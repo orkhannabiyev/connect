@@ -1,39 +1,38 @@
-import React, { Component } from 'react';
-import { Text, StyleSheet, View } from 'react-native';
+import React, { useEffect } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-export default class App extends Component {
-  render() {
+import { LoginScreen, OnboardingScreen } from './src/screens/index';
+
+const AppStack = createStackNavigator();
+
+export default function App() {
+  const [isFirstLaunch, setIsFirstLaunch] = React.useState(null);
+
+  useEffect(() => {
+    AsyncStorage.getItem('alreadyLaunched').then((value) => {
+      if (value === null) {
+        AsyncStorage.setItem('alreadyLaunched', 'true');
+        setIsFirstLaunch(true);
+      } else {
+        setIsFirstLaunch(false);
+      }
+    });
+  }, []);
+
+  if (isFirstLaunch === null) {
+    return null;
+  } else if (isFirstLaunch === true) {
     return (
-      <View style={styles.container}>
-        <View style={styles.upContainer}>
-          <Text> LOLOLOLOL</Text>
-        </View>
-        <View style={styles.down}>
-          <Text> LO </Text>
-        </View>
-      </View>
+      <NavigationContainer>
+        <AppStack.Navigator headerMode="none">
+          <AppStack.Screen name="Onboarding" component={OnboardingScreen} />
+          <AppStack.Screen name="Login" component={LoginScreen} />
+        </AppStack.Navigator>
+      </NavigationContainer>
     );
+  } else {
+    return <LoginScreen />;
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#cbd3dd',
-  },
-  upContainer: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#d49b9b',
-    width: '60%',
-  },
-  down: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#feefac',
-  },
-});
