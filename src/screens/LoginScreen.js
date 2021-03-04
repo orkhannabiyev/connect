@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import {
   ScrollView,
   Text,
@@ -7,11 +7,14 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
+import { AuthContext } from '../navigation/AuthProvider';
 import { FormButton, FormInput, SocialButton } from '../components/index';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+
+  const { login } = useContext(AuthContext);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -22,7 +25,7 @@ const LoginScreen = ({ navigation }) => {
       <Text style={styles.text}>RN Social App</Text>
       <FormInput
         labelValue={email}
-        onChangeText={() => setEmail(email)}
+        onChangeText={(userEmail) => setEmail(userEmail)}
         placeholderText="Email"
         iconType="user"
         keyboardType="email-address"
@@ -31,13 +34,16 @@ const LoginScreen = ({ navigation }) => {
       />
       <FormInput
         labelValue={password}
-        onChangeText={() => setPassword(password)}
+        onChangeText={(userPassword) => setPassword(userPassword)}
         placeholderText="Password"
         iconType="lock"
         secureTextEntry={true}
       />
 
-      <FormButton buttonTitle="Sign In" onPress={() => alert('lolo')} />
+      <FormButton
+        buttonTitle="Sign In"
+        onPress={() => login(email, password)}
+      />
 
       <TouchableOpacity style={styles.forgotButton} onPress={() => {}}>
         <Text style={styles.navButtonText}>Forgot Password</Text>

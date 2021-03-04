@@ -4,7 +4,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import { LoginScreen, OnboardingScreen, SignUpScreen } from '../screens/index';
 
-const AppStack = createStackNavigator();
+const Stack = createStackNavigator();
 
 const AuthStack = () => {
   const [isFirstLaunch, setIsFirstLaunch] = React.useState(null);
@@ -30,19 +30,15 @@ const AuthStack = () => {
   }
 
   return (
-    <AppStack.Navigator initialRouteName={routeName} headerMode="none">
-      <AppStack.Screen
+    <Stack.Navigator initialRouteName={routeName} headerMode="none">
+      <Stack.Screen
         name="Onboarding"
         component={OnboardingScreen}
         options={() => null}
       />
-      <AppStack.Screen
-        name="Login"
-        component={LoginScreen}
-        options={() => null}
-      />
-      <AppStack.Screen name="SignUp" component={SignUpScreen} />
-    </AppStack.Navigator>
+      <Stack.Screen name="Login" component={LoginScreen} options={() => null} />
+      <Stack.Screen name="SignUp" component={SignUpScreen} />
+    </Stack.Navigator>
   );
 };
 
