@@ -14,7 +14,7 @@ const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
-  const { login } = useContext(AuthContext);
+  const { login, googleLogin } = useContext(AuthContext);
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
@@ -22,7 +22,7 @@ const LoginScreen = ({ navigation }) => {
         source={require('../assets/rn-social-logo.png')}
         style={styles.logo}
       />
-      <Text style={styles.text}>RN Social App</Text>
+      <Text style={styles.text}>Connect</Text>
       <FormInput
         labelValue={email}
         onChangeText={(userEmail) => setEmail(userEmail)}
@@ -59,7 +59,7 @@ const LoginScreen = ({ navigation }) => {
 
       <SocialButton
         buttonTitle="Sign in with Google"
-        onPress={() => alert('google')}
+        onPress={() => googleLogin()}
         btnType="google"
         color="#f90606"
         backgroundColor="#a8a8a8"

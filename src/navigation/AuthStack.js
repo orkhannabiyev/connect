@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { GoogleSignin } from '@react-native-google-signin/google-signin';
 
 import { LoginScreen, OnboardingScreen, SignUpScreen } from '../screens/index';
 
@@ -20,6 +21,11 @@ const AuthStack = () => {
       }
     });
   }, []);
+
+  GoogleSignin.configure({
+    webClientId:
+      '386848489272-0g843mfmkg84lsa3vshjgo28n8oc1fjm.apps.googleusercontent.com',
+  });
 
   if (isFirstLaunch === true) {
     routeName = 'Onboarding';
