@@ -1,9 +1,12 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { StyleSheet, View, Alert, Text, ActivityIndicator } from 'react-native';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ImagePicker from 'react-native-image-crop-picker';
 import storage from '@react-native-firebase/storage';
+import firestore from '@react-native-firebase/firestore';
+
+import { AuthContext } from '../navigation/AuthProvider';
 
 import {
   InputWrapper,
@@ -15,9 +18,11 @@ import {
 } from '../styles/AddPost';
 
 const HomeScreen = () => {
+  const { user } = useContext(AuthContext);
   const [image, setImage] = useState(null);
   const [uploading, setUploading] = useState(false);
   const [transferred, setTransferred] = useState(0);
+  const [post, setPost] = useState(null);
 
   const takePhotoFromLibrary = () => {
     ImagePicker.openPicker({
@@ -40,6 +45,41 @@ const HomeScreen = () => {
   };
 
   const submitPost = async () => {
+    const imageUrl = await uploadImage();
+    console.log('Image Url: ', imageUrl);
+    console.log('Post: ', post);
+
+    firestore()
+      .collection('posts')
+      .add({
+        userId: user.uid,
+        post: post,
+        postImg: imageUrl,
+        postTime: firestore.Timestamp.fromDate(new Date()),
+        likes: null,
+        comments: null,
+      })
+      .then(() => {
+        console.log('Post Added!');
+        Alert.alert(
+          'Post published!',
+          'Your post has been published Successfully!',
+        );
+        setPost(null);
+      })
+      .catch((error) => {
+        console.log(
+          'Something went wrong with added post to firestore.',
+          error,
+        );
+      });
+  };
+
+  const uploadImage = async () => {
+    if (image === null) {
+      return null;
+    }
+
     let fileName = image.substring(image.lastIndexOf('/') + 1);
 
     const extension = fileName.split('.').pop();
@@ -49,7 +89,8 @@ const HomeScreen = () => {
     setUploading(true);
     setTransferred(0);
 
-    const task = storage().ref(fileName).putFile(image);
+    const storageRef = storage().ref(`photos/${fileName}`);
+    const task = storageRef.putFile(image);
 
     task.on('state_changed', (taskSnapshot) => {
       console.log(
@@ -64,23 +105,29 @@ const HomeScreen = () => {
 
     try {
       await task;
+      const url = await storageRef.getDownloadURL();
+
       setUploading(false);
-      Alert.alert(
-        'Image uploaded',
-        'Your image has been uploaded to firebase successfully',
-      );
+      setImage(null);
+
+      return url;
     } catch (e) {
       console.log(e);
+      return null;
     }
-
-    setImage(null);
   };
 
   return (
     <View style={styles.container}>
       <InputWrapper>
         {image !== null ? <AddImage source={{ uri: image }} /> : null}
-        <InputField placeholder="what?" multiline numberOfLines={4} />
+        <InputField
+          placeholder="What's on your mind?"
+          multiline
+          numberOfLines={4}
+          value={post}
+          onChangeText={(content) => setPost(content)}
+        />
         {uploading ? (
           <StatusWrapper>
             <Text>{transferred}% status</Text>
@@ -104,12 +151,6 @@ const HomeScreen = () => {
           title="Take Photo"
           onPress={takePhoto}>
           <Icon name="md-notifications-off" style={styles.actionButtonIcon} />
-        </ActionButton.Item>
-        <ActionButton.Item
-          buttonColor="#1abc9c"
-          title="All Tasks"
-          onPress={() => {}}>
-          <Icon name="heart" style={styles.actionButtonIcon} />
         </ActionButton.Item>
       </ActionButton>
     </View>
