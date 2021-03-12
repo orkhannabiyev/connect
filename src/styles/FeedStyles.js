@@ -3,8 +3,9 @@ import styled from 'styled-components';
 export const Container = styled.View`
   flex: 1;
   align-items: center;
+  width: 100%;
   background-color: #fff;
-  padding: 20px;
+  padding: 0px;
 `;
 
 export const Card = styled.View`
@@ -21,8 +22,8 @@ export const UserInfo = styled.View`
 `;
 
 export const UserImg = styled.Image`
-  width: 50px;
-  height: 50px;
+  width: 70%;
+  height: 50%;
   border-radius: 25px;
 `;
 
