@@ -18,7 +18,7 @@ import {
 } from '../styles/FeedStyles';
 import { AuthContext } from '../navigation/AuthProvider';
 
-export const PostCard = ({ item, onDelete }) => {
+const PostCard = ({ item, onDelete }) => {
   const { user } = useContext(AuthContext);
   const likeIcon = item.liked ? 'heart' : 'heart-outline';
   const likeIconColor = item.liked ? '#2e64e5' : '#fff';
@@ -59,3 +59,5 @@ export const PostCard = ({ item, onDelete }) => {
     </Card>
   );
 };
+
+export { PostCard };

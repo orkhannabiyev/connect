@@ -22,7 +22,7 @@ const FormInput = ({ labelValue, placeholderText, iconType, ...rest }) => {
   );
 };
 
-export default FormInput;
+export { FormInput };
 
 const styles = StyleSheet.create({
   inputContainer: {

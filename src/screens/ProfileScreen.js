@@ -2,9 +2,9 @@ import React, { useContext } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { AuthContext } from '../navigation/AuthProvider';
-import { FormButton } from '../components/index';
+import { FormButton } from '../components';
 
-const HomeScreen = () => {
+const ProfileScreen = () => {
   const { user, logout } = useContext(AuthContext);
 
   return (
@@ -15,7 +15,7 @@ const HomeScreen = () => {
   );
 };
 
-export default HomeScreen;
+export { ProfileScreen };
 
 const styles = StyleSheet.create({
   container: {

@@ -43,4 +43,4 @@ const OnboardingScreen = ({ navigation }) => {
   );
 };
 
-export default OnboardingScreen;
+export { OnboardingScreen };

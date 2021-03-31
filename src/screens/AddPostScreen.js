@@ -17,7 +17,7 @@ import {
   StatusWrapper,
 } from '../styles/AddPost';
 
-const HomeScreen = () => {
+const AddPostScreen = () => {
   const { user } = useContext(AuthContext);
   const [image, setImage] = useState(null);
   const [uploading, setUploading] = useState(false);
@@ -157,7 +157,7 @@ const HomeScreen = () => {
   );
 };
 
-export default HomeScreen;
+export { AddPostScreen };
 
 const styles = StyleSheet.create({
   container: {

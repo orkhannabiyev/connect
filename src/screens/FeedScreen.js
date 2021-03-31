@@ -4,7 +4,7 @@ import storage from '@react-native-firebase/storage';
 import firestore from '@react-native-firebase/firestore';
 
 import { Container } from '../styles/FeedStyles';
-import { PostCard } from '../components/PostCard';
+import { PostCard } from '../components';
 
 const FeedScreen = () => {
   const [posts, setPosts] = useState([]);
@@ -137,4 +137,4 @@ const FeedScreen = () => {
   );
 };
 
-export default FeedScreen;
+export { FeedScreen };

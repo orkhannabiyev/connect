@@ -12,7 +12,7 @@ const FormButton = ({ buttonTitle, ...rest }) => {
   );
 };
 
-export default FormButton;
+export { FormButton };
 
 const styles = StyleSheet.create({
   buttonContainer: {

@@ -14,7 +14,7 @@ import {
   AddPostScreen,
   MessagesScreen,
   EditProfileScreen,
-} from '../screens/index';
+} from '../screens';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();

@@ -8,7 +8,7 @@ import {
 } from 'react-native';
 
 import { AuthContext } from '../navigation/AuthProvider';
-import { FormButton, FormInput, SocialButton } from '../components/index';
+import { FormButton, FormInput, SocialButton } from '../components';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState();
@@ -76,7 +76,7 @@ const LoginScreen = ({ navigation }) => {
   );
 };
 
-export default LoginScreen;
+export { LoginScreen };
 
 const styles = StyleSheet.create({
   container: {

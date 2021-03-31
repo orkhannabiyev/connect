@@ -4,7 +4,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import { windowHeight } from '../utils/Dimentions';
 
-const FormButton = ({
+const SocialButton = ({
   buttonTitle,
   btnType,
   color,
@@ -31,7 +31,7 @@ const FormButton = ({
   );
 };
 
-export default FormButton;
+export { SocialButton };
 
 const styles = StyleSheet.create({
   buttonContainer: {
