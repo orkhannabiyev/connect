@@ -29,7 +29,7 @@ const AddPostScreen = () => {
       width: 300,
       height: 400,
       cropping: true,
-    }).then((image) => {
+    }).then(image => {
       console.log(image);
       setImage(image.path);
     });
@@ -39,15 +39,13 @@ const AddPostScreen = () => {
       width: 300,
       height: 400,
       cropping: true,
-    }).then((image) => {
+    }).then(image => {
       setImage(image.path);
     });
   };
 
   const submitPost = async () => {
     const imageUrl = await uploadImage();
-    console.log('Image Url: ', imageUrl);
-    console.log('Post: ', post);
 
     firestore()
       .collection('posts')
@@ -67,7 +65,7 @@ const AddPostScreen = () => {
         );
         setPost(null);
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(
           'Something went wrong with added post to firestore.',
           error,
@@ -92,7 +90,7 @@ const AddPostScreen = () => {
     const storageRef = storage().ref(`photos/${fileName}`);
     const task = storageRef.putFile(image);
 
-    task.on('state_changed', (taskSnapshot) => {
+    task.on('state_changed', taskSnapshot => {
       console.log(
         `${taskSnapshot.bytesTransferred} transferred out of ${taskSnapshot.totalBytes}`,
       );
@@ -126,7 +124,7 @@ const AddPostScreen = () => {
           multiline
           numberOfLines={4}
           value={post}
-          onChangeText={(content) => setPost(content)}
+          onChangeText={content => setPost(content)}
         />
         {uploading ? (
           <StatusWrapper>

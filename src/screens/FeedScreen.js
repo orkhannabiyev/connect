@@ -7,7 +7,7 @@ import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 import { Container } from '../styles/FeedStyles';
 import { PostCard } from '../components';
 
-const FeedScreen = () => {
+const FeedScreen = ({ navigation }) => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [deleted, setDeleted] = useState(false);
@@ -32,9 +32,13 @@ const FeedScreen = () => {
             list.push({
               id: doc.id,
               userId,
+              userName: 'Test Name',
+              userImg:
+                'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg',
+              postTime: postTime,
               post,
               postImg,
-              postTime: postTime,
+              liked: false,
               likes,
               comments,
             });
@@ -209,7 +213,9 @@ const FeedScreen = () => {
               <PostCard
                 item={item}
                 onDelete={handleDelete}
-                onPress={() => {}}
+                onPress={() =>
+                  navigation.navigate('Profile', { userId: item.userId })
+                }
               />
             )}
             keyExtractor={(item) => item.id}

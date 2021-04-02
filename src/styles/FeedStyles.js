@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 export const Container = styled.View`
   flex: 1;
-  align-items: center;
-  width: 100%;
+  width: 95%;
+  align-self: center;
   background-color: #fff;
   padding: 0px;
 `;
@@ -22,8 +22,8 @@ export const UserInfo = styled.View`
 `;
 
 export const UserImg = styled.Image`
-  width: 70%;
-  height: 50%;
+  width: 10%;
+  height: 90%;
   border-radius: 25px;
 `;
 

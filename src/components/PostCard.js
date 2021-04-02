@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import { TouchableOpacity } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
 
@@ -19,7 +20,7 @@ import {
 import { AuthContext } from '../navigation/AuthProvider';
 import ProgressiveImage from './ProgressiveImage';
 
-const PostCard = ({ item, onDelete }) => {
+const PostCard = ({ item, onDelete, onPress }) => {
   const { user } = useContext(AuthContext);
   const likeIcon = item.liked ? 'heart' : 'heart-outline';
   const likeIconColor = item.liked ? '#2e64e5' : '#fff';
@@ -29,8 +30,10 @@ const PostCard = ({ item, onDelete }) => {
       <UserInfo>
         <UserImg source={{ uri: item.userImg }} />
         <UserInfoText>
-          <UserName>{item.userName}</UserName>
-          <PostTime>{moment(item.postTime.toDate()).fromNow()}</PostTime>
+          <TouchableOpacity onPress={onPress}>
+            <UserName>{item.userName}</UserName>
+            <PostTime>{moment(item.postTime.toDate()).fromNow()}</PostTime>
+          </TouchableOpacity>
         </UserInfoText>
       </UserInfo>
       <PostText>{item.post}</PostText>
