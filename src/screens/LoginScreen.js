@@ -25,7 +25,7 @@ const LoginScreen = ({ navigation }) => {
       <Text style={styles.text}>Connect</Text>
       <FormInput
         labelValue={email}
-        onChangeText={(userEmail) => setEmail(userEmail)}
+        onChangeText={userEmail => setEmail(userEmail)}
         placeholderText="Email"
         iconType="user"
         keyboardType="email-address"
@@ -34,7 +34,7 @@ const LoginScreen = ({ navigation }) => {
       />
       <FormInput
         labelValue={password}
-        onChangeText={(userPassword) => setPassword(userPassword)}
+        onChangeText={userPassword => setPassword(userPassword)}
         placeholderText="Password"
         iconType="lock"
         secureTextEntry={true}
@@ -76,7 +76,7 @@ const LoginScreen = ({ navigation }) => {
   );
 };
 
-export { LoginScreen };
+export default LoginScreen;
 
 const styles = StyleSheet.create({
   container: {

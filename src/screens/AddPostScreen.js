@@ -155,7 +155,7 @@ const AddPostScreen = () => {
   );
 };
 
-export { AddPostScreen };
+export default AddPostScreen;
 
 const styles = StyleSheet.create({
   container: {

@@ -162,7 +162,7 @@ const ProfileScreen = ({ route, navigation }) => {
   );
 };
 
-export { ProfileScreen };
+export default ProfileScreen;
 
 const styles = StyleSheet.create({
   container: {

@@ -25,7 +25,7 @@ const ChatScreen = () => {
   );
 };
 
-export { ChatScreen };
+export default ChatScreen;
 
 const styles = StyleSheet.create({
   container: {

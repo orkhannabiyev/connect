@@ -112,7 +112,7 @@ const ProfileStack = ({ navigation }) => (
 );
 
 const AppStack = () => {
-  const getTabBarVisibility = (route) => {
+  const getTabBarVisibility = route => {
     const routeName = getFocusedRouteNameFromRoute(route)
       ? getFocusedRouteNameFromRoute(route).state.routes[route.state.index]
       : '';

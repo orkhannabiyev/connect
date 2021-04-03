@@ -340,7 +340,7 @@ const EditProfileScreen = ({ route }) => {
   );
 };
 
-export { EditProfileScreen };
+export default EditProfileScreen;
 
 const styles = StyleSheet.create({
   container: {

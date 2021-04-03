@@ -1,9 +1,9 @@
-export * from './LoginScreen';
-export * from './OnboardingScreen';
-export * from './SignUpScreen';
-export * from './FeedScreen';
-export * from './ChatScreen';
-export * from './AddPostScreen';
-export * from './EditProfileScreen';
-export * from './MessagesScreen';
-export * from './ProfileScreen';
+export { default as LoginScreen } from './LoginScreen';
+export { default as OnboardingScreen } from './OnboardingScreen';
+export { default as SignUpScreen } from './SignUpScreen';
+export { default as FeedScreen } from './FeedScreen';
+export { default as ChatScreen } from './ChatScreen';
+export { default as AddPostScreen } from './AddPostScreen';
+export { default as EditProfileScreen } from './EditProfileScreen';
+export { default as MessagesScreen } from './MessagesScreen';
+export { default as ProfileScreen } from './ProfileScreen';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Image } from 'react-native';
+import { Image } from 'react-native';
 import Onboarding from 'react-native-onboarding-swiper';
 
 const OnboardingScreen = ({ navigation }) => {
@@ -43,4 +43,4 @@ const OnboardingScreen = ({ navigation }) => {
   );
 };
 
-export { OnboardingScreen };
+export default OnboardingScreen;

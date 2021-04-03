@@ -23,7 +23,7 @@ const SignUpScreen = ({ navigation }) => {
 
       <FormInput
         labelValue={email}
-        onChangeText={(userEmail) => setEmail(userEmail)}
+        onChangeText={userEmail => setEmail(userEmail)}
         placeholderText="Email"
         iconType="user"
         keyboardType="email-address"
@@ -33,7 +33,7 @@ const SignUpScreen = ({ navigation }) => {
 
       <FormInput
         labelValue={password}
-        onChangeText={(userPassword) => setPassword(userPassword)}
+        onChangeText={userPassword => setPassword(userPassword)}
         placeholderText="Password"
         iconType="lock"
         secureTextEntry={true}
@@ -41,7 +41,7 @@ const SignUpScreen = ({ navigation }) => {
 
       <FormInput
         labelValue={confirmPassword}
-        onChangeText={(userPassword) => setConfirmPassword(userPassword)}
+        onChangeText={userPassword => setConfirmPassword(userPassword)}
         placeholderText="Confirm Password"
         iconType="lock"
         secureTextEntry={true}
@@ -96,7 +96,7 @@ const SignUpScreen = ({ navigation }) => {
   );
 };
 
-export { SignUpScreen };
+export default SignUpScreen;
 
 const styles = StyleSheet.create({
   container: {

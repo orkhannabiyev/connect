@@ -1,69 +1,28 @@
-import React, { useEffect, useState } from 'react';
-import { FlatList, Alert, SafeAreaView, View, ScrollView } from 'react-native';
-import storage from '@react-native-firebase/storage';
-import firestore from '@react-native-firebase/firestore';
-import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
+import React, { useEffect } from 'react';
+import { FlatList, Alert, SafeAreaView } from 'react-native';
+import { connect } from 'react-redux';
 
 import { Container } from '../styles/FeedStyles';
-import { PostCard } from '../components';
+import { PostCard, ShimmerEffect } from '../components';
+import { getPosts, deletePost } from '../actions/FeedActions';
 
-const FeedScreen = ({ navigation }) => {
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [deleted, setDeleted] = useState(false);
-
-  const fetchPosts = async () => {
-    const list = [];
-
-    try {
-      await firestore()
-        .collection('posts')
-        .get()
-        .then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            const {
-              userId,
-              post,
-              postImg,
-              postTime,
-              likes,
-              comments,
-            } = doc.data();
-            list.push({
-              id: doc.id,
-              userId,
-              userName: 'Test Name',
-              userImg:
-                'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg',
-              postTime: postTime,
-              post,
-              postImg,
-              liked: false,
-              likes,
-              comments,
-            });
-          });
-        });
-      setPosts(list);
-
-      if (loading) {
-        setLoading(false);
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
+const FeedScreen = ({
+  navigation,
+  getPosts,
+  deletePost,
+  posts,
+  loading,
+  deleted,
+}) => {
+  console.log('LOADING', loading);
+  console.log('deleted', deleted);
 
   useEffect(() => {
-    fetchPosts();
-  }, []);
-
-  useEffect(() => {
-    fetchPosts();
-    setDeleted(false);
+    console.log('useEffect');
+    getPosts();
   }, [deleted]);
 
-  const handleDelete = (postId) => {
+  const handleDelete = postId => {
     Alert.alert(
       'Delete post',
       'Are you sure?',
@@ -82,129 +41,10 @@ const FeedScreen = ({ navigation }) => {
     );
   };
 
-  const deletePost = (postId) => {
-    console.log('POSTID', postId);
-    firestore()
-      .collection('posts')
-      .doc(postId)
-      .get()
-      .then((documentSnapshot) => {
-        if (documentSnapshot.exists) {
-          const { postImg } = documentSnapshot.data();
-
-          if (postImg != null) {
-            const storageRef = storage().refFromURL(postImg);
-            const imageRef = storage().ref(storageRef.fullPath);
-
-            imageRef
-              .delete()
-              .then(() => {
-                console.log(`${postImg} has been deleted successfully.`);
-                deleteFirestoreData(postId);
-                setDeleted(true);
-              })
-              .catch((e) => {
-                console.log('Error while deleting the image. ', e);
-              });
-          } else {
-            deleteFirestoreData(postId);
-          }
-        }
-      });
-  };
-
-  const deleteFirestoreData = (postId) => {
-    firestore()
-      .collection('posts')
-      .doc(postId)
-      .delete()
-      .then(() => {
-        Alert.alert(
-          'Post deleted!',
-          'Your post has been deleted successfully!',
-        );
-        setDeleted(true);
-      })
-      .catch((e) => console.log('Error deleting posst.', e));
-  };
-
   return (
     <SafeAreaView style={{ flex: 1 }}>
       {loading ? (
-        <ScrollView
-          style={{ flex: 1 }}
-          contentContainerStyle={{ alignItems: 'center' }}>
-          <SkeletonPlaceholder>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <View style={{ width: 60, height: 60, borderRadius: 50 }} />
-              <View style={{ marginLeft: 20 }}>
-                <View style={{ width: 120, height: 20, borderRadius: 4 }} />
-                <View
-                  style={{
-                    marginTop: 6,
-                    width: 80,
-                    height: 20,
-                    borderRadius: 4,
-                  }}
-                />
-              </View>
-            </View>
-            <View style={{ marginTop: 10, marginBottom: 30 }}>
-              <View style={{ width: 300, height: 20, borderRadius: 4 }} />
-              <View
-                style={{
-                  marginTop: 6,
-                  width: 250,
-                  height: 20,
-                  borderRadius: 4,
-                }}
-              />
-              <View
-                style={{
-                  marginTop: 6,
-                  width: 350,
-                  height: 200,
-                  borderRadius: 4,
-                }}
-              />
-            </View>
-          </SkeletonPlaceholder>
-          <SkeletonPlaceholder>
-            <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-              <View style={{ width: 60, height: 60, borderRadius: 50 }} />
-              <View style={{ marginLeft: 20 }}>
-                <View style={{ width: 120, height: 20, borderRadius: 4 }} />
-                <View
-                  style={{
-                    marginTop: 6,
-                    width: 80,
-                    height: 20,
-                    borderRadius: 4,
-                  }}
-                />
-              </View>
-            </View>
-            <View style={{ marginTop: 10, marginBottom: 30 }}>
-              <View style={{ width: 300, height: 20, borderRadius: 4 }} />
-              <View
-                style={{
-                  marginTop: 6,
-                  width: 250,
-                  height: 20,
-                  borderRadius: 4,
-                }}
-              />
-              <View
-                style={{
-                  marginTop: 6,
-                  width: 350,
-                  height: 200,
-                  borderRadius: 4,
-                }}
-              />
-            </View>
-          </SkeletonPlaceholder>
-        </ScrollView>
+        <ShimmerEffect />
       ) : (
         <Container>
           <FlatList
@@ -218,8 +58,10 @@ const FeedScreen = ({ navigation }) => {
                 }
               />
             )}
-            keyExtractor={(item) => item.id}
+            keyExtractor={item => item.id}
             showsVerticalScrollIndicator={false}
+            onRefresh={() => getPosts()}
+            refreshing={loading}
           />
         </Container>
       )}
@@ -227,4 +69,15 @@ const FeedScreen = ({ navigation }) => {
   );
 };
 
-export { FeedScreen };
+const mapStateToProps = ({ feed }) => ({
+  posts: feed.posts,
+  loading: feed.loading,
+  deleted: feed.deleted,
+});
+
+const mapDispatchToProps = {
+  getPosts,
+  deletePost,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FeedScreen);

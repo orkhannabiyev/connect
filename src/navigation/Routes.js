@@ -10,7 +10,7 @@ const Routes = () => {
   const [initializing, setInitializing] = useState(true);
   const { user, setUser } = useContext(AuthContext);
 
-  const onAuthStateChanged = (user) => {
+  const onAuthStateChanged = user => {
     setUser(user);
     if (initializing) setInitializing(false);
   };
