@@ -14,11 +14,7 @@ const FeedScreen = ({
   loading,
   deleted,
 }) => {
-  console.log('LOADING', loading);
-  console.log('deleted', deleted);
-
   useEffect(() => {
-    console.log('useEffect');
     getPosts();
   }, [deleted]);
 

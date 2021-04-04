@@ -1,101 +1,45 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import {
   View,
   Text,
   Image,
   TouchableOpacity,
   StyleSheet,
-  ScrollView,
   SafeAreaView,
+  ActivityIndicator,
+  FlatList,
 } from 'react-native';
-import firestore from '@react-native-firebase/firestore';
+import { connect } from 'react-redux';
 import { AuthContext } from '../navigation/AuthProvider';
 import { PostCard } from '../components';
+import { selfPosts } from '../actions/SelfPostsAction';
+import { getUser } from '../actions/UserActions';
 
-const ProfileScreen = ({ route, navigation }) => {
+const ProfileScreen = ({
+  route,
+  navigation,
+  userData,
+  userLoading,
+  getUser,
+  posts,
+  postsLoading,
+  selfPosts,
+}) => {
   const { user, logout } = useContext(AuthContext);
 
-  const [posts, setPosts] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [deleted, setDeleted] = useState(false);
-  const [userData, setUserData] = useState(null);
-
-  const fetchPosts = async () => {
-    try {
-      const list = [];
-
-      await firestore()
-        .collection('posts')
-        .where('userId', '==', route.params ? route.params.userId : user.uid)
-        .orderBy('postTime', 'desc')
-        .get()
-        .then(querySnapshot => {
-          querySnapshot.forEach(doc => {
-            const {
-              userId,
-              post,
-              postImg,
-              postTime,
-              likes,
-              comments,
-            } = doc.data();
-            list.push({
-              id: doc.id,
-              userId,
-              userName: 'Test Name',
-              userImg:
-                'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg',
-              postTime: postTime,
-              post,
-              postImg,
-              liked: false,
-              likes,
-              comments,
-            });
-          });
-        });
-
-      setPosts(list);
-
-      if (loading) {
-        setLoading(false);
-      }
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  const getUser = async () => {
-    await firestore()
-      .collection('users')
-      .doc(route.params ? route.params.userId : user.uid)
-      .get()
-      .then(documentSnapshot => {
-        if (documentSnapshot.exists) {
-          console.log('User Data', documentSnapshot.data());
-          setUserData(documentSnapshot.data());
-        }
-      });
-    console.log('getUser');
-  };
-
   useEffect(() => {
-    getUser();
-    fetchPosts();
-    navigation.addListener('focus', () => setLoading(!loading));
-  }, [navigation]);
+    getUser(route, user);
+    selfPosts(route, user);
+  }, []);
 
-  const handleDelete = () => {};
+  const refresh = () => {
+    getUser(route, user);
+    selfPosts(route, user);
+  };
 
-  return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#fff' }}>
-      <ScrollView
-        style={styles.container}
-        contentContainerStyle={{
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-        showsVerticalScrollIndicator={false}>
+  const scroll = () => {
+    return (
+      <View style={styles.container}>
         <Image
           style={styles.userImg}
           source={{
@@ -153,22 +97,70 @@ const ProfileScreen = ({ route, navigation }) => {
             <Text style={styles.userInfoSubTitle}>Following</Text>
           </View>
         </View>
+      </View>
+    );
+  };
 
-        {posts.map(item => (
-          <PostCard key={item.id} item={item} onDelete={handleDelete} />
-        ))}
-      </ScrollView>
+  const handleDelete = () => {};
+
+  return (
+    <SafeAreaView style={styles.scrollView}>
+      {userLoading ? (
+        <ActivityIndicator size={50} color="#123456" />
+      ) : (
+        <FlatList
+          data={posts}
+          renderItem={({ item }) => (
+            <PostCard item={item} onDelete={handleDelete} />
+          )}
+          keyExtractor={item => item.id}
+          showsVerticalScrollIndicator={false}
+          ListHeaderComponent={scroll}
+          onRefresh={refresh}
+          refreshing={userLoading || postsLoading}
+        />
+      )}
     </SafeAreaView>
   );
 };
 
-export default ProfileScreen;
+const mapStateToProps = ({ selfposts, user }) => ({
+  posts: selfposts.posts,
+  postsLoading: selfposts.loading,
+  userData: user.data,
+  userLoading: user.loading,
+});
+
+const mapDispatchToProps = {
+  selfPosts,
+  getUser,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(ProfileScreen);
 
 const styles = StyleSheet.create({
-  container: {
+  scrollView: {
     flex: 1,
     backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  container: {
+    position: 'relative',
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#fff',
     padding: 20,
+  },
+  activityIndicator: {
+    color: 'black',
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   userImg: {
     height: 150,

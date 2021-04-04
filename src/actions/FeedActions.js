@@ -1,7 +1,11 @@
-import { GET_POSTS, DELETE_POST, POSTS_FAILED, LOADING } from '../types';
 import { Alert } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
+
+export const GET_POSTS = 'GET_POSTS';
+export const POSTS_FAILED = 'POSTS_FAILED';
+export const LOADING = 'LOADING';
+export const DELETE_POST = 'DELETE_POST';
 
 export const getPosts = () => {
   const posts = [];

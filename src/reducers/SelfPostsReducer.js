@@ -1,39 +1,32 @@
 import {
-  GET_POSTS,
-  DELETE_POST,
-  POSTS_FAILED,
-  LOADING,
-} from '../actions/FeedActions';
+  SELF_POSTS_LOADING,
+  SELF_POSTS_SUCCESS,
+  SELF_POSTS_ERROR,
+} from '../actions/SelfPostsAction';
 
 const initState = {
   posts: [],
-  loading: true,
-  deleted: false,
+  loading: false,
 };
 
 export default (state = initState, action) => {
+  // console.log('REDUCER SELF POSTS length', action.payload);
   switch (action.type) {
-    case LOADING:
+    case SELF_POSTS_LOADING:
       return {
         ...state,
         loading: true,
       };
-    case GET_POSTS:
+    case SELF_POSTS_SUCCESS:
       return {
         ...state,
         posts: action.payload,
         loading: false,
-        deleted: false,
       };
-    case DELETE_POST:
+    case SELF_POSTS_ERROR:
       return {
         ...state,
-        deleted: action.payload,
-        loading: true,
-      };
-    case POSTS_FAILED:
-      return {
-        ...state,
+        error: action.payload,
         loading: false,
       };
     default:
