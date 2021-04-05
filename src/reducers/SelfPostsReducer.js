@@ -10,7 +10,6 @@ const initState = {
 };
 
 export default (state = initState, action) => {
-  // console.log('REDUCER SELF POSTS length', action.payload);
   switch (action.type) {
     case SELF_POSTS_LOADING:
       return {
