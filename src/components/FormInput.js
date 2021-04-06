@@ -4,20 +4,13 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 import { windowHeight, windowWidth } from '../utils/Dimentions';
 
-const FormInput = ({ labelValue, placeholderText, iconType, ...rest }) => {
+const FormInput = ({ iconType, ...rest }) => {
   return (
     <View style={styles.inputContainer}>
       <View style={styles.iconStyle}>
         <Icon name={iconType} size={25} color="#666" />
       </View>
-      <TextInput
-        style={styles.input}
-        value={labelValue}
-        numberOfLines={1}
-        placeholder={placeholderText}
-        placeholderTextColor="#cbaeff"
-        {...rest}
-      />
+      <TextInput style={styles.input} {...rest} />
     </View>
   );
 };

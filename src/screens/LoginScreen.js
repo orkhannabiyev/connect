@@ -24,18 +24,18 @@ const LoginScreen = ({ navigation }) => {
       />
       <Text style={styles.text}>Connect</Text>
       <FormInput
-        labelValue={email}
+        value={email}
         onChangeText={userEmail => setEmail(userEmail)}
-        placeholderText="Email"
+        placeholder="Email"
         iconType="user"
         keyboardType="email-address"
         autoCapitalize="none"
         autoCorrect={false}
       />
       <FormInput
-        labelValue={password}
+        value={password}
         onChangeText={userPassword => setPassword(userPassword)}
-        placeholderText="Password"
+        placeholder="Password"
         iconType="lock"
         secureTextEntry={true}
       />

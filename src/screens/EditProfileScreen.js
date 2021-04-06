@@ -300,7 +300,7 @@ const EditProfileScreen = ({ route }) => {
           <TextInput
             placeholder="Phone"
             placeholderTextColor="#666666"
-            keyboardType="number-pad"
+            keyboardType="phone-pad"
             autoCorrect={false}
             value={userData ? userData.phone : ''}
             onChangeText={txt => setUserData({ ...userData, phone: txt })}
