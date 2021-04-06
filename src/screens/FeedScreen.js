@@ -56,7 +56,7 @@ const FeedScreen = ({
             )}
             keyExtractor={item => item.id}
             showsVerticalScrollIndicator={false}
-            onRefresh={() => getPosts()}
+            onRefresh={getPosts}
             refreshing={loading}
           />
         </Container>

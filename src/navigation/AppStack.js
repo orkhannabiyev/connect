@@ -134,7 +134,7 @@ const AppStack = () => {
         component={FeedStack}
         options={({ route }) => ({
           tabBarLabel: 'Home',
-          tabBarVisible: getTabBarVisibility(route),
+          // tabBarVisible: getTabBarVisibility(route),
           tabBarIcon: ({ color, size }) => (
             <MaterialCommunityIcons
               name="home-outline"

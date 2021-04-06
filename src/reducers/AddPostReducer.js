@@ -1,16 +1,23 @@
 import {
+  CREATE_POST,
   POST_LOADING,
   POST_SUCCESS,
   POST_ERROR,
 } from '../actions/AddPostActions';
 
 const initState = {
-  post: {},
   loading: false,
+  payload: {},
 };
 
 export default (state = initState, action) => {
   switch (action.type) {
+    case CREATE_POST:
+      return {
+        ...state,
+        payload: action.payload,
+        loading: false,
+      };
     case POST_LOADING:
       return {
         ...state,
@@ -19,8 +26,8 @@ export default (state = initState, action) => {
     case POST_SUCCESS:
       return {
         ...state,
-        post: action.payload,
-        loading: true,
+        payload: action.payload,
+        loading: false,
       };
     case POST_ERROR:
       return {

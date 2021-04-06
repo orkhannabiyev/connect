@@ -6,8 +6,24 @@ export const POST_LOADING = 'LOADING';
 export const POST_SUCCESS = 'SUCCESS';
 export const POST_ERROR = 'ERROR';
 
-export const submitPost = async () => {
-  const imageUrl = await uploadImage();
+export const CREATE_POST = 'CREATE_POST';
+export const createPost = (postText, imageUrl) => dispatch => {
+  dispatch({
+    type: CREATE_POST,
+    payload: {
+      post: postText,
+      image: imageUrl,
+    },
+  });
+};
+
+export const submitPost = (user, post, image) => async dispatch => {
+  console.log('submitPost');
+  // dispatch({
+  //   type: POST_LOADING,
+  // });
+
+  const imageUrl = await uploadImage(image);
 
   firestore()
     .collection('posts')
@@ -25,14 +41,20 @@ export const submitPost = async () => {
         'Post published!',
         'Your post has been published Successfully!',
       );
-      setPost(null);
+      dispatch({
+        type: POST_SUCCESS,
+        payload: {
+          post: null,
+          image: null,
+        },
+      });
     })
     .catch(error => {
       console.log('Something went wrong with added post to firestore.', error);
     });
 };
 
-const uploadImage = async () => {
+const uploadImage = async image => {
   if (image === null) {
     return null;
   }
@@ -43,9 +65,6 @@ const uploadImage = async () => {
   const name = fileName.split('.').slice(0, -1).join('.');
   fileName = `${name}${Date.now()}.${extension}`;
 
-  setUploading(true);
-  setTransferred(0);
-
   const storageRef = storage().ref(`photos/${fileName}`);
   const task = storageRef.putFile(image);
 
@@ -53,18 +72,11 @@ const uploadImage = async () => {
     console.log(
       `${taskSnapshot.bytesTransferred} transferred out of ${taskSnapshot.totalBytes}`,
     );
-
-    setTransferred(
-      Math.round(taskSnapshot.bytesTransferred / taskSnapshot.totalBytes) * 100,
-    );
   });
 
   try {
     await task;
     const url = await storageRef.getDownloadURL();
-
-    setUploading(false);
-    setImage(null);
 
     return url;
   } catch (e) {

@@ -1,12 +1,12 @@
-import React, { useState, useContext } from 'react';
-import { StyleSheet, View, Alert, Text, ActivityIndicator } from 'react-native';
+import React, { useState, useEffect, useContext } from 'react';
+import { StyleSheet, View, ActivityIndicator } from 'react-native';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ImagePicker from 'react-native-image-crop-picker';
-import storage from '@react-native-firebase/storage';
-import firestore from '@react-native-firebase/firestore';
+import { connect } from 'react-redux';
 
 import { AuthContext } from '../navigation/AuthProvider';
+import { createPost, submitPost } from '../actions/AddPostActions';
 
 import {
   InputWrapper,
@@ -17,12 +17,10 @@ import {
   StatusWrapper,
 } from '../styles/AddPost';
 
-const AddPostScreen = () => {
+const AddPostScreen = ({ post, image, loading, submitPost, createPost }) => {
   const { user } = useContext(AuthContext);
-  const [image, setImage] = useState(null);
-  const [uploading, setUploading] = useState(false);
-  const [transferred, setTransferred] = useState(0);
-  const [post, setPost] = useState(null);
+  const [imageUrl, setImageUrl] = useState(null);
+  const [postText, setPostText] = useState(null);
 
   const takePhotoFromLibrary = () => {
     ImagePicker.openPicker({
@@ -31,7 +29,7 @@ const AddPostScreen = () => {
       cropping: true,
     }).then(image => {
       console.log(image);
-      setImage(image.path);
+      setImageUrl(image.path);
     });
   };
   const takePhoto = () => {
@@ -40,100 +38,32 @@ const AddPostScreen = () => {
       height: 400,
       cropping: true,
     }).then(image => {
-      setImage(image.path);
+      setImageUrl(image.path);
     });
   };
 
-  const submitPost = async () => {
-    const imageUrl = await uploadImage();
-
-    firestore()
-      .collection('posts')
-      .add({
-        userId: user.uid,
-        post: post,
-        postImg: imageUrl,
-        postTime: firestore.Timestamp.fromDate(new Date()),
-        likes: null,
-        comments: null,
-      })
-      .then(() => {
-        console.log('Post Added!');
-        Alert.alert(
-          'Post published!',
-          'Your post has been published Successfully!',
-        );
-        setPost(null);
-      })
-      .catch(error => {
-        console.log(
-          'Something went wrong with added post to firestore.',
-          error,
-        );
-      });
-  };
-
-  const uploadImage = async () => {
-    if (image === null) {
-      return null;
-    }
-
-    let fileName = image.substring(image.lastIndexOf('/') + 1);
-
-    const extension = fileName.split('.').pop();
-    const name = fileName.split('.').slice(0, -1).join('.');
-    fileName = `${name}${Date.now()}.${extension}`;
-
-    setUploading(true);
-    setTransferred(0);
-
-    const storageRef = storage().ref(`photos/${fileName}`);
-    const task = storageRef.putFile(image);
-
-    task.on('state_changed', taskSnapshot => {
-      console.log(
-        `${taskSnapshot.bytesTransferred} transferred out of ${taskSnapshot.totalBytes}`,
-      );
-
-      setTransferred(
-        Math.round(taskSnapshot.bytesTransferred / taskSnapshot.totalBytes) *
-          100,
-      );
-    });
-
-    try {
-      await task;
-      const url = await storageRef.getDownloadURL();
-
-      setUploading(false);
-      setImage(null);
-
-      return url;
-    } catch (e) {
-      console.log(e);
-      return null;
-    }
-  };
+  useEffect(() => {
+    createPost(postText, imageUrl);
+  }, [postText, imageUrl]);
 
   return (
     <View style={styles.container}>
       <InputWrapper>
-        {image !== null ? <AddImage source={{ uri: image }} /> : null}
+        {image !== null ? <AddImage source={{ uri: imageUrl }} /> : null}
         <InputField
           placeholder="What's on your mind?"
           multiline
           numberOfLines={4}
           value={post}
-          onChangeText={content => setPost(content)}
+          onChangeText={content => setPostText(content)}
         />
-        {uploading ? (
+        {loading ? (
           <StatusWrapper>
-            <Text>{transferred}% status</Text>
-            <ActivityIndicator size="large" color="#fff111" />
+            <ActivityIndicator size="large" color="#123456" />
           </StatusWrapper>
         ) : (
-          <SubmitBtn onPress={submitPost}>
-            <SubmitBtnText>POst</SubmitBtnText>
+          <SubmitBtn onPress={() => submitPost(user, post, image)}>
+            <SubmitBtnText>Post</SubmitBtnText>
           </SubmitBtn>
         )}
       </InputWrapper>
@@ -155,7 +85,18 @@ const AddPostScreen = () => {
   );
 };
 
-export default AddPostScreen;
+const mapStateToProps = ({ addPost }) => ({
+  post: addPost.payload.post,
+  image: addPost.payload.image,
+  loading: addPost.loading,
+});
+
+const mapDispatchToProps = {
+  submitPost,
+  createPost,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(AddPostScreen);
 
 const styles = StyleSheet.create({
   container: {
