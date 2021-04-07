@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { StyleSheet, View, ActivityIndicator } from 'react-native';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -6,7 +6,7 @@ import ImagePicker from 'react-native-image-crop-picker';
 import { connect } from 'react-redux';
 
 import { AuthContext } from '../navigation/AuthProvider';
-import { createPost, submitPost } from '../actions/AddPostActions';
+import { submitPost } from '../actions/AddPostActions';
 
 import {
   InputWrapper,
@@ -17,10 +17,10 @@ import {
   StatusWrapper,
 } from '../styles/AddPost';
 
-const AddPostScreen = ({ post, image, loading, submitPost, createPost }) => {
+const AddPostScreen = ({ loading, submitPost }) => {
   const { user } = useContext(AuthContext);
-  const [imageUrl, setImageUrl] = useState(null);
-  const [postText, setPostText] = useState(null);
+  const [image, setImage] = useState(null);
+  const [post, setPost] = useState(null);
 
   const takePhotoFromLibrary = () => {
     ImagePicker.openPicker({
@@ -29,7 +29,7 @@ const AddPostScreen = ({ post, image, loading, submitPost, createPost }) => {
       cropping: true,
     }).then(image => {
       console.log(image);
-      setImageUrl(image.path);
+      setImage(image.path);
     });
   };
   const takePhoto = () => {
@@ -38,31 +38,33 @@ const AddPostScreen = ({ post, image, loading, submitPost, createPost }) => {
       height: 400,
       cropping: true,
     }).then(image => {
-      setImageUrl(image.path);
+      setImage(image.path);
     });
   };
 
-  useEffect(() => {
-    createPost(postText, imageUrl);
-  }, [postText, imageUrl]);
+  const submit = () => {
+    submitPost(user, post, image);
+    setImage(null);
+    setPost(null);
+  };
 
   return (
     <View style={styles.container}>
       <InputWrapper>
-        {image !== null ? <AddImage source={{ uri: imageUrl }} /> : null}
+        {image !== null ? <AddImage source={{ uri: image }} /> : null}
         <InputField
           placeholder="What's on your mind?"
           multiline
           numberOfLines={4}
           value={post}
-          onChangeText={content => setPostText(content)}
+          onChangeText={setPost}
         />
         {loading ? (
           <StatusWrapper>
             <ActivityIndicator size="large" color="#123456" />
           </StatusWrapper>
         ) : (
-          <SubmitBtn onPress={() => submitPost(user, post, image)}>
+          <SubmitBtn onPress={submit}>
             <SubmitBtnText>Post</SubmitBtnText>
           </SubmitBtn>
         )}
@@ -86,14 +88,11 @@ const AddPostScreen = ({ post, image, loading, submitPost, createPost }) => {
 };
 
 const mapStateToProps = ({ addPost }) => ({
-  post: addPost.payload.post,
-  image: addPost.payload.image,
   loading: addPost.loading,
 });
 
 const mapDispatchToProps = {
   submitPost,
-  createPost,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddPostScreen);

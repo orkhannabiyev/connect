@@ -6,21 +6,10 @@ export const POST_LOADING = 'LOADING';
 export const POST_SUCCESS = 'SUCCESS';
 export const POST_ERROR = 'ERROR';
 
-export const CREATE_POST = 'CREATE_POST';
-export const createPost = (postText, imageUrl) => dispatch => {
-  dispatch({
-    type: CREATE_POST,
-    payload: {
-      post: postText,
-      image: imageUrl,
-    },
-  });
-};
-
 export const submitPost = (user, post, image) => async dispatch => {
-  console.log('submitPost');
   // dispatch({
   //   type: POST_LOADING,
+  //   loading: true,
   // });
 
   const imageUrl = await uploadImage(image);
@@ -43,14 +32,15 @@ export const submitPost = (user, post, image) => async dispatch => {
       );
       dispatch({
         type: POST_SUCCESS,
-        payload: {
-          post: null,
-          image: null,
-        },
+        loading: false,
       });
     })
     .catch(error => {
       console.log('Something went wrong with added post to firestore.', error);
+      dispatch({
+        type: POST_ERROR,
+        loading: false,
+      });
     });
 };
 

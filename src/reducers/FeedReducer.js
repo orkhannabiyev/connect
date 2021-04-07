@@ -2,18 +2,18 @@ import {
   GET_POSTS,
   DELETE_POST,
   POSTS_FAILED,
-  LOADING,
+  POSTS_LOADING,
 } from '../actions/FeedActions';
 
 const initState = {
   posts: [],
-  loading: true,
+  loading: false,
   deleted: false,
 };
 
 export default (state = initState, action) => {
   switch (action.type) {
-    case LOADING:
+    case POSTS_LOADING:
       return {
         ...state,
         loading: true,
