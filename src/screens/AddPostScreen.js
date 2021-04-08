@@ -27,19 +27,27 @@ const AddPostScreen = ({ loading, submitPost }) => {
       width: 300,
       height: 400,
       cropping: true,
-    }).then(image => {
-      console.log(image);
-      setImage(image.path);
-    });
+    })
+      .then(image => {
+        console.log(image);
+        setImage(image.path);
+      })
+      .catch(err => {
+        console.log('err', err);
+      });
   };
   const takePhoto = () => {
     ImagePicker.openCamera({
       width: 300,
       height: 400,
       cropping: true,
-    }).then(image => {
-      setImage(image.path);
-    });
+    })
+      .then(image => {
+        setImage(image.path);
+      })
+      .catch(err => {
+        console.log('err', err);
+      });
   };
 
   const submit = () => {

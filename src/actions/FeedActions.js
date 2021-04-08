@@ -83,7 +83,6 @@ export const deletePost = postId => {
                 deleteFirestoreData(postId);
                 dispatch({
                   type: DELETE_POST,
-                  payload: true,
                 });
               })
               .catch(e => {
@@ -93,7 +92,6 @@ export const deletePost = postId => {
             deleteFirestoreData(postId);
             dispatch({
               type: DELETE_POST,
-              payload: true,
             });
           }
         }
