@@ -26,10 +26,8 @@ import { AuthContext } from '../navigation/AuthProvider';
 import { FormButton } from '../components';
 
 const EditProfileScreen = ({ route }) => {
-  const { user, logout } = useContext(AuthContext);
+  const { user } = useContext(AuthContext);
   const [image, setImage] = useState(null);
-  const [uploading, setUploading] = useState(false);
-  const [transferred, setTransferred] = useState(0);
   const [userData, setUserData] = useState(null);
 
   const getUser = async () => {
@@ -92,20 +90,12 @@ const EditProfileScreen = ({ route }) => {
     const name = filename.split('.').slice(0, -1).join('.');
     filename = name + Date.now() + '.' + extension;
 
-    setUploading(true);
-    setTransferred(0);
-
     const storageRef = storage().ref(`photos/${filename}`);
     const task = storageRef.putFile(uploadUri);
 
     task.on('state_changed', taskSnapshot => {
       console.log(
         `${taskSnapshot.bytesTransferred} transferred out of ${taskSnapshot.totalBytes}`,
-      );
-
-      setTransferred(
-        Math.round(taskSnapshot.bytesTransferred / taskSnapshot.totalBytes) *
-          100,
       );
     });
 
@@ -114,7 +104,6 @@ const EditProfileScreen = ({ route }) => {
 
       const url = await storageRef.getDownloadURL();
 
-      setUploading(false);
       setImage(null);
       return url;
     } catch (e) {
@@ -191,8 +180,6 @@ const EditProfileScreen = ({ route }) => {
 
   const bs = React.createRef();
   const fall = new Animated.Value(1);
-  console.log('BS', bs);
-  console.log('fall', fall);
 
   return (
     <View style={styles.container}>
