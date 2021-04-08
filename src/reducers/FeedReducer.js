@@ -28,7 +28,7 @@ export default (state = initState, action) => {
     case DELETE_POST:
       return {
         ...state,
-        deleted: action.payload,
+        deleted: true,
         loading: true,
       };
     case POSTS_FAILED:
