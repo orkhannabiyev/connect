@@ -9,6 +9,7 @@ import {
 
 import { AuthContext } from '../navigation/AuthProvider';
 import { FormButton, FormInput, SocialButton } from '../components';
+import { Color } from '../utils/Color';
 
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState();
@@ -53,16 +54,16 @@ const LoginScreen = ({ navigation }) => {
         buttonTitle="Sign in with Facebook"
         onPress={() => fbLogin()}
         btnType="facebook"
-        color="#1152df"
-        backgroundColor="#aaaaaa"
+        color={Color.fb}
+        backgroundColor={Color.fbBackground}
       />
 
       <SocialButton
         buttonTitle="Sign in with Google"
         onPress={() => googleLogin()}
         btnType="google"
-        color="#f90606"
-        backgroundColor="#a8a8a8"
+        color={Color.google}
+        backgroundColor={Color.googleBackground}
       />
 
       <TouchableOpacity

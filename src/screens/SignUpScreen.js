@@ -9,6 +9,7 @@ import {
 import { FormButton, FormInput, SocialButton } from '../components';
 
 import { AuthContext } from '../navigation/AuthProvider';
+import { Color } from '../utils/Color';
 
 const SignUpScreen = ({ navigation }) => {
   const [email, setEmail] = useState();
@@ -22,9 +23,9 @@ const SignUpScreen = ({ navigation }) => {
       <Text style={styles.text}>Create an account</Text>
 
       <FormInput
-        labelValue={email}
+        value={email}
         onChangeText={userEmail => setEmail(userEmail)}
-        placeholderText="Email"
+        placeholder="Email"
         iconType="user"
         keyboardType="email-address"
         autoCapitalize="none"
@@ -32,17 +33,17 @@ const SignUpScreen = ({ navigation }) => {
       />
 
       <FormInput
-        labelValue={password}
+        value={password}
         onChangeText={userPassword => setPassword(userPassword)}
-        placeholderText="Password"
+        placeholder="Password"
         iconType="lock"
         secureTextEntry={true}
       />
 
       <FormInput
-        labelValue={confirmPassword}
+        value={confirmPassword}
         onChangeText={userPassword => setConfirmPassword(userPassword)}
-        placeholderText="Confirm Password"
+        placeholder="Confirm Password"
         iconType="lock"
         secureTextEntry={true}
       />
@@ -56,7 +57,7 @@ const SignUpScreen = ({ navigation }) => {
         <Text style={styles.color_textPrivate}>
           By registering, you confirm that you accept our{' '}
         </Text>
-        <TouchableOpacity onPress={() => alert('Terms Clicked!')}>
+        <TouchableOpacity onPress={() => {}}>
           <Text style={[styles.color_textPrivate, { color: '#e88832' }]}>
             Terms of service
           </Text>
@@ -72,16 +73,16 @@ const SignUpScreen = ({ navigation }) => {
           <SocialButton
             buttonTitle="Sign Up with Facebook"
             btnType="facebook"
-            color="#4867aa"
-            backgroundColor="#e6eaf4"
+            color={Color.fb}
+            backgroundColor={Color.fbBackground}
             onPress={() => {}}
           />
 
           <SocialButton
             buttonTitle="Sign Up with Google"
             btnType="google"
-            color="#de4d41"
-            backgroundColor="#f5e7ea"
+            color={Color.google}
+            backgroundColor={Color.googleBackground}
             onPress={() => {}}
           />
         </View>
