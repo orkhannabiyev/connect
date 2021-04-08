@@ -32,7 +32,6 @@ const EditProfileScreen = ({ route }) => {
   const [userData, setUserData] = useState(null);
 
   const getUser = async () => {
-    console.log('USER', user);
     await firestore()
       .collection('users')
       .doc(user.uid)
