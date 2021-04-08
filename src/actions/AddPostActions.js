@@ -2,15 +2,14 @@ import { Alert } from 'react-native';
 import storage from '@react-native-firebase/storage';
 import firestore from '@react-native-firebase/firestore';
 
-export const POST_LOADING = 'LOADING';
-export const POST_SUCCESS = 'SUCCESS';
-export const POST_ERROR = 'ERROR';
+export const POST_LOADING = 'POST_LOADING';
+export const POST_SUCCESS = 'POST_SUCCESS';
+export const POST_ERROR = 'POST_ERROR';
 
 export const submitPost = (user, post, image) => async dispatch => {
-  // dispatch({
-  //   type: POST_LOADING,
-  //   loading: true,
-  // });
+  dispatch({
+    type: POST_LOADING,
+  });
 
   const imageUrl = await uploadImage(image);
 
@@ -32,14 +31,12 @@ export const submitPost = (user, post, image) => async dispatch => {
       );
       dispatch({
         type: POST_SUCCESS,
-        loading: false,
       });
     })
     .catch(error => {
       console.log('Something went wrong with added post to firestore.', error);
       dispatch({
         type: POST_ERROR,
-        loading: false,
       });
     });
 };

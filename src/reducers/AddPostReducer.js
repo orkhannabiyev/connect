@@ -9,22 +9,21 @@ const initState = {
 };
 
 export default (state = initState, action) => {
-  console.log('ADD POST STATE: ', state);
   switch (action.type) {
     case POST_LOADING:
       return {
         ...state,
-        loading: action.loading,
+        loading: true,
       };
     case POST_SUCCESS:
       return {
         ...state,
-        loading: action.loading,
+        loading: false,
       };
     case POST_ERROR:
       return {
         ...state,
-        loading: action.loading,
+        loading: false,
       };
     default:
       return state;

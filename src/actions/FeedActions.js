@@ -2,7 +2,7 @@ import { Alert } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 
-export const POSTS_LOADING = 'LOADING';
+export const POSTS_LOADING = 'POSTS_LOADING';
 export const GET_POSTS = 'GET_POSTS';
 export const POSTS_FAILED = 'POSTS_FAILED';
 export const DELETE_POST = 'DELETE_POST';
