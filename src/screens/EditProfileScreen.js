@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Alert,
   Platform,
+  KeyboardAvoidingView,
 } from 'react-native';
 
 import firestore from '@react-native-firebase/firestore';
@@ -182,7 +183,10 @@ const EditProfileScreen = ({ route }) => {
   const fall = new Animated.Value(1);
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView
+      behavior="position"
+      keyboardVerticalOffset={100}
+      style={styles.container}>
       <BottomSheet
         ref={bs}
         snapPoints={[330, -5]}
@@ -323,7 +327,7 @@ const EditProfileScreen = ({ route }) => {
         </View>
         <FormButton buttonTitle="Update" onPress={handleUpdate} />
       </Animated.View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 

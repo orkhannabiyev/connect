@@ -1,5 +1,9 @@
 import React, { useState, useContext } from 'react';
-import { StyleSheet, View, ActivityIndicator } from 'react-native';
+import {
+  StyleSheet,
+  ActivityIndicator,
+  KeyboardAvoidingView,
+} from 'react-native';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -57,7 +61,7 @@ const AddPostScreen = ({ loading, submitPost }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <KeyboardAvoidingView keyboardVerticalOffset={100} style={styles.container}>
       <InputWrapper>
         {image !== null ? <AddImage source={{ uri: image }} /> : null}
         <InputField
@@ -91,7 +95,7 @@ const AddPostScreen = ({ loading, submitPost }) => {
           <Icon name="md-notifications-off" style={styles.actionButtonIcon} />
         </ActionButton.Item>
       </ActionButton>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
