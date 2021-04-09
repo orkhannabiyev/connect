@@ -16,7 +16,7 @@ export { FormButton };
 const styles = StyleSheet.create({
   buttonContainer: {
     width: '100%',
-    height: '7.5%',
+    height: '9%',
     backgroundColor: '#2e64e5',
     alignItems: 'center',
     justifyContent: 'center',

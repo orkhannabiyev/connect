@@ -1,4 +1,9 @@
-import { USER_LOADING, USER_SUCCESS, USER_ERROR } from '../actions/UserActions';
+import {
+  USER_LOADING,
+  USER_SUCCESS,
+  USER_DOES_NOT_EXIST,
+  USER_ERROR,
+} from '../actions/UserActions';
 
 const initState = {
   profile: {},
@@ -6,7 +11,6 @@ const initState = {
 };
 
 export default (state = initState, action) => {
-  // console.log('USER REDUCER', action.payload);
   switch (action.type) {
     case USER_LOADING:
       return {
@@ -17,6 +21,11 @@ export default (state = initState, action) => {
       return {
         ...state,
         data: action.payload,
+        loading: false,
+      };
+    case USER_DOES_NOT_EXIST:
+      return {
+        ...state,
         loading: false,
       };
     case USER_ERROR:

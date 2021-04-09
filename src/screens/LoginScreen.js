@@ -5,6 +5,7 @@ import {
   StyleSheet,
   Image,
   TouchableOpacity,
+  KeyboardAvoidingView,
 } from 'react-native';
 
 import { AuthContext } from '../navigation/AuthProvider';
@@ -18,61 +19,65 @@ const LoginScreen = ({ navigation }) => {
   const { login, googleLogin, fbLogin } = useContext(AuthContext);
 
   return (
-    <ScrollView contentContainerStyle={styles.container}>
-      <Image
-        source={require('../assets/rn-social-logo.png')}
-        style={styles.logo}
-      />
-      <Text style={styles.text}>Connect</Text>
-      <FormInput
-        value={email}
-        onChangeText={userEmail => setEmail(userEmail)}
-        placeholder="Email"
-        iconType="user"
-        keyboardType="email-address"
-        autoCapitalize="none"
-        autoCorrect={false}
-      />
-      <FormInput
-        value={password}
-        onChangeText={userPassword => setPassword(userPassword)}
-        placeholder="Password"
-        iconType="lock"
-        secureTextEntry={true}
-      />
+    <ScrollView>
+      <KeyboardAvoidingView
+        keyboardVerticalOffset={100}
+        style={styles.container}>
+        <Image
+          source={require('../assets/rn-social-logo.png')}
+          style={styles.logo}
+        />
+        <Text style={styles.text}>Connect</Text>
+        <FormInput
+          value={email}
+          onChangeText={userEmail => setEmail(userEmail)}
+          placeholder="Email"
+          iconType="user"
+          keyboardType="email-address"
+          autoCapitalize="none"
+          autoCorrect={false}
+        />
+        <FormInput
+          value={password}
+          onChangeText={userPassword => setPassword(userPassword)}
+          placeholder="Password"
+          iconType="lock"
+          secureTextEntry={true}
+        />
 
-      <FormButton
-        buttonTitle="Sign In"
-        onPress={() => login(email, password)}
-      />
+        <FormButton
+          buttonTitle="Sign In"
+          onPress={() => login(email, password)}
+        />
 
-      <TouchableOpacity style={styles.forgotButton} onPress={() => {}}>
+        {/* <TouchableOpacity style={styles.forgotButton} onPress={() => {}}>
         <Text style={styles.navButtonText}>Forgot Password</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
-      <SocialButton
-        buttonTitle="Sign in with Facebook"
-        onPress={() => fbLogin()}
-        btnType="facebook"
-        color={Color.fb}
-        backgroundColor={Color.fbBackground}
-      />
+        <SocialButton
+          buttonTitle="Sign in with Facebook"
+          onPress={() => fbLogin()}
+          btnType="facebook"
+          color={Color.fb}
+          backgroundColor={Color.fbBackground}
+        />
 
-      <SocialButton
-        buttonTitle="Sign in with Google"
-        onPress={() => googleLogin()}
-        btnType="google"
-        color={Color.google}
-        backgroundColor={Color.googleBackground}
-      />
+        <SocialButton
+          buttonTitle="Sign in with Google"
+          onPress={() => googleLogin()}
+          btnType="google"
+          color={Color.google}
+          backgroundColor={Color.googleBackground}
+        />
 
-      <TouchableOpacity
-        style={styles.forgotButton}
-        onPress={() => navigation.navigate('SignUp')}>
-        <Text style={styles.navButtonText}>
-          Dont have an account? Create here
-        </Text>
-      </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.forgotButton}
+          onPress={() => navigation.navigate('SignUp')}>
+          <Text style={styles.navButtonText}>
+            Dont have an account? Create here
+          </Text>
+        </TouchableOpacity>
+      </KeyboardAvoidingView>
     </ScrollView>
   );
 };
