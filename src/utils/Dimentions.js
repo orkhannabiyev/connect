@@ -1,3 +1,7 @@
 import { Dimensions } from 'react-native';
-export const windowWidth = Dimensions.get('window').width;
-export const windowHeight = Dimensions.get('window').height;
+
+export const { width, height } = Dimensions.get('window');
+
+export function totalSize(number) {
+  return (Math.sqrt(height * height + width * width) * number) / 100;
+}

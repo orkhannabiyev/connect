@@ -2,8 +2,6 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-import { windowHeight } from '../utils/Dimentions';
-
 const SocialButton = ({
   buttonTitle,
   btnType,
@@ -37,7 +35,7 @@ const styles = StyleSheet.create({
   buttonContainer: {
     marginTop: 10,
     width: '100%',
-    height: windowHeight / 15,
+    height: '7%',
     padding: 10,
     flexDirection: 'row',
     borderRadius: 3,
