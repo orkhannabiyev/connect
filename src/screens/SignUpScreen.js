@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import {
   View,
   Text,
@@ -7,17 +7,16 @@ import {
   KeyboardAvoidingView,
   ScrollView,
 } from 'react-native';
-import { FormButton, FormInput } from '../components';
+import { connect } from 'react-redux';
 
-import { AuthContext } from '../navigation/AuthProvider';
+import { FormButton, FormInput } from '../components';
+import { register } from '../actions/AuthActions';
 import { totalSize } from '../utils/Dimentions';
 
-const SignUpScreen = ({ navigation }) => {
+const SignUpScreen = ({ navigation, register }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [confirmPassword, setConfirmPassword] = useState();
-
-  const { register } = useContext(AuthContext);
 
   return (
     <ScrollView>
@@ -82,7 +81,11 @@ const SignUpScreen = ({ navigation }) => {
   );
 };
 
-export default SignUpScreen;
+const mapDispatchToProps = {
+  register,
+};
+
+export default connect(() => ({}), mapDispatchToProps)(SignUpScreen);
 
 const styles = StyleSheet.create({
   container: {

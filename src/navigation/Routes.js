@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 
 import AuthStack from './AuthStack';
 import AppStack from './AppStack';
-// import { AuthContext } from './AuthProvider';
 
 const Routes = ({ user, loading }) => {
   if (loading) return null;

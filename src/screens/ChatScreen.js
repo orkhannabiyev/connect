@@ -1,13 +1,8 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
-import { AuthContext } from '../navigation/AuthProvider';
-import { FormButton } from '../components';
-
 const ChatScreen = () => {
-  const { user, logout } = useContext(AuthContext);
-
   return (
     <View style={styles.container}>
       <SkeletonPlaceholder>

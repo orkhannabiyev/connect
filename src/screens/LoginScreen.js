@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import {
   ScrollView,
   Text,
@@ -9,16 +9,13 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 
-import { login } from '../actions/AuthActions';
-import { AuthContext } from '../navigation/AuthProvider';
+import { login, fbLogin, googleLogin } from '../actions/AuthActions';
 import { FormButton, FormInput, SocialButton } from '../components';
 import { Color } from '../utils/Color';
 
-const LoginScreen = ({ navigation, login }) => {
+const LoginScreen = ({ navigation, login, googleLogin, fbLogin }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-
-  const { googleLogin, fbLogin } = useContext(AuthContext);
 
   return (
     <ScrollView>
@@ -84,13 +81,13 @@ const LoginScreen = ({ navigation, login }) => {
   );
 };
 
-const mapStateToProps = ({}) => ({});
-
 const mapDispatchToProps = {
   login,
+  fbLogin,
+  googleLogin,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);
+export default connect(() => ({}), mapDispatchToProps)(LoginScreen);
 
 const styles = StyleSheet.create({
   container: {

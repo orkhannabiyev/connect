@@ -1,13 +1,11 @@
 import {
-  LOG_IN_LOADING,
+  AUTH_LOADING,
   LOG_IN_SUCCESS,
-  LOG_IN_ERROR,
-  SIGN_UP_LOADING,
   SIGN_UP_SUCCESS,
-  SIGN_UP_ERROR,
-  LOG_OUT_LOADING,
+  GOOGLE_LOGIN_SUCCESS,
+  FB_LOGIN_SUCCESS,
   LOG_OUT_SUCCESS,
-  LOG_OUT_ERROR,
+  AUTH_ERROR,
 } from '../actions/AuthActions';
 
 const initState = {
@@ -17,7 +15,7 @@ const initState = {
 
 export default (state = initState, action) => {
   switch (action.type) {
-    case LOG_IN_LOADING:
+    case AUTH_LOADING:
       return {
         ...state,
         loading: true,
@@ -28,31 +26,23 @@ export default (state = initState, action) => {
         user: action.payload,
         loading: false,
       };
-    case LOG_IN_ERROR:
-      return {
-        ...state,
-        loading: false,
-      };
-    case SIGN_UP_LOADING:
-      return {
-        ...state,
-        loading: true,
-      };
     case SIGN_UP_SUCCESS:
       return {
         ...state,
         user: action.payload,
         loading: false,
       };
-    case SIGN_UP_ERROR:
+    case GOOGLE_LOGIN_SUCCESS:
       return {
         ...state,
+        user: action.payload,
         loading: false,
       };
-    case LOG_OUT_LOADING:
+    case FB_LOGIN_SUCCESS:
       return {
         ...state,
-        loading: true,
+        user: action.payload,
+        loading: false,
       };
     case LOG_OUT_SUCCESS:
       return {
@@ -60,7 +50,7 @@ export default (state = initState, action) => {
         user: action.payload,
         loading: false,
       };
-    case LOG_OUT_ERROR:
+    case AUTH_ERROR:
       return {
         ...state,
         loading: false,
