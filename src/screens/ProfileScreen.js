@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 import { PostCard } from '../components';
 import { selfPosts } from '../actions/SelfPostsAction';
 import { logout } from '../actions/AuthActions';
-import { getUser } from '../actions/UserActions';
+import { getUser, removeUser } from '../actions/UserActions';
 
 const ProfileScreen = ({
   user,
@@ -26,11 +26,17 @@ const ProfileScreen = ({
   postsLoading,
   selfPosts,
   logout,
+  removeUser,
 }) => {
   useEffect(() => {
     getUser(route, user);
     selfPosts(route, user);
   }, []);
+
+  const onLogout = () => {
+    logout();
+    removeUser();
+  };
 
   const refresh = () => {
     getUser(route, user);
@@ -75,7 +81,7 @@ const ProfileScreen = ({
                 }}>
                 <Text style={styles.userBtnTxt}>Edit</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.userBtn} onPress={logout}>
+              <TouchableOpacity style={styles.userBtn} onPress={onLogout}>
                 <Text style={styles.userBtnTxt}>Logout</Text>
               </TouchableOpacity>
             </>
@@ -135,6 +141,7 @@ const mapDispatchToProps = {
   selfPosts,
   getUser,
   logout,
+  removeUser,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileScreen);

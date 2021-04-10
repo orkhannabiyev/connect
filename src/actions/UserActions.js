@@ -39,6 +39,6 @@ export const removeUser = () => {
   return dispatch =>
     dispatch({
       type: REMOVE_USER,
-      payload: {},
+      payload: null,
     });
 };

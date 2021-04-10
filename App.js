@@ -4,7 +4,7 @@ import { createStore, applyMiddleware } from 'redux';
 import ReduxThunk from 'redux-thunk';
 import RNBootSplash from 'react-native-bootsplash';
 
-import Providers from './src/navigation';
+import Routes from './src/navigation';
 import reducers from './src/reducers/reducers';
 
 const store = createStore(reducers, applyMiddleware(ReduxThunk));
@@ -22,7 +22,7 @@ const App = () => {
   }, []);
   return (
     <Provider store={store}>
-      <Providers />
+      <Routes />
     </Provider>
   );
 };
