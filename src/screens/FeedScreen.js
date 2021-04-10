@@ -13,6 +13,7 @@ const FeedScreen = ({
   posts,
   loading,
   deleted,
+  user,
 }) => {
   useEffect(() => {
     getPosts();
@@ -48,6 +49,7 @@ const FeedScreen = ({
             renderItem={({ item }) => (
               <PostCard
                 item={item}
+                user={user}
                 onDelete={handleDelete}
                 onPress={() =>
                   navigation.navigate('Profile', { userId: item.userId })
@@ -65,10 +67,11 @@ const FeedScreen = ({
   );
 };
 
-const mapStateToProps = ({ feed }) => ({
+const mapStateToProps = ({ feed, auth }) => ({
   posts: feed.posts,
   loading: feed.loading,
   deleted: feed.deleted,
+  user: auth.user.user,
 });
 
 const mapDispatchToProps = {

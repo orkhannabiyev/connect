@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import {
   StyleSheet,
   ActivityIndicator,
@@ -9,7 +9,6 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import ImagePicker from 'react-native-image-crop-picker';
 import { connect } from 'react-redux';
 
-import { AuthContext } from '../navigation/AuthProvider';
 import { submitPost } from '../actions/AddPostActions';
 
 import {
@@ -21,8 +20,7 @@ import {
   StatusWrapper,
 } from '../styles/AddPost';
 
-const AddPostScreen = ({ loading, submitPost }) => {
-  const { user } = useContext(AuthContext);
+const AddPostScreen = ({ loading, submitPost, user }) => {
   const [image, setImage] = useState(null);
   const [post, setPost] = useState(null);
 
@@ -99,8 +97,9 @@ const AddPostScreen = ({ loading, submitPost }) => {
   );
 };
 
-const mapStateToProps = ({ addPost }) => ({
+const mapStateToProps = ({ addPost, auth }) => ({
   loading: addPost.loading,
+  user: auth.user.user,
 });
 
 const mapDispatchToProps = {

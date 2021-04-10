@@ -7,16 +7,18 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
 } from 'react-native';
+import { connect } from 'react-redux';
 
+import { login } from '../actions/AuthActions';
 import { AuthContext } from '../navigation/AuthProvider';
 import { FormButton, FormInput, SocialButton } from '../components';
 import { Color } from '../utils/Color';
 
-const LoginScreen = ({ navigation }) => {
+const LoginScreen = ({ navigation, login }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
 
-  const { login, googleLogin, fbLogin } = useContext(AuthContext);
+  const { googleLogin, fbLogin } = useContext(AuthContext);
 
   return (
     <ScrollView>
@@ -82,7 +84,13 @@ const LoginScreen = ({ navigation }) => {
   );
 };
 
-export default LoginScreen;
+const mapStateToProps = ({}) => ({});
+
+const mapDispatchToProps = {
+  login,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen);
 
 const styles = StyleSheet.create({
   container: {

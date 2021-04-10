@@ -17,11 +17,9 @@ import {
   Interaction,
   InteractionText,
 } from '../styles/FeedStyles';
-import { AuthContext } from '../navigation/AuthProvider';
 import ProgressiveImage from './ProgressiveImage';
 
-const PostCard = ({ item, onDelete, onPress }) => {
-  const { user } = useContext(AuthContext);
+const PostCard = ({ item, user, onDelete, onPress }) => {
   const likeIcon = item.liked ? 'heart' : 'heart-outline';
   const likeIconColor = item.liked ? '#2e64e5' : '#fff';
 

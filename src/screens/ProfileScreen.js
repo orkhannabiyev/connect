@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect } from 'react';
 import {
   View,
   Text,
@@ -10,24 +10,23 @@ import {
   FlatList,
 } from 'react-native';
 import { connect } from 'react-redux';
-import { AuthContext } from '../navigation/AuthProvider';
 import { PostCard } from '../components';
 import { selfPosts } from '../actions/SelfPostsAction';
-import { getUser, removeUser } from '../actions/UserActions';
+import { logout } from '../actions/AuthActions';
+import { getUser } from '../actions/UserActions';
 
 const ProfileScreen = ({
+  user,
   route,
   navigation,
   userData,
   userLoading,
   getUser,
-  removeUser,
   posts,
   postsLoading,
   selfPosts,
+  logout,
 }) => {
-  const { user, logout } = useContext(AuthContext);
-
   useEffect(() => {
     getUser(route, user);
     selfPosts(route, user);
@@ -36,11 +35,6 @@ const ProfileScreen = ({
   const refresh = () => {
     getUser(route, user);
     selfPosts(route, user);
-  };
-
-  const onLogout = () => {
-    logout();
-    removeUser();
   };
 
   const scroll = () => {
@@ -59,7 +53,6 @@ const ProfileScreen = ({
           {userData ? userData.fname || 'Test' : 'Test'}{' '}
           {userData ? userData.lname || 'User' : 'User'}
         </Text>
-        {/* <Text>{route.params ? route.params.userId : user.uid}</Text> */}
         <Text style={styles.aboutUser}>
           {userData ? userData.about || 'No details added.' : ''}
         </Text>
@@ -82,7 +75,7 @@ const ProfileScreen = ({
                 }}>
                 <Text style={styles.userBtnTxt}>Edit</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.userBtn} onPress={onLogout}>
+              <TouchableOpacity style={styles.userBtn} onPress={logout}>
                 <Text style={styles.userBtnTxt}>Logout</Text>
               </TouchableOpacity>
             </>
@@ -117,7 +110,7 @@ const ProfileScreen = ({
         <FlatList
           data={posts}
           renderItem={({ item }) => (
-            <PostCard item={item} onDelete={handleDelete} />
+            <PostCard item={item} user={user} onDelete={handleDelete} />
           )}
           keyExtractor={item => item.id}
           showsVerticalScrollIndicator={false}
@@ -130,7 +123,8 @@ const ProfileScreen = ({
   );
 };
 
-const mapStateToProps = ({ selfposts, user }) => ({
+const mapStateToProps = ({ auth, selfposts, user }) => ({
+  user: auth.user.user,
   posts: selfposts.posts,
   postsLoading: selfposts.loading,
   userData: user.data,
@@ -140,7 +134,7 @@ const mapStateToProps = ({ selfposts, user }) => ({
 const mapDispatchToProps = {
   selfPosts,
   getUser,
-  removeUser,
+  logout,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileScreen);

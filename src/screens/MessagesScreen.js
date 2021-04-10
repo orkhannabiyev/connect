@@ -1,21 +1,28 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
-import { AuthContext } from '../navigation/AuthProvider';
 import { FormButton } from '../components';
+import { connect } from 'react-redux';
+import { logout } from '../actions/AuthActions';
 
-const MessagesScreen = () => {
-  const { user, logout } = useContext(AuthContext);
-
+const MessagesScreen = ({ user, logout }) => {
   return (
     <View style={styles.container}>
       <Text>Welcome {user.uid}</Text>
-      <FormButton buttonTitle="Log Out" onPress={() => logout()} />
+      <FormButton buttonTitle="Log Out" onPress={logout} />
     </View>
   );
 };
 
-export default MessagesScreen;
+const mapStateToProps = ({ auth }) => ({
+  user: auth.user.user,
+});
+
+const mapDispatchToProps = {
+  logout,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MessagesScreen);
 
 const styles = StyleSheet.create({
   container: {

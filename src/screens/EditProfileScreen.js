@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -10,6 +10,7 @@ import {
   Platform,
   KeyboardAvoidingView,
 } from 'react-native';
+import { connect } from 'react-redux';
 
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
@@ -23,11 +24,9 @@ import Animated from 'react-native-reanimated';
 import BottomSheet from 'reanimated-bottom-sheet';
 import ImagePicker from 'react-native-image-crop-picker';
 
-import { AuthContext } from '../navigation/AuthProvider';
 import { FormButton } from '../components';
 
-const EditProfileScreen = ({ route }) => {
-  const { user } = useContext(AuthContext);
+const EditProfileScreen = ({ user }) => {
   const [image, setImage] = useState(null);
   const [userData, setUserData] = useState(null);
 
@@ -38,7 +37,6 @@ const EditProfileScreen = ({ route }) => {
       .get()
       .then(documentSnapshot => {
         if (documentSnapshot.exists) {
-          console.log('User Data', documentSnapshot.data());
           setUserData(documentSnapshot.data());
         }
       })
@@ -330,7 +328,13 @@ const EditProfileScreen = ({ route }) => {
   );
 };
 
-export default EditProfileScreen;
+const mapStateToProps = ({ auth }) => ({
+  user: auth.user.user,
+});
+
+const mapDispatchToProps = {};
+
+export default connect(mapStateToProps, mapDispatchToProps)(EditProfileScreen);
 
 const styles = StyleSheet.create({
   container: {

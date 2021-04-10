@@ -2,13 +2,13 @@ import React from 'react';
 import { View, StyleSheet, TextInput } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const FormInput = ({ iconType, ...rest }) => {
+const FormInput = ({ iconType, placeholder, ...rest }) => {
   return (
     <View style={styles.inputContainer}>
       <View style={styles.iconStyle}>
         <Icon name={iconType} size={25} color="#666" />
       </View>
-      <TextInput style={styles.input} {...rest} />
+      <TextInput style={styles.input} placeholder={placeholder} {...rest} />
     </View>
   );
 };
