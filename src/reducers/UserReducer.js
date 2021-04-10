@@ -2,11 +2,12 @@ import {
   USER_LOADING,
   USER_SUCCESS,
   USER_DOES_NOT_EXIST,
+  REMOVE_USER,
   USER_ERROR,
 } from '../actions/UserActions';
 
 const initState = {
-  profile: {},
+  data: {},
   loading: false,
 };
 
@@ -26,6 +27,12 @@ export default (state = initState, action) => {
     case USER_DOES_NOT_EXIST:
       return {
         ...state,
+        loading: false,
+      };
+    case REMOVE_USER:
+      return {
+        ...state,
+        data: action.payload,
         loading: false,
       };
     case USER_ERROR:

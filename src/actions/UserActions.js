@@ -33,3 +33,12 @@ export const getUser = (route, user) => {
       });
   };
 };
+
+export const REMOVE_USER = 'REMOVE_USER';
+export const removeUser = () => {
+  return dispatch =>
+    dispatch({
+      type: REMOVE_USER,
+      payload: {},
+    });
+};

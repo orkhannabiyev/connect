@@ -13,7 +13,7 @@ import { connect } from 'react-redux';
 import { AuthContext } from '../navigation/AuthProvider';
 import { PostCard } from '../components';
 import { selfPosts } from '../actions/SelfPostsAction';
-import { getUser } from '../actions/UserActions';
+import { getUser, removeUser } from '../actions/UserActions';
 
 const ProfileScreen = ({
   route,
@@ -21,6 +21,7 @@ const ProfileScreen = ({
   userData,
   userLoading,
   getUser,
+  removeUser,
   posts,
   postsLoading,
   selfPosts,
@@ -35,6 +36,11 @@ const ProfileScreen = ({
   const refresh = () => {
     getUser(route, user);
     selfPosts(route, user);
+  };
+
+  const onLogout = () => {
+    logout();
+    removeUser();
   };
 
   const scroll = () => {
@@ -76,7 +82,7 @@ const ProfileScreen = ({
                 }}>
                 <Text style={styles.userBtnTxt}>Edit</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.userBtn} onPress={() => logout()}>
+              <TouchableOpacity style={styles.userBtn} onPress={onLogout}>
                 <Text style={styles.userBtnTxt}>Logout</Text>
               </TouchableOpacity>
             </>
@@ -134,6 +140,7 @@ const mapStateToProps = ({ selfposts, user }) => ({
 const mapDispatchToProps = {
   selfPosts,
   getUser,
+  removeUser,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileScreen);
