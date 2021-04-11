@@ -6,112 +6,27 @@ import {
   ImageBackground,
   TextInput,
   StyleSheet,
-  Alert,
   Platform,
   KeyboardAvoidingView,
 } from 'react-native';
 import { connect } from 'react-redux';
-
-import firestore from '@react-native-firebase/firestore';
-import storage from '@react-native-firebase/storage';
-
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-
 import Animated from 'react-native-reanimated';
 import BottomSheet from 'reanimated-bottom-sheet';
 import ImagePicker from 'react-native-image-crop-picker';
 
 import { FormButton } from '../components';
+import { handleUpdate } from '../actions/UserActions';
 
-const EditProfileScreen = ({ user }) => {
+const EditProfileScreen = ({ user, userUid }) => {
   const [image, setImage] = useState(null);
   const [userData, setUserData] = useState(null);
 
-  const getUser = async () => {
-    await firestore()
-      .collection('users')
-      .doc(user.uid)
-      .get()
-      .then(documentSnapshot => {
-        if (documentSnapshot.exists) {
-          setUserData(documentSnapshot.data());
-        }
-      })
-      .catch(error => {
-        console.log('ERROR', error);
-      });
-  };
-
-  const handleUpdate = async () => {
-    console.log('userData', userData);
-    let imgUrl = await uploadImage();
-
-    if (imgUrl == null && userData.userImg) {
-      imgUrl = userData.userImg;
-    }
-
-    firestore()
-      .collection('users')
-      .doc(user.uid)
-      .set({
-        fname: userData.fname,
-        lname: userData.lname,
-        about: userData.about,
-        phone: userData.phone,
-        country: userData.country,
-        city: userData.city,
-        userImg: imgUrl,
-      })
-      .then(() => {
-        console.log('User Updated!');
-        Alert.alert(
-          'Profile Updated!',
-          'Your profile has been updated successfully.',
-        );
-      })
-      .catch(err => {
-        console.log('ERROR', err);
-      });
-  };
-
-  const uploadImage = async () => {
-    if (image == null) {
-      return null;
-    }
-    const uploadUri = image;
-    let filename = uploadUri.substring(uploadUri.lastIndexOf('/') + 1);
-
-    const extension = filename.split('.').pop();
-    const name = filename.split('.').slice(0, -1).join('.');
-    filename = name + Date.now() + '.' + extension;
-
-    const storageRef = storage().ref(`photos/${filename}`);
-    const task = storageRef.putFile(uploadUri);
-
-    task.on('state_changed', taskSnapshot => {
-      console.log(
-        `${taskSnapshot.bytesTransferred} transferred out of ${taskSnapshot.totalBytes}`,
-      );
-    });
-
-    try {
-      await task;
-
-      const url = await storageRef.getDownloadURL();
-
-      setImage(null);
-      return url;
-    } catch (e) {
-      console.log(e);
-      return null;
-    }
-  };
-
   useEffect(() => {
-    getUser();
+    setUserData(user);
   }, []);
 
   const takePhotoFromCamera = () => {
@@ -322,14 +237,18 @@ const EditProfileScreen = ({ user }) => {
             style={styles.textInput}
           />
         </View>
-        <FormButton buttonTitle="Update" onPress={handleUpdate} />
+        <FormButton
+          buttonTitle="Update"
+          onPress={() => handleUpdate(userUid, userData, image)}
+        />
       </Animated.View>
     </KeyboardAvoidingView>
   );
 };
 
-const mapStateToProps = ({ auth }) => ({
-  user: auth.user,
+const mapStateToProps = ({ auth, user }) => ({
+  userUid: auth.user.uid,
+  user: user.data,
 });
 
 const mapDispatchToProps = {};
