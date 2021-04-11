@@ -329,7 +329,7 @@ const EditProfileScreen = ({ user }) => {
 };
 
 const mapStateToProps = ({ auth }) => ({
-  user: auth.user.user,
+  user: auth.user,
 });
 
 const mapDispatchToProps = {};

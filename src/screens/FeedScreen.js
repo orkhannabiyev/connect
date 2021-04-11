@@ -71,7 +71,7 @@ const mapStateToProps = ({ feed, auth }) => ({
   posts: feed.posts,
   loading: feed.loading,
   deleted: feed.deleted,
-  user: auth.user.user,
+  user: auth.user,
 });
 
 const mapDispatchToProps = {

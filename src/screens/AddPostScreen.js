@@ -96,7 +96,7 @@ const AddPostScreen = ({ loading, submitPost, user }) => {
 
 const mapStateToProps = ({ addPost, auth }) => ({
   loading: addPost.loading,
-  user: auth.user.user,
+  user: auth.user,
 });
 
 const mapDispatchToProps = {

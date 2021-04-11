@@ -13,9 +13,10 @@ export const login = (email, password) => async dispatch => {
       type: AUTH_LOADING,
     });
     const user = await auth().signInWithEmailAndPassword(email, password);
+
     dispatch({
       type: LOG_IN_SUCCESS,
-      payload: user,
+      payload: user.user,
     });
   } catch (err) {
     dispatch({
@@ -32,9 +33,10 @@ export const register = (email, password) => async dispatch => {
       type: AUTH_LOADING,
     });
     const user = await auth().createUserWithEmailAndPassword(email, password);
+
     dispatch({
       type: SIGN_UP_SUCCESS,
-      payload: user,
+      payload: user.user,
     });
   } catch (e) {
     dispatch({
@@ -60,7 +62,7 @@ export const googleLogin = () => async dispatch => {
     const user = await auth().signInWithCredential(googleCredential);
     dispatch({
       type: GOOGLE_LOGIN_SUCCESS,
-      payload: user,
+      payload: user.user,
     });
   } catch (e) {
     dispatch({
@@ -99,10 +101,10 @@ export const fbLogin = () => async dispatch => {
 
     // Sign-in the user with the credential
     const user = await auth().signInWithCredential(facebookCredential);
-    console.log('USER', user);
+
     dispatch({
       type: FB_LOGIN_SUCCESS,
-      payload: user,
+      payload: user.user,
     });
   } catch (e) {
     dispatch({

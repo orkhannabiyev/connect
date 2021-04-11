@@ -130,7 +130,7 @@ const ProfileScreen = ({
 };
 
 const mapStateToProps = ({ auth, selfposts, user }) => ({
-  user: auth.user.user,
+  user: auth.user,
   posts: selfposts.posts,
   postsLoading: selfposts.loading,
   userData: user.data,
