@@ -4,9 +4,10 @@ import { connect } from 'react-redux';
 
 import AuthStack from './AuthStack';
 import AppStack from './AppStack';
+import { Loading } from '../components/Loading';
 
 const Routes = ({ user, loading }) => {
-  if (loading) return null;
+  if (loading) return <Loading size={8} />;
 
   return (
     <NavigationContainer>

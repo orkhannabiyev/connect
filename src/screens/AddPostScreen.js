@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
-import {
-  StyleSheet,
-  ActivityIndicator,
-  KeyboardAvoidingView,
-} from 'react-native';
+import { StyleSheet, KeyboardAvoidingView } from 'react-native';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ImagePicker from 'react-native-image-crop-picker';
 import { connect } from 'react-redux';
 
 import { submitPost } from '../actions/AddPostActions';
+import { Loading } from '../components/Loading';
 
 import {
   InputWrapper,
@@ -71,7 +68,7 @@ const AddPostScreen = ({ loading, submitPost, user }) => {
         />
         {loading ? (
           <StatusWrapper>
-            <ActivityIndicator size="large" color="#123456" />
+            <Loading size={5} />
           </StatusWrapper>
         ) : (
           <SubmitBtn onPress={submit}>

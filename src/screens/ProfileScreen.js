@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   StyleSheet,
   SafeAreaView,
-  ActivityIndicator,
   FlatList,
 } from 'react-native';
 import { connect } from 'react-redux';
@@ -14,6 +13,7 @@ import { PostCard } from '../components';
 import { selfPosts } from '../actions/SelfPostsAction';
 import { logout } from '../actions/AuthActions';
 import { getUser, removeUser } from '../actions/UserActions';
+import { Loading } from '../components/Loading';
 
 const ProfileScreen = ({
   user,
@@ -43,9 +43,9 @@ const ProfileScreen = ({
     selfPosts(route, user);
   };
 
-  const scroll = () => {
+  const profile = () => {
     return (
-      <View style={styles.container}>
+      <View style={styles.profileContainer}>
         <Image
           style={styles.userImg}
           source={{
@@ -109,9 +109,9 @@ const ProfileScreen = ({
   const handleDelete = () => {};
 
   return (
-    <SafeAreaView style={styles.scrollView}>
+    <SafeAreaView style={styles.container}>
       {userLoading ? (
-        <ActivityIndicator size={50} color="#123456" />
+        <Loading size={8} />
       ) : (
         <FlatList
           data={posts}
@@ -120,7 +120,7 @@ const ProfileScreen = ({
           )}
           keyExtractor={item => item.id}
           showsVerticalScrollIndicator={false}
-          ListHeaderComponent={scroll}
+          ListHeaderComponent={profile}
           onRefresh={refresh}
           refreshing={userLoading || postsLoading}
         />
@@ -147,13 +147,13 @@ const mapDispatchToProps = {
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileScreen);
 
 const styles = StyleSheet.create({
-  scrollView: {
+  container: {
     flex: 1,
     backgroundColor: '#fff',
     justifyContent: 'center',
     alignItems: 'center',
   },
-  container: {
+  profileContainer: {
     position: 'relative',
     justifyContent: 'center',
     alignItems: 'center',
