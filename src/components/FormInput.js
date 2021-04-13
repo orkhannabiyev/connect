@@ -4,14 +4,14 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 
 import { totalSize } from '../utils/Dimentions';
 
-const FormInput = ({ iconType, placeholder, error, ...rest }) => {
+const FormInput = ({ iconType, error, ...rest }) => {
   return (
     <View style={styles.inputContainer}>
       <View style={{ flexDirection: 'row' }}>
         <View style={styles.iconStyle}>
           <Icon name={iconType} size={25} color="#666" />
         </View>
-        <TextInput style={styles.input} placeholder={placeholder} {...rest} />
+        <TextInput style={styles.input} placeholderTextColor="#ccc" {...rest} />
       </View>
 
       {error && <Text style={styles.errorMessage}>{error.message}</Text>}
