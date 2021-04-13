@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef } from 'react';
 import {
   View,
   Text,
@@ -13,25 +13,22 @@ import { useForm, Controller } from 'react-hook-form';
 import { FormButton, FormInput } from '../components';
 import { register } from '../actions/AuthActions';
 import { totalSize } from '../utils/Dimentions';
-import { emailRegEx, passwordRegEx } from '../utils/Constants';
+import { emailRegEx } from '../utils/Constants';
 
 const SignUpScreen = ({ navigation, register }) => {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [confirmPassword, setConfirmPassword] = useState();
-
   const {
     control,
     handleSubmit,
     formState: { errors },
+    watch,
   } = useForm();
 
   const onSignin = data => {
-    setEmail(data.email);
-    setPassword(data.password);
-    setConfirmPassword(data.confirmPassword);
     register(data.email, data.password);
   };
+
+  const password = useRef({});
+  password.current = watch('password', '');
 
   return (
     <ScrollView>
@@ -43,9 +40,9 @@ const SignUpScreen = ({ navigation, register }) => {
         <Controller
           name="email"
           control={control}
-          render={({ field: { onChange } }) => (
+          render={({ field: { onChange, value } }) => (
             <FormInput
-              value={email}
+              value={value}
               error={errors.email}
               onChangeText={userEmail => onChange(userEmail)}
               placeholder="Email"
@@ -56,10 +53,10 @@ const SignUpScreen = ({ navigation, register }) => {
             />
           )}
           rules={{
-            required: { value: true, message: 'Type Email, bitch' },
+            required: { value: true, message: 'Enter email' },
             pattern: {
               value: emailRegEx,
-              message: 'Type correct email, BITCH',
+              message: 'Invalid email',
             },
           }}
           defaultValue=""
@@ -67,9 +64,9 @@ const SignUpScreen = ({ navigation, register }) => {
         <Controller
           name="password"
           control={control}
-          render={({ field: { onChange } }) => (
+          render={({ field: { onChange, value } }) => (
             <FormInput
-              value={password}
+              value={value}
               error={errors.password}
               onChangeText={userPassword => onChange(userPassword)}
               placeholder="Password"
@@ -78,10 +75,10 @@ const SignUpScreen = ({ navigation, register }) => {
             />
           )}
           rules={{
-            required: { value: true, message: 'Type password, bitch' },
-            pattern: {
-              value: passwordRegEx,
-              message: 'Type correct password, BITCH',
+            required: { value: true, message: 'Enter password' },
+            minLength: {
+              value: 6,
+              message: 'Password must have at least 6 characters',
             },
           }}
           defaultValue=""
@@ -90,9 +87,9 @@ const SignUpScreen = ({ navigation, register }) => {
         <Controller
           name="confirmPassword"
           control={control}
-          render={({ field: { onChange } }) => (
+          render={({ field: { onChange, value } }) => (
             <FormInput
-              value={confirmPassword}
+              value={value}
               error={errors.confirmPassword}
               onChangeText={userPassword => onChange(userPassword)}
               placeholder="Confirm Password"
@@ -101,11 +98,13 @@ const SignUpScreen = ({ navigation, register }) => {
             />
           )}
           rules={{
-            required: { value: true, message: 'Type password, bitch' },
-            pattern: {
-              value: passwordRegEx,
-              message: 'Confirm password, BITCH',
+            required: { value: true, message: 'Confirm password' },
+            minLength: {
+              value: 6,
+              message: 'Password must have at least 6 characters',
             },
+            validate: value =>
+              value === password.current || 'The passwords do not match',
           }}
           defaultValue=""
         />

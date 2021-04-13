@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   ScrollView,
   Text,
@@ -13,12 +13,9 @@ import { useForm, Controller } from 'react-hook-form';
 import { login, fbLogin, googleLogin } from '../actions/AuthActions';
 import { FormButton, FormInput, SocialButton } from '../components';
 import { Color } from '../utils/Color';
-import { emailRegEx, passwordRegEx } from '../utils/Constants';
+import { emailRegEx } from '../utils/Constants';
 
 const LoginScreen = ({ navigation, login, googleLogin, fbLogin }) => {
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-
   const {
     control,
     handleSubmit,
@@ -26,8 +23,6 @@ const LoginScreen = ({ navigation, login, googleLogin, fbLogin }) => {
   } = useForm();
 
   const onLogin = data => {
-    setEmail(data.email);
-    setPassword(data.password);
     login(data.email, data.password);
   };
 
@@ -44,9 +39,9 @@ const LoginScreen = ({ navigation, login, googleLogin, fbLogin }) => {
         <Controller
           name="email"
           control={control}
-          render={({ field: { onChange } }) => (
+          render={({ field: { onChange, value } }) => (
             <FormInput
-              value={email}
+              value={value}
               error={errors.email}
               onChangeText={userEmail => onChange(userEmail)}
               placeholder="Email"
@@ -57,10 +52,10 @@ const LoginScreen = ({ navigation, login, googleLogin, fbLogin }) => {
             />
           )}
           rules={{
-            required: { value: true, message: 'Type Email, bitch' },
+            required: { value: true, message: 'Enter email' },
             pattern: {
               value: emailRegEx,
-              message: 'Type correct email, BITCH',
+              message: 'Invalid email',
             },
           }}
           defaultValue=""
@@ -68,9 +63,9 @@ const LoginScreen = ({ navigation, login, googleLogin, fbLogin }) => {
         <Controller
           name="password"
           control={control}
-          render={({ field: { onChange } }) => (
+          render={({ field: { onChange, value } }) => (
             <FormInput
-              value={password}
+              value={value}
               error={errors.password}
               onChangeText={userPassword => onChange(userPassword)}
               placeholder="Password"
@@ -79,10 +74,11 @@ const LoginScreen = ({ navigation, login, googleLogin, fbLogin }) => {
             />
           )}
           rules={{
-            required: { value: true, message: 'Type password, bitch' },
-            pattern: {
-              value: passwordRegEx,
-              message: 'Type correct password, BITCH',
+            required: { value: true, message: 'Enter password' },
+            type: 'password',
+            minLength: {
+              value: 6,
+              message: 'Password must have at least 6 characters',
             },
           }}
           defaultValue=""
