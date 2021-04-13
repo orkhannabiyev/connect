@@ -10,12 +10,13 @@ import {
 import { connect } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
 
-import { FormButton, FormInput } from '../components';
-import { register } from '../actions/AuthActions';
+import { FormButton, FormInput, SocialButton } from '../components';
+import { register, fbLogin, googleLogin } from '../actions/AuthActions';
 import { totalSize } from '../utils/Dimentions';
 import { emailRegEx } from '../utils/Constants';
+import { Color } from '../utils/Color';
 
-const SignUpScreen = ({ navigation, register }) => {
+const SignUpScreen = ({ navigation, register, fbLogin, googleLogin }) => {
   const {
     control,
     handleSubmit,
@@ -111,6 +112,22 @@ const SignUpScreen = ({ navigation, register }) => {
 
         <FormButton buttonTitle="Sign Up" onPress={handleSubmit(onSignin)} />
 
+        <SocialButton
+          buttonTitle="Sign in with Facebook"
+          onPress={() => fbLogin()}
+          btnType="facebook"
+          color={Color.fb}
+          backgroundColor={Color.fbBackground}
+        />
+
+        <SocialButton
+          buttonTitle="Sign in with Google"
+          onPress={() => googleLogin()}
+          btnType="google"
+          color={Color.google}
+          backgroundColor={Color.googleBackground}
+        />
+
         <View style={styles.textPrivate}>
           <Text style={styles.color_textPrivate}>
             By registering, you confirm that you accept our{' '}
@@ -138,6 +155,8 @@ const SignUpScreen = ({ navigation, register }) => {
 
 const mapDispatchToProps = {
   register,
+  fbLogin,
+  googleLogin,
 };
 
 export default connect(() => ({}), mapDispatchToProps)(SignUpScreen);

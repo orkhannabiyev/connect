@@ -91,7 +91,7 @@ const LoginScreen = ({ navigation, login, googleLogin, fbLogin }) => {
       </TouchableOpacity> */}
 
         <SocialButton
-          buttonTitle="Sign in with Facebook"
+          buttonTitle="Log in with Facebook"
           onPress={() => fbLogin()}
           btnType="facebook"
           color={Color.fb}
@@ -99,7 +99,7 @@ const LoginScreen = ({ navigation, login, googleLogin, fbLogin }) => {
         />
 
         <SocialButton
-          buttonTitle="Sign in with Google"
+          buttonTitle="Log in with Google"
           onPress={() => googleLogin()}
           btnType="google"
           color={Color.google}
