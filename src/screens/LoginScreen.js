@@ -8,14 +8,28 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import { connect } from 'react-redux';
+import { useForm, Controller } from 'react-hook-form';
 
 import { login, fbLogin, googleLogin } from '../actions/AuthActions';
 import { FormButton, FormInput, SocialButton } from '../components';
 import { Color } from '../utils/Color';
+import { emailRegEx, passwordRegEx } from '../utils/Constants';
 
 const LoginScreen = ({ navigation, login, googleLogin, fbLogin }) => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
+
+  const {
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
+  const onLogin = data => {
+    setEmail(data.email);
+    setPassword(data.password);
+    login(data.email, data.password);
+  };
 
   return (
     <ScrollView>
@@ -27,27 +41,54 @@ const LoginScreen = ({ navigation, login, googleLogin, fbLogin }) => {
           style={styles.logo}
         />
         <Text style={styles.text}>Connect</Text>
-        <FormInput
-          value={email}
-          onChangeText={userEmail => setEmail(userEmail)}
-          placeholder="Email"
-          iconType="user"
-          keyboardType="email-address"
-          autoCapitalize="none"
-          autoCorrect={false}
+        <Controller
+          name="email"
+          control={control}
+          render={({ field: { onChange } }) => (
+            <FormInput
+              value={email}
+              error={errors.email}
+              onChangeText={userEmail => onChange(userEmail)}
+              placeholder="Email"
+              iconType="user"
+              keyboardType="email-address"
+              autoCapitalize="none"
+              autoCorrect={false}
+            />
+          )}
+          rules={{
+            required: { value: true, message: 'Type Email, bitch' },
+            pattern: {
+              value: emailRegEx,
+              message: 'Type correct email, BITCH',
+            },
+          }}
+          defaultValue=""
         />
-        <FormInput
-          value={password}
-          onChangeText={userPassword => setPassword(userPassword)}
-          placeholder="Password"
-          iconType="lock"
-          secureTextEntry={true}
+        <Controller
+          name="password"
+          control={control}
+          render={({ field: { onChange } }) => (
+            <FormInput
+              value={password}
+              error={errors.password}
+              onChangeText={userPassword => onChange(userPassword)}
+              placeholder="Password"
+              iconType="lock"
+              secureTextEntry={true}
+            />
+          )}
+          rules={{
+            required: { value: true, message: 'Type password, bitch' },
+            pattern: {
+              value: passwordRegEx,
+              message: 'Type correct password, BITCH',
+            },
+          }}
+          defaultValue=""
         />
 
-        <FormButton
-          buttonTitle="Sign In"
-          onPress={() => login(email, password)}
-        />
+        <FormButton buttonTitle="Sign In" onPress={handleSubmit(onLogin)} />
 
         {/* <TouchableOpacity style={styles.forgotButton} onPress={() => {}}>
         <Text style={styles.navButtonText}>Forgot Password</Text>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { totalSize } from '../utils/Dimentions';
 
 const FormButton = ({ buttonTitle, ...rest }) => {
   return (
@@ -21,6 +22,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     borderRadius: 3,
+    marginTop: totalSize(1),
   },
   buttonText: {
     fontSize: 18,

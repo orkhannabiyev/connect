@@ -1,14 +1,20 @@
 import React from 'react';
-import { View, StyleSheet, TextInput } from 'react-native';
+import { View, StyleSheet, TextInput, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const FormInput = ({ iconType, placeholder, ...rest }) => {
+import { totalSize } from '../utils/Dimentions';
+
+const FormInput = ({ iconType, placeholder, error, ...rest }) => {
   return (
     <View style={styles.inputContainer}>
-      <View style={styles.iconStyle}>
-        <Icon name={iconType} size={25} color="#666" />
+      <View style={{ flexDirection: 'row' }}>
+        <View style={styles.iconStyle}>
+          <Icon name={iconType} size={25} color="#666" />
+        </View>
+        <TextInput style={styles.input} placeholder={placeholder} {...rest} />
       </View>
-      <TextInput style={styles.input} placeholder={placeholder} {...rest} />
+
+      {error && <Text style={styles.errorMessage}>{error.message}</Text>}
     </View>
   );
 };
@@ -17,14 +23,13 @@ export { FormInput };
 
 const styles = StyleSheet.create({
   inputContainer: {
-    marginTop: 5,
-    marginBottom: 10,
+    marginTop: totalSize(1),
+    marginBottom: totalSize(2),
     width: '100%',
     height: '9%',
     borderColor: '#ccc',
     borderRadius: 3,
     borderWidth: 1,
-    flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#fff',
   },
@@ -45,5 +50,11 @@ const styles = StyleSheet.create({
     color: '#333',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  errorMessage: {
+    color: 'red',
+    marginTop: totalSize(0.7),
+    fontSize: totalSize(1.8),
+    alignSelf: 'flex-start',
   },
 });
