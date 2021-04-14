@@ -3,17 +3,17 @@ import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 
 export const POSTS_LOADING = 'POSTS_LOADING';
-export const GET_POSTS = 'GET_POSTS';
-export const POSTS_FAILED = 'POSTS_FAILED';
-export const DELETE_POST = 'DELETE_POST';
+export const POSTS_SUCCESS = 'POSTS_SUCCESS';
+export const POSTS_ERROR = 'POSTS_ERROR';
 
-export const getPosts = () => {
+export const getPosts = () => async dispatch => {
   const posts = [];
 
-  return dispatch => {
+  try {
     dispatch({
       type: POSTS_LOADING,
     });
+
     firestore()
       .collection('posts')
       .get()
@@ -42,61 +42,71 @@ export const getPosts = () => {
               comments,
             });
             dispatch({
-              type: GET_POSTS,
+              type: POSTS_SUCCESS,
               payload: posts,
             });
           });
-        } else {
-          dispatch({
-            type: GET_POSTS,
-            payload: posts,
-          });
         }
-      })
-      .catch(err => {
         dispatch({
-          type: POSTS_FAILED,
-          payload: err,
+          type: POSTS_SUCCESS,
+          payload: posts,
         });
       });
-  };
+  } catch (err) {
+    dispatch({
+      type: POSTS_ERROR,
+      payload: err,
+    });
+  }
 };
 
-export const deletePost = postId => {
-  return dispatch => {
+export const DELETE_POST_LOADING = 'DELETE_POST_LOADING';
+export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS';
+export const DELETE_POST_ERROR = 'DELETE_POST_ERROR';
+
+export const deletePost = postId => async dispatch => {
+  try {
+    dispatch({
+      type: DELETE_POST_LOADING,
+    });
     firestore()
       .collection('posts')
       .doc(postId)
       .get()
       .then(documentSnapshot => {
-        if (documentSnapshot.exists) {
-          const { postImg } = documentSnapshot.data();
+        if (!documentSnapshot.exists) {
+          return;
+        }
+        const { postImg } = documentSnapshot.data();
 
-          if (postImg !== null) {
-            const storageRef = storage().refFromURL(postImg);
-            const imageRef = storage().ref(storageRef.fullPath);
+        if (postImg) {
+          const storageRef = storage().refFromURL(postImg);
+          const imageRef = storage().ref(storageRef.fullPath);
 
-            imageRef
-              .delete()
-              .then(() => {
-                console.log(`${postImg} has been deleted successfully.`);
-                deleteFirestoreData(postId);
-                dispatch({
-                  type: DELETE_POST,
-                });
-              })
-              .catch(e => {
-                console.log('Error while deleting the image. ', e);
+          imageRef
+            .delete()
+            .then(() => {
+              console.log(`${postImg} has been deleted successfully.`);
+              deleteFirestoreData(postId);
+              dispatch({
+                type: DELETE_POST_SUCCESS,
               });
-          } else {
-            deleteFirestoreData(postId);
-            dispatch({
-              type: DELETE_POST,
+            })
+            .catch(e => {
+              console.log('Error while deleting the image. ', e);
             });
-          }
+        } else {
+          deleteFirestoreData(postId);
+          dispatch({
+            type: DELETE_POST_SUCCESS,
+          });
         }
       });
-  };
+  } catch (err) {
+    dispatch({
+      type: DELETE_POST_ERROR,
+    });
+  }
 };
 
 const deleteFirestoreData = postId => {

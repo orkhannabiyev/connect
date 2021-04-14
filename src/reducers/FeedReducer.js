@@ -1,8 +1,10 @@
 import {
-  GET_POSTS,
-  DELETE_POST,
-  POSTS_FAILED,
   POSTS_LOADING,
+  POSTS_SUCCESS,
+  POSTS_ERROR,
+  DELETE_POST_LOADING,
+  DELETE_POST_SUCCESS,
+  DELETE_POST_ERROR,
 } from '../actions/FeedActions';
 
 const initState = {
@@ -18,24 +20,34 @@ export default (state = initState, action) => {
         ...state,
         loading: true,
       };
-    case GET_POSTS:
+    case POSTS_SUCCESS:
       return {
         ...state,
         posts: action.payload,
-        loading: false,
         deleted: false,
+        loading: false,
       };
-    case DELETE_POST:
+    case POSTS_ERROR:
+      return {
+        ...state,
+        loading: false,
+      };
+    case DELETE_POST_LOADING:
+      return {
+        ...state,
+        loading: true,
+      };
+    case DELETE_POST_SUCCESS:
       return {
         ...state,
         deleted: true,
-        loading: true,
       };
-    case POSTS_FAILED:
+    case DELETE_POST_ERROR:
       return {
         ...state,
         loading: false,
       };
+
     default:
       return state;
   }
