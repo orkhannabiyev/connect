@@ -5,9 +5,11 @@ import { connect } from 'react-redux';
 import { Container } from '../styles/FeedStyles';
 import { PostCard, ShimmerEffect } from '../components';
 import { getPosts, deletePost } from '../actions/FeedActions';
+import { loginStatus } from '../actions/AuthActions';
 
 const FeedScreen = ({
   navigation,
+  loginStatus,
   getPosts,
   deletePost,
   posts,
@@ -15,6 +17,10 @@ const FeedScreen = ({
   deleted,
   user,
 }) => {
+  useEffect(() => {
+    loginStatus();
+  }, []);
+
   useEffect(() => {
     getPosts();
   }, [deleted]);
@@ -75,6 +81,7 @@ const mapStateToProps = ({ feed, auth }) => ({
 });
 
 const mapDispatchToProps = {
+  loginStatus,
   getPosts,
   deletePost,
 };

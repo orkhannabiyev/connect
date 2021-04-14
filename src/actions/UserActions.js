@@ -67,12 +67,3 @@ export const handleUpdate = async (userUid, userData, image) => {
       console.log('ERROR', err);
     });
 };
-
-export const REMOVE_USER = 'REMOVE_USER';
-export const removeUser = () => {
-  return dispatch =>
-    dispatch({
-      type: REMOVE_USER,
-      payload: null,
-    });
-};

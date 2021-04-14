@@ -1,9 +1,32 @@
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const AUTH_LOADING = 'AUTH_LOADING';
 export const AUTH_ERROR = 'AUTH_ERROR';
+
+export const LOG_IN_STATUS_SUCCESS = 'LOG_IN_STATUS_SUCCESS';
+
+export const loginStatus = () => async dispatch => {
+  try {
+    dispatch({
+      type: AUTH_LOADING,
+    });
+
+    const res = await AsyncStorage.getItem('@user');
+    const user = JSON.parse(res);
+
+    dispatch({
+      type: LOG_IN_STATUS_SUCCESS,
+      payload: user,
+    });
+  } catch (err) {
+    dispatch({
+      type: AUTH_ERROR,
+    });
+  }
+};
 
 export const LOG_IN_SUCCESS = 'LOG_IN_SUCCESS';
 
@@ -113,21 +136,16 @@ export const fbLogin = () => async dispatch => {
   }
 };
 
-export const LOG_OUT_SUCCESS = 'LOG_OUT_SUCCESS';
-
 export const logout = () => async dispatch => {
   try {
     dispatch({
       type: AUTH_LOADING,
     });
     await auth().signOut();
-    dispatch({
-      type: LOG_OUT_SUCCESS,
-      payload: null,
-    });
   } catch (e) {
     dispatch({
       type: AUTH_ERROR,
+      payload: e,
     });
   }
 };

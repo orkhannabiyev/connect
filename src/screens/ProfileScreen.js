@@ -12,31 +12,26 @@ import { connect } from 'react-redux';
 import { PostCard } from '../components';
 import { selfPosts } from '../actions/SelfPostsAction';
 import { logout } from '../actions/AuthActions';
-import { getUser, removeUser } from '../actions/UserActions';
+import { getUser } from '../actions/UserActions';
 import { Loading } from '../components/Loading';
 
 const ProfileScreen = ({
-  user,
   route,
   navigation,
-  userData,
+  user,
   userLoading,
+  userData,
+  userDataLoading,
   getUser,
   posts,
   postsLoading,
   selfPosts,
   logout,
-  removeUser,
 }) => {
   useEffect(() => {
     getUser(route, user);
     selfPosts(route, user);
   }, []);
-
-  const onLogout = () => {
-    logout();
-    removeUser();
-  };
 
   const refresh = () => {
     getUser(route, user);
@@ -81,7 +76,7 @@ const ProfileScreen = ({
                 }}>
                 <Text style={styles.userBtnTxt}>Edit</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.userBtn} onPress={onLogout}>
+              <TouchableOpacity style={styles.userBtn} onPress={logout}>
                 <Text style={styles.userBtnTxt}>Logout</Text>
               </TouchableOpacity>
             </>
@@ -110,7 +105,7 @@ const ProfileScreen = ({
 
   return (
     <SafeAreaView style={styles.container}>
-      {userLoading ? (
+      {userLoading || userDataLoading || postsLoading ? (
         <Loading size={8} />
       ) : (
         <FlatList
@@ -122,7 +117,7 @@ const ProfileScreen = ({
           showsVerticalScrollIndicator={false}
           ListHeaderComponent={profile}
           onRefresh={refresh}
-          refreshing={userLoading || postsLoading}
+          refreshing={userDataLoading || postsLoading}
         />
       )}
     </SafeAreaView>
@@ -131,17 +126,17 @@ const ProfileScreen = ({
 
 const mapStateToProps = ({ auth, selfposts, user }) => ({
   user: auth.user,
+  userLoading: auth.loading,
   posts: selfposts.posts,
   postsLoading: selfposts.loading,
   userData: user.data,
-  userLoading: user.loading,
+  userDataLoading: user.loading,
 });
 
 const mapDispatchToProps = {
   selfPosts,
   getUser,
   logout,
-  removeUser,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProfileScreen);
