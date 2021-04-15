@@ -25,7 +25,7 @@ const SignUpScreen = ({ navigation, register, fbLogin, googleLogin }) => {
   } = useForm();
 
   const onSignin = data => {
-    register(data.email, data.password);
+    register(data.name, data.email, data.password);
   };
 
   const password = useRef({});
@@ -37,6 +37,30 @@ const SignUpScreen = ({ navigation, register, fbLogin, googleLogin }) => {
         keyboardVerticalOffset={100}
         style={styles.container}>
         <Text style={styles.text}>Create an account</Text>
+        <Controller
+          name="name"
+          control={control}
+          render={({ field: { onChange, value } }) => (
+            <FormInput
+              value={value}
+              error={errors.name}
+              onChangeText={userName => onChange(userName)}
+              placeholder="Name"
+              iconType="user"
+              keyboardType="email-address"
+              autoCapitalize="none"
+              autoCorrect={false}
+            />
+          )}
+          rules={{
+            required: { value: true, message: 'Enter name' },
+            minLength: {
+              value: 3,
+              message: 'Name must have at least 3 characters',
+            },
+          }}
+          defaultValue=""
+        />
 
         <Controller
           name="email"

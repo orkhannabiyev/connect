@@ -18,6 +18,7 @@ export const submitPost = (user, post, image) => async dispatch => {
     .collection('posts')
     .add({
       userId: user.uid,
+      userName: user.displayName,
       post: post,
       postImg: imageUrl,
       postTime: firestore.Timestamp.fromDate(new Date()),

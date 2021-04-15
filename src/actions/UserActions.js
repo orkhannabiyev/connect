@@ -36,32 +36,31 @@ export const getUser = (route, user) => dispatch => {
 };
 
 export const handleUpdate = async (userUid, userData, image) => {
-  let imgUrl = await uploadImage(image);
+  try {
+    let imgUrl = await uploadImage(image);
 
-  if (imgUrl == null && userData.userImg) {
-    imgUrl = userData.userImg;
+    if (imgUrl == null && userData.userImg) {
+      imgUrl = userData.userImg;
+    }
+
+    firestore()
+      .collection('users')
+      .doc(userUid)
+      .set({
+        about: userData.about,
+        phone: userData.phone,
+        country: userData.country,
+        city: userData.city,
+        userImg: imgUrl,
+      })
+      .then(() => {
+        console.log('User Updated!');
+        Alert.alert(
+          'Profile Updated!',
+          'Your profile has been updated successfully.',
+        );
+      });
+  } catch (err) {
+    console.log('ERROR', err);
   }
-
-  firestore()
-    .collection('users')
-    .doc(userUid)
-    .set({
-      fname: userData.fname,
-      lname: userData.lname,
-      about: userData.about,
-      phone: userData.phone,
-      country: userData.country,
-      city: userData.city,
-      userImg: imgUrl,
-    })
-    .then(() => {
-      console.log('User Updated!');
-      Alert.alert(
-        'Profile Updated!',
-        'Your profile has been updated successfully.',
-      );
-    })
-    .catch(err => {
-      console.log('ERROR', err);
-    });
 };

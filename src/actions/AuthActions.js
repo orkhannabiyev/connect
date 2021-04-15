@@ -50,17 +50,26 @@ export const login = (email, password) => async dispatch => {
 
 export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
 
-export const register = (email, password) => async dispatch => {
+export const register = (name, email, password) => async dispatch => {
   try {
     dispatch({
       type: AUTH_LOADING,
     });
-    const user = await auth().createUserWithEmailAndPassword(email, password);
-
-    dispatch({
-      type: SIGN_UP_SUCCESS,
-      payload: user.user,
-    });
+    const userCredentials = await auth().createUserWithEmailAndPassword(
+      email,
+      password,
+    );
+    if (userCredentials.user) {
+      await userCredentials.user.updateProfile({
+        displayName: name,
+      });
+      await userCredentials.user.reload();
+      const user = auth().currentUser;
+      dispatch({
+        type: SIGN_UP_SUCCESS,
+        payload: user,
+      });
+    }
   } catch (e) {
     dispatch({
       type: AUTH_ERROR,

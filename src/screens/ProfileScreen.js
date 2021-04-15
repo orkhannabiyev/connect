@@ -20,8 +20,8 @@ const ProfileScreen = ({
   navigation,
   user,
   userLoading,
-  userData,
-  userDataLoading,
+  userProfile,
+  userProfileLoading,
   getUser,
   posts,
   postsLoading,
@@ -44,18 +44,15 @@ const ProfileScreen = ({
         <Image
           style={styles.userImg}
           source={{
-            uri: userData
-              ? userData.userImg ||
+            uri: userProfile
+              ? userProfile.userImg ||
                 'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg'
               : 'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg',
           }}
         />
-        <Text style={styles.userName}>
-          {userData ? userData.fname || 'Test' : 'Test'}{' '}
-          {userData ? userData.lname || 'User' : 'User'}
-        </Text>
+        <Text style={styles.userName}>{user.displayName}</Text>
         <Text style={styles.aboutUser}>
-          {userData ? userData.about || 'No details added.' : ''}
+          {userProfile ? userProfile.about || 'No details added.' : ''}
         </Text>
         <View style={styles.userBtnWrapper}>
           {route.params ? (
@@ -105,7 +102,7 @@ const ProfileScreen = ({
 
   return (
     <SafeAreaView style={styles.container}>
-      {userLoading || userDataLoading || postsLoading ? (
+      {userLoading || userProfileLoading || postsLoading ? (
         <Loading size={8} />
       ) : (
         <FlatList
@@ -117,20 +114,20 @@ const ProfileScreen = ({
           showsVerticalScrollIndicator={false}
           ListHeaderComponent={profile}
           onRefresh={refresh}
-          refreshing={userDataLoading || postsLoading}
+          refreshing={userProfileLoading || postsLoading}
         />
       )}
     </SafeAreaView>
   );
 };
 
-const mapStateToProps = ({ auth, selfposts, user }) => ({
+const mapStateToProps = ({ auth, selfposts, userProfile }) => ({
   user: auth.user,
   userLoading: auth.loading,
   posts: selfposts.posts,
   postsLoading: selfposts.loading,
-  userData: user.data,
-  userDataLoading: user.loading,
+  userProfile: userProfile.data,
+  userProfileLoading: userProfile.loading,
 });
 
 const mapDispatchToProps = {

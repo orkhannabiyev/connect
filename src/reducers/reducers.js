@@ -8,7 +8,7 @@ import AuthReducer from './AuthReducer';
 export default combineReducers({
   feed: FeedReducer,
   selfposts: SelfPostsReducer,
-  user: UserReducer,
+  userProfile: UserReducer,
   addPost: AddPostReducer,
   auth: AuthReducer,
 });

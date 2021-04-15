@@ -20,13 +20,14 @@ import ImagePicker from 'react-native-image-crop-picker';
 
 import { FormButton } from '../components';
 import { handleUpdate } from '../actions/UserActions';
+import { totalSize } from '../utils/Dimentions';
 
-const EditProfileScreen = ({ user, userUid }) => {
+const EditProfileScreen = ({ userProfile, user }) => {
   const [image, setImage] = useState(null);
-  const [userData, setUserData] = useState(null);
+  const [userData, setUserData] = useState({});
 
   useEffect(() => {
-    setUserData(user);
+    setUserData(userProfile);
   }, []);
 
   const takePhotoFromCamera = () => {
@@ -95,13 +96,11 @@ const EditProfileScreen = ({ user, userUid }) => {
   const fall = new Animated.Value(1);
 
   return (
-    <KeyboardAvoidingView
-      behavior="position"
-      keyboardVerticalOffset={100}
-      style={styles.container}>
+    <KeyboardAvoidingView behavior="position" style={styles.container}>
       <BottomSheet
         ref={bs}
-        snapPoints={[330, -5]}
+        snapPoints={[330, -200]}
+        enabledBottomClamp={true}
         renderContent={renderInner}
         renderHeader={renderHeader}
         initialSnap={1}
@@ -111,6 +110,7 @@ const EditProfileScreen = ({ user, userUid }) => {
       <Animated.View
         style={{
           margin: 20,
+          marginBottom: totalSize(15),
           opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),
         }}>
         <View style={{ alignItems: 'center' }}>
@@ -157,33 +157,10 @@ const EditProfileScreen = ({ user, userUid }) => {
               </ImageBackground>
             </View>
           </TouchableOpacity>
-          <Text style={{ marginTop: 10, fontSize: 18, fontWeight: 'bold' }}>
-            {userData ? userData.fname : ''} {userData ? userData.lname : ''}
+          <Text
+            style={{ marginVertical: 20, fontSize: 18, fontWeight: 'bold' }}>
+            {user.displayName}
           </Text>
-          <Text>{user.uid}</Text>
-        </View>
-
-        <View style={styles.action}>
-          <FontAwesome name="user-o" color="#333333" size={20} />
-          <TextInput
-            placeholder="First Name"
-            placeholderTextColor="#666666"
-            autoCorrect={false}
-            value={userData ? userData.fname : ''}
-            onChangeText={txt => setUserData({ ...userData, fname: txt })}
-            style={styles.textInput}
-          />
-        </View>
-        <View style={styles.action}>
-          <FontAwesome name="user-o" color="#333333" size={20} />
-          <TextInput
-            placeholder="Last Name"
-            placeholderTextColor="#666666"
-            value={userData ? userData.lname : ''}
-            onChangeText={txt => setUserData({ ...userData, lname: txt })}
-            autoCorrect={false}
-            style={styles.textInput}
-          />
         </View>
         <View style={styles.action}>
           <Ionicons name="ios-clipboard-outline" color="#333333" size={20} />
@@ -239,16 +216,16 @@ const EditProfileScreen = ({ user, userUid }) => {
         </View>
         <FormButton
           buttonTitle="Update"
-          onPress={() => handleUpdate(userUid, userData, image)}
+          onPress={() => handleUpdate(user.uid, userData, image)}
         />
       </Animated.View>
     </KeyboardAvoidingView>
   );
 };
 
-const mapStateToProps = ({ auth, user }) => ({
-  userUid: auth.user.uid,
-  user: user.data,
+const mapStateToProps = ({ auth, userProfile }) => ({
+  user: auth.user,
+  userProfile: userProfile.data,
 });
 
 const mapDispatchToProps = {};
