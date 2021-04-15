@@ -41,7 +41,7 @@ export const getPosts = () => async dispatch => {
               likes,
               comments,
             });
-            dispatch({
+            return dispatch({
               type: POSTS_SUCCESS,
               payload: posts,
             });
@@ -83,7 +83,7 @@ export const deletePost = postId => async dispatch => {
           const storageRef = storage().refFromURL(postImg);
           const imageRef = storage().ref(storageRef.fullPath);
 
-          imageRef
+          return imageRef
             .delete()
             .then(() => {
               console.log(`${postImg} has been deleted successfully.`);
@@ -95,12 +95,11 @@ export const deletePost = postId => async dispatch => {
             .catch(e => {
               console.log('Error while deleting the image. ', e);
             });
-        } else {
-          deleteFirestoreData(postId);
-          dispatch({
-            type: DELETE_POST_SUCCESS,
-          });
         }
+        deleteFirestoreData(postId);
+        dispatch({
+          type: DELETE_POST_SUCCESS,
+        });
       });
   } catch (err) {
     dispatch({
