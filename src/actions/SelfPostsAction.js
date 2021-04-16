@@ -23,9 +23,11 @@ export const selfPosts = (route, user) => {
               const {
                 userId,
                 userName,
+                userImg,
                 post,
                 postImg,
                 postTime,
+                liked,
                 likes,
                 comments,
               } = doc.data();
@@ -33,12 +35,11 @@ export const selfPosts = (route, user) => {
                 id: doc.id,
                 userId,
                 userName,
-                userImg:
-                  'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg',
-                postTime: postTime,
+                userImg,
+                postTime,
                 post,
                 postImg,
-                liked: false,
+                liked,
                 likes,
                 comments,
               });

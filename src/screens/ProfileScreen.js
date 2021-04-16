@@ -7,12 +7,14 @@ import {
   StyleSheet,
   SafeAreaView,
   FlatList,
+  Alert,
 } from 'react-native';
 import { connect } from 'react-redux';
 import { PostCard } from '../components';
 import { selfPosts } from '../actions/SelfPostsAction';
 import { logout } from '../actions/AuthActions';
 import { getUser } from '../actions/UserActions';
+import { deletePost } from '../actions/FeedActions';
 import { Loading } from '../components/Loading';
 
 const ProfileScreen = ({
@@ -26,12 +28,15 @@ const ProfileScreen = ({
   posts,
   postsLoading,
   selfPosts,
+  deletePost,
+  deleted,
+  deletedLoading,
   logout,
 }) => {
   useEffect(() => {
     getUser(route, user);
     selfPosts(route, user);
-  }, []);
+  }, [deleted]);
 
   const refresh = () => {
     getUser(route, user);
@@ -98,17 +103,38 @@ const ProfileScreen = ({
     );
   };
 
-  const handleDelete = () => {};
+  const handleDelete = postId => {
+    Alert.alert(
+      'Delete post',
+      'Are you sure?',
+      [
+        {
+          text: 'Cancel',
+          onPress: () => console.log('Cancel Pressed!'),
+          style: 'cancel',
+        },
+        {
+          text: 'Confirm',
+          onPress: () => deletePost(postId),
+        },
+      ],
+      { cancelable: false },
+    );
+  };
 
   return (
     <SafeAreaView style={styles.container}>
-      {userLoading || userProfileLoading || postsLoading ? (
+      {userLoading || userProfileLoading || postsLoading || deletedLoading ? (
         <Loading size={8} />
       ) : (
         <FlatList
           data={posts}
           renderItem={({ item }) => (
-            <PostCard item={item} user={user} onDelete={handleDelete} />
+            <PostCard
+              item={item}
+              user={user}
+              onDelete={() => handleDelete(item.id)}
+            />
           )}
           keyExtractor={item => item.id}
           showsVerticalScrollIndicator={false}
@@ -121,16 +147,19 @@ const ProfileScreen = ({
   );
 };
 
-const mapStateToProps = ({ auth, selfposts, userProfile }) => ({
+const mapStateToProps = ({ auth, selfposts, userProfile, feed }) => ({
   user: auth.user,
   userLoading: auth.loading,
   posts: selfposts.posts,
   postsLoading: selfposts.loading,
   userProfile: userProfile.data,
   userProfileLoading: userProfile.loading,
+  deleted: feed.deleted,
+  deletedLoading: feed.loading,
 });
 
 const mapDispatchToProps = {
+  deletePost,
   selfPosts,
   getUser,
   logout,

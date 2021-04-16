@@ -1,5 +1,6 @@
 import { Alert } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
+import auth from '@react-native-firebase/auth';
 
 import { uploadImage } from '../utils/UploadImage';
 
@@ -60,6 +61,8 @@ export const handleUpdate = async (userUid, userData, image) => {
           'Your profile has been updated successfully.',
         );
       });
+
+    await auth().currentUser.updateProfile({ photoURL: imgUrl });
   } catch (err) {
     console.log('ERROR', err);
   }
