@@ -1,22 +1,14 @@
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const AUTH_LOADING = 'AUTH_LOADING';
 export const AUTH_ERROR = 'AUTH_ERROR';
 
 export const LOG_IN_STATUS_SUCCESS = 'LOG_IN_STATUS_SUCCESS';
 
-export const loginStatus = () => async dispatch => {
+export const loginStatus = user => dispatch => {
   try {
-    dispatch({
-      type: AUTH_LOADING,
-    });
-
-    const res = await AsyncStorage.getItem('@user');
-    const user = JSON.parse(res);
-
     dispatch({
       type: LOG_IN_STATUS_SUCCESS,
       payload: user,
