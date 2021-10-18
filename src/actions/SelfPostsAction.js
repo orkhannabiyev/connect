@@ -22,22 +22,24 @@ export const selfPosts = (route, user) => {
             querySnapshot.forEach(doc => {
               const {
                 userId,
+                userName,
+                userImg,
                 post,
                 postImg,
                 postTime,
+                liked,
                 likes,
                 comments,
               } = doc.data();
               list.push({
                 id: doc.id,
                 userId,
-                userName: 'Test Name',
-                userImg:
-                  'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg',
-                postTime: postTime,
+                userName,
+                userImg,
+                postTime,
                 post,
                 postImg,
-                liked: false,
+                liked,
                 likes,
                 comments,
               });

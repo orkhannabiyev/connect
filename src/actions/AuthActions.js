@@ -1,22 +1,14 @@
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const AUTH_LOADING = 'AUTH_LOADING';
 export const AUTH_ERROR = 'AUTH_ERROR';
 
 export const LOG_IN_STATUS_SUCCESS = 'LOG_IN_STATUS_SUCCESS';
 
-export const loginStatus = () => async dispatch => {
+export const loginStatus = user => dispatch => {
   try {
-    dispatch({
-      type: AUTH_LOADING,
-    });
-
-    const res = await AsyncStorage.getItem('@user');
-    const user = JSON.parse(res);
-
     dispatch({
       type: LOG_IN_STATUS_SUCCESS,
       payload: user,
@@ -50,17 +42,26 @@ export const login = (email, password) => async dispatch => {
 
 export const SIGN_UP_SUCCESS = 'SIGN_UP_SUCCESS';
 
-export const register = (email, password) => async dispatch => {
+export const register = (name, email, password) => async dispatch => {
   try {
     dispatch({
       type: AUTH_LOADING,
     });
-    const user = await auth().createUserWithEmailAndPassword(email, password);
-
-    dispatch({
-      type: SIGN_UP_SUCCESS,
-      payload: user.user,
-    });
+    const userCredentials = await auth().createUserWithEmailAndPassword(
+      email,
+      password,
+    );
+    if (userCredentials.user) {
+      await userCredentials.user.updateProfile({
+        displayName: name,
+      });
+      await userCredentials.user.reload();
+      const user = auth().currentUser;
+      dispatch({
+        type: SIGN_UP_SUCCESS,
+        payload: user,
+      });
+    }
   } catch (e) {
     dispatch({
       type: AUTH_ERROR,
