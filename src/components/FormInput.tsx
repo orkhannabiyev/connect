@@ -1,10 +1,14 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { View, StyleSheet, TextInput, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 import { totalSize } from '../utils/Dimentions';
 
-const FormInput = ({ iconType, error, ...rest }) => {
+type FormInputType = {
+  iconType: string;
+};
+
+const FormInput: FC<FormInputType> = ({ iconType, error, ...rest }) => {
   return (
     <View style={styles.inputContainer}>
       <View style={{ flexDirection: 'row' }}>

@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { View, ActivityIndicator, StyleSheet } from 'react-native';
 import { totalSize } from '../utils/Dimentions';
 
-export const Loading = ({ size }) => {
+type LoadingType = {
+  size: number;
+};
+
+export const Loading: FC<LoadingType> = ({ size }) => {
   return (
     <View style={styles.loading}>
       <ActivityIndicator size={totalSize(size)} color="blue" />
