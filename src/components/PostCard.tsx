@@ -70,7 +70,7 @@ const PostCard: FC<PostCardType> = ({ item, user, onDelete, onPress }) => {
           <Ionicons name="md-chatbubble-outline" size={25} />
           <InteractionText>comment</InteractionText>
         </Interaction>
-        {user.uid === item.userId ? (
+        {user && user.uid === item.userId ? (
           <Interaction onPress={() => onDelete(item.id)}>
             <Ionicons name="md-trash-bin" size={25} />
           </Interaction>
