@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { FC } from 'react';
 import { TouchableOpacity } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
@@ -19,7 +19,14 @@ import {
 } from '../styles/FeedStyles';
 import ProgressiveImage from './ProgressiveImage';
 
-const PostCard = ({ item, user, onDelete, onPress }) => {
+type PostCardType = {
+  item: object;
+  user: object;
+  onDelete: () => void;
+  onPress: () => void;
+};
+
+const PostCard: FC<PostCardType> = ({ item, user, onDelete, onPress }) => {
   const likeIcon = item.liked ? 'heart' : 'heart-outline';
   const likeIconColor = item.liked ? '#2e64e5' : '#fff';
 
@@ -63,7 +70,7 @@ const PostCard = ({ item, user, onDelete, onPress }) => {
           <Ionicons name="md-chatbubble-outline" size={25} />
           <InteractionText>comment</InteractionText>
         </Interaction>
-        {user.uid === item.userId ? (
+        {user && user.uid === item.userId ? (
           <Interaction onPress={() => onDelete(item.id)}>
             <Ionicons name="md-trash-bin" size={25} />
           </Interaction>

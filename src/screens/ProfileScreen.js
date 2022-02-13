@@ -55,7 +55,7 @@ const ProfileScreen = ({
               : 'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg',
           }}
         />
-        <Text style={styles.userName}>{user.displayName}</Text>
+        <Text style={styles.userName}>{user && user.displayName}</Text>
         <Text style={styles.aboutUser}>
           {userProfile ? userProfile.about || 'No details added.' : ''}
         </Text>

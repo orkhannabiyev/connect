@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { View, StyleSheet, Text, TouchableOpacity } from 'react-native';
-import { totalSize } from '../utils/Dimentions';
+import { totalSize } from '@utils/Dimentions';
 
-const FormButton = ({ buttonTitle, ...rest }) => {
+type FormButtonType = {
+  buttonTitle: string;
+};
+
+const FormButton: FC<FormButtonType> = ({ buttonTitle, ...rest }) => {
   return (
     <View style={styles.buttonContainer}>
       <TouchableOpacity {...rest}>
