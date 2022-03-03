@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { FC, useEffect } from 'react';
 import {
   View,
   Text,
@@ -16,8 +16,15 @@ import { logout } from '../actions/AuthActions';
 import { getUser } from '../actions/UserActions';
 import { deletePost } from '../actions/FeedActions';
 import { Loading } from '../components/Loading';
+import { UserBody } from 'models/user';
+import { PostBody } from 'models/post';
 
-const ProfileScreen = ({
+type ProfileScreenType = {
+  posts: PostBody[];
+  user: UserBody;
+};
+
+const ProfileScreen: FC<ProfileScreenType> = ({
   route,
   navigation,
   user,
@@ -49,10 +56,9 @@ const ProfileScreen = ({
         <Image
           style={styles.userImg}
           source={{
-            uri: userProfile
-              ? userProfile.userImg ||
-                'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg'
-              : 'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg',
+            uri:
+              userProfile.userImg ||
+              'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg',
           }}
         />
         <Text style={styles.userName}>{user && user.displayName}</Text>
@@ -103,7 +109,7 @@ const ProfileScreen = ({
     );
   };
 
-  const handleDelete = postId => {
+  const handleDelete = (postId: string) => {
     Alert.alert(
       'Delete post',
       'Are you sure?',
@@ -131,9 +137,10 @@ const ProfileScreen = ({
           data={posts}
           renderItem={({ item }) => (
             <PostCard
-              item={item}
+              post={item}
               user={user}
               onDelete={() => handleDelete(item.id)}
+              onPress={() => {}}
             />
           )}
           keyExtractor={item => item.id}

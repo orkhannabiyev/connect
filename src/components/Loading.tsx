@@ -1,6 +1,6 @@
 import React, { FC } from 'react';
 import { View, ActivityIndicator, StyleSheet } from 'react-native';
-import { totalSize } from '../utils/Dimentions';
+import { totalSize } from '@utils/Dimentions';
 
 type LoadingType = {
   size: number;

@@ -11,47 +11,50 @@ import {
   UserName,
   PostTime,
   PostText,
-  PostImg,
   Divider,
   InteractionWrapper,
   Interaction,
   InteractionText,
 } from '../styles/FeedStyles';
 import ProgressiveImage from './ProgressiveImage';
+import { PostBody } from '@models/post';
+import { UserBody } from 'models/user';
 
 type PostCardType = {
-  item: object;
-  user: object;
+  post: PostBody;
+  user: UserBody;
   onDelete: () => void;
   onPress: () => void;
 };
 
-const PostCard: FC<PostCardType> = ({ item, user, onDelete, onPress }) => {
-  const likeIcon = item.liked ? 'heart' : 'heart-outline';
-  const likeIconColor = item.liked ? '#2e64e5' : '#fff';
+const PostCard: FC<PostCardType> = ({ post, user, onDelete, onPress }) => {
+  const likeIcon = post.liked ? 'heart' : 'heart-outline';
+  const likeIconColor = post.liked ? '#2e64e5' : '#fff';
+  // console.log('POST', post);
+  console.log('USER', JSON.stringify(user, null, 3));
 
   return (
     <Card>
       <UserInfo>
         <UserImg
           source={{
-            uri: item.userImg
-              ? item.userImg
-              : 'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg',
+            uri:
+              post.userImg ||
+              'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg',
           }}
         />
         <UserInfoText>
           <TouchableOpacity onPress={onPress}>
-            <UserName>{item.userName}</UserName>
-            <PostTime>{moment(item.postTime.toDate()).fromNow()}</PostTime>
+            <UserName>{post.userName}</UserName>
+            <PostTime>{moment(post.postTime.toDate()).fromNow()}</PostTime>
           </TouchableOpacity>
         </UserInfoText>
       </UserInfo>
-      <PostText>{item.post}</PostText>
-      {item.postImg != null ? (
+      <PostText>{post.post}</PostText>
+      {post.postImg != null ? (
         <ProgressiveImage
           defaultImageSource={require('../assets/default-img.jpg')}
-          source={{ uri: item.postImg }}
+          source={{ uri: post.postImg }}
           style={{ width: '100%', height: 250 }}
           resizeMode="cover"
         />
@@ -60,18 +63,18 @@ const PostCard: FC<PostCardType> = ({ item, user, onDelete, onPress }) => {
       )}
 
       <InteractionWrapper>
-        <Interaction active={item.liked}>
+        <Interaction active={post.liked}>
           <Ionicons name={likeIcon} size={25} color={likeIconColor} />
-          <InteractionText active={item.liked}>
-            {item.likes} Likes
+          <InteractionText active={post.liked}>
+            {post.likes} Likes
           </InteractionText>
         </Interaction>
         <Interaction>
           <Ionicons name="md-chatbubble-outline" size={25} />
           <InteractionText>comment</InteractionText>
         </Interaction>
-        {user && user.uid === item.userId ? (
-          <Interaction onPress={() => onDelete(item.id)}>
+        {user && user.uid === post.userId ? (
+          <Interaction onPress={() => onDelete(post.id)}>
             <Ionicons name="md-trash-bin" size={25} />
           </Interaction>
         ) : null}

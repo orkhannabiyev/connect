@@ -1,12 +1,19 @@
-import React, { useEffect } from 'react';
-import { FlatList, Alert, SafeAreaView } from 'react-native';
+import React, { FC, useEffect } from 'react';
+import { FlatList, Alert, SafeAreaView, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 
-import { Container } from '../styles/FeedStyles';
-import { PostCard, ShimmerEffect } from '../components';
+import { Container } from '@styles/FeedStyles';
+import { PostCard, ShimmerEffect } from 'components';
 import { getPosts, deletePost } from '../actions/FeedActions';
+import { PostBody } from 'models/post';
+import { UserBody } from 'models/user';
 
-const FeedScreen = ({
+type FeedScreenType = {
+  posts: PostBody[];
+  user: UserBody;
+};
+
+const FeedScreen: FC<FeedScreenType> = ({
   navigation,
   getPosts,
   deletePost,
@@ -14,12 +21,15 @@ const FeedScreen = ({
   loading,
   deleted,
   user,
+  userProfile,
 }) => {
+  console.log('posts', posts);
+  console.log('userProfile', userProfile);
   useEffect(() => {
     getPosts();
   }, [deleted]);
 
-  const handleDelete = postId => {
+  const handleDelete = (postId: string) => {
     Alert.alert(
       'Delete post',
       'Are you sure?',
@@ -39,7 +49,7 @@ const FeedScreen = ({
   };
 
   return (
-    <SafeAreaView style={{ flex: 1 }}>
+    <SafeAreaView style={styles.container}>
       {loading ? (
         <ShimmerEffect />
       ) : (
@@ -48,7 +58,7 @@ const FeedScreen = ({
             data={posts}
             renderItem={({ item }) => (
               <PostCard
-                item={item}
+                post={item}
                 user={user}
                 onDelete={handleDelete}
                 onPress={() =>
@@ -67,11 +77,18 @@ const FeedScreen = ({
   );
 };
 
-const mapStateToProps = ({ feed, auth }) => ({
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
+
+const mapStateToProps = ({ feed, auth, userProfile }) => ({
   posts: feed.posts,
   loading: feed.loading,
   deleted: feed.deleted,
   user: auth.user,
+  userProfile: userProfile.data,
 });
 
 const mapDispatchToProps = {

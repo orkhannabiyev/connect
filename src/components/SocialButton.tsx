@@ -1,9 +1,22 @@
-import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React, { FC } from 'react';
+import {
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+  ColorValue,
+} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { totalSize } from '../utils/Dimentions';
 
-const SocialButton = ({
+type SocialButtonType = {
+  buttonTitle: string;
+  btnType: string;
+  color: ColorValue;
+  backgroundColor: ColorValue;
+};
+
+const SocialButton: FC<SocialButtonType> = ({
   buttonTitle,
   btnType,
   color,
@@ -11,6 +24,7 @@ const SocialButton = ({
   ...rest
 }) => {
   let bgColor = backgroundColor;
+
   return (
     <TouchableOpacity
       style={[styles.buttonContainer, { backgroundColor: bgColor }]}
