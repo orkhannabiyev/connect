@@ -23,8 +23,8 @@ const FeedScreen: FC<FeedScreenType> = ({
   user,
   userProfile,
 }) => {
-  console.log('posts', posts);
-  console.log('userProfile', userProfile);
+  // console.log('posts', posts);
+  // console.log('userProfile', userProfile);
   useEffect(() => {
     getPosts();
   }, [deleted]);

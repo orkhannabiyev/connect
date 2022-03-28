@@ -1,6 +1,9 @@
 import auth from '@react-native-firebase/auth';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import { LoginManager, AccessToken } from 'react-native-fbsdk';
+import { Alert } from 'react-native';
+
+import { firebaseErrorMessagehandler } from '@utils/FirebaseErrorMessageHandler';
 
 export const AUTH_LOADING = 'AUTH_LOADING';
 export const AUTH_ERROR = 'AUTH_ERROR';
@@ -34,8 +37,10 @@ export const login = (email, password) => async dispatch => {
       payload: user.user,
     });
   } catch (err) {
+    Alert.alert(firebaseErrorMessagehandler(err.code));
     dispatch({
       type: AUTH_ERROR,
+      payload: firebaseErrorMessagehandler(err.code),
     });
   }
 };

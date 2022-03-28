@@ -54,6 +54,7 @@ export default (state = initState, action) => {
       return {
         ...state,
         loading: false,
+        user: action.payload,
       };
     default:
       return state;

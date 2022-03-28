@@ -31,7 +31,7 @@ const PostCard: FC<PostCardType> = ({ post, user, onDelete, onPress }) => {
   const likeIcon = post.liked ? 'heart' : 'heart-outline';
   const likeIconColor = post.liked ? '#2e64e5' : '#fff';
   // console.log('POST', post);
-  console.log('USER', JSON.stringify(user, null, 3));
+  // console.log('USER', JSON.stringify(user, null, 3));
 
   return (
     <Card>
