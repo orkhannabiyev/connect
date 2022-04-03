@@ -1,13 +1,15 @@
 import { Alert } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
+import { PostBody } from 'models/post';
+import { Dispatch } from 'store/redux/types';
 
 export const POSTS_LOADING = 'POSTS_LOADING';
 export const POSTS_SUCCESS = 'POSTS_SUCCESS';
 export const POSTS_ERROR = 'POSTS_ERROR';
 
-export const getPosts = () => async dispatch => {
-  const posts = [];
+export const getPosts = () => async (dispatch: Dispatch) => {
+  const posts: PostBody[] = [];
 
   try {
     dispatch({
@@ -65,7 +67,7 @@ export const DELETE_POST_LOADING = 'DELETE_POST_LOADING';
 export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS';
 export const DELETE_POST_ERROR = 'DELETE_POST_ERROR';
 
-export const deletePost = postId => async dispatch => {
+export const deletePost = (postId: string) => async (dispatch: Dispatch) => {
   try {
     dispatch({
       type: DELETE_POST_LOADING,
@@ -109,7 +111,7 @@ export const deletePost = postId => async dispatch => {
   }
 };
 
-const deleteFirestoreData = postId => {
+const deleteFirestoreData = (postId: string) => {
   firestore()
     .collection('posts')
     .doc(postId)

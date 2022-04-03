@@ -4,11 +4,12 @@ import { connect } from 'react-redux';
 
 import { Container } from '@styles/FeedStyles';
 import { PostCard, ShimmerEffect } from 'components';
-import { getPosts, deletePost } from '../actions/FeedActions';
+import { getPosts, deletePost } from '../store/redux/actions/FeedActions';
 import { PostBody } from 'models/post';
 import { UserBody } from 'models/user';
 
 type FeedScreenType = {
+  navigation
   posts: PostBody[];
   user: UserBody;
 };
@@ -21,10 +22,7 @@ const FeedScreen: FC<FeedScreenType> = ({
   loading,
   deleted,
   user,
-  userProfile,
 }) => {
-  // console.log('posts', posts);
-  // console.log('userProfile', userProfile);
   useEffect(() => {
     getPosts();
   }, [deleted]);

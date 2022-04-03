@@ -10,7 +10,7 @@ import {
 import { connect } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
 
-import { login, fbLogin, googleLogin } from '../actions/AuthActions';
+import { login, fbLogin, googleLogin } from '../store/redux/actions/AuthActions';
 import { FormButton, FormInput, SocialButton } from '../components';
 import { Color } from '../utils/Color';
 import { emailRegEx } from '../utils/Constants';

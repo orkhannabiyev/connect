@@ -2,41 +2,50 @@ import { Alert } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import auth from '@react-native-firebase/auth';
 
-import { uploadImage } from '../utils/UploadImage';
+import { uploadImage } from 'utils/UploadImage';
+import { UserBody } from 'models/user';
+import { Dispatch } from 'store/redux/types';
+import { UserUpdateData } from 'models/userUpdateData';
+import { AppScreenRouteProp } from 'navigation/types/appStackTypes';
 
 export const USER_LOADING = 'USER_LOADING';
 export const USER_SUCCESS = 'USER_SUCCESS';
 export const USER_DOES_NOT_EXIST = 'USER_DOES_NOT_EXIST';
 export const USER_ERROR = 'USER_ERROR';
 
-export const getUser = (route, user) => dispatch => {
-  dispatch({
-    type: USER_LOADING,
-  });
-  firestore()
-    .collection('users')
-    .doc(route.params ? route.params.userId : user.uid)
-    .get()
-    .then(documentSnapshot => {
-      if (documentSnapshot.exists) {
-        return dispatch({
-          type: USER_SUCCESS,
-          payload: documentSnapshot.data(),
-        });
-      }
-      dispatch({
-        type: USER_DOES_NOT_EXIST,
-      });
-    })
-    .catch(error => {
-      dispatch({
-        type: USER_ERROR,
-        payload: error,
-      });
+export const getUser =
+  (route: AppScreenRouteProp, user: UserBody) => (dispatch: Dispatch) => {
+    dispatch({
+      type: USER_LOADING,
     });
-};
+    firestore()
+      .collection('users')
+      .doc(route.params ? route.params.userId : user.uid)
+      .get()
+      .then(documentSnapshot => {
+        if (documentSnapshot.exists) {
+          return dispatch({
+            type: USER_SUCCESS,
+            payload: documentSnapshot.data(),
+          });
+        }
+        dispatch({
+          type: USER_DOES_NOT_EXIST,
+        });
+      })
+      .catch(error => {
+        dispatch({
+          type: USER_ERROR,
+          payload: error,
+        });
+      });
+  };
 
-export const handleUpdate = async (userUid, userData, image) => {
+export const handleUpdate = async (
+  userUid: string,
+  userData: UserUpdateData,
+  image: string,
+) => {
   try {
     let imgUrl = await uploadImage(image);
 

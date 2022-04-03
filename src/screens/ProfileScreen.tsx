@@ -11,15 +11,16 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { PostCard } from '../components';
-import { selfPosts } from '../actions/SelfPostsAction';
-import { logout } from '../actions/AuthActions';
-import { getUser } from '../actions/UserActions';
-import { deletePost } from '../actions/FeedActions';
+import { selfPosts } from '../store/redux/actions/SelfPostsAction';
+import { logout } from '../store/redux/actions/AuthActions';
+import { getUser } from '../store/redux/actions/UserActions';
+import { deletePost } from '../store/redux/actions/FeedActions';
 import { Loading } from '../components/Loading';
 import { UserBody } from 'models/user';
 import { PostBody } from 'models/post';
 
 type ProfileScreenType = {
+  route;
   posts: PostBody[];
   user: UserBody;
 };

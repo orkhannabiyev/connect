@@ -19,7 +19,7 @@ import BottomSheet from 'reanimated-bottom-sheet';
 import ImagePicker from 'react-native-image-crop-picker';
 
 import { FormButton } from '../components';
-import { handleUpdate } from '../actions/UserActions';
+import { handleUpdate } from '../store/redux/actions/UserActions';
 import { totalSize } from '../utils/Dimentions';
 
 const EditProfileScreen = ({ userProfile, user }) => {

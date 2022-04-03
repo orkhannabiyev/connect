@@ -1,13 +1,17 @@
 import firestore from '@react-native-firebase/firestore';
+import { PostBody } from 'models/post';
+import { UserBody } from 'models/user';
+import { Dispatch } from 'store/redux/types';
+import { AppScreenRouteProp } from 'navigation/types/appStackTypes';
 
 export const SELF_POSTS_LOADING = 'PROFILE_LOADING';
 export const SELF_POSTS_SUCCESS = 'PROFILE_SUCCESS';
 export const SELF_POSTS_ERROR = 'PROFILE_ERROR';
 
-export const selfPosts = (route, user) => {
-  const list = [];
+export const selfPosts = (route: AppScreenRouteProp, user: UserBody) => {
+  const list: PostBody[] = [];
 
-  return dispatch => {
+  return (dispatch: Dispatch) => {
     try {
       dispatch({
         type: SELF_POSTS_LOADING,

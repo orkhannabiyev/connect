@@ -5,12 +5,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-import { LoginScreen, OnboardingScreen, SignUpScreen } from '../screens';
+import { LoginScreen, OnboardingScreen, SignUpScreen } from '@screens/index';
 
 const Stack = createStackNavigator();
 
 const AuthStack = () => {
-  const [isFirstLaunch, setIsFirstLaunch] = React.useState(null);
+  const [isFirstLaunch, setIsFirstLaunch] = React.useState(Boolean);
   let routeName;
 
   useEffect(() => {

@@ -14,15 +14,36 @@ import {
   AddPostScreen,
   MessagesScreen,
   EditProfileScreen,
-} from '../screens';
+} from '@screens/index';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
+export enum FEED_ROUTES {
+  ADD_POST = 'AddPost',
+  FEED = 'Feed',
+}
+
+export enum MESSAGES_ROUTES {
+  MESSAGES = 'Messages',
+  CHAT = 'Chat',
+}
+
+export enum PROFILE_ROUTES {
+  PROFILE = 'Profile',
+  EDIT_PROFILE = 'EditProfile',
+}
+
+export enum TAB_ROUTES {
+  FEED = 'Feed',
+  MESSAGES = 'Messages',
+  PROFILE = 'Profile',
+}
+
 const FeedStack = ({ navigation }) => (
   <Stack.Navigator>
     <Stack.Screen
-      name="RN Social"
+      name={FEED_ROUTES.FEED}
       component={FeedScreen}
       options={{
         headerTitleAlign: 'center',
@@ -49,7 +70,7 @@ const FeedStack = ({ navigation }) => (
       }}
     />
     <Stack.Screen
-      name="AddPost"
+      name={FEED_ROUTES.ADD_POST}
       component={AddPostScreen}
       options={{
         title: '',
@@ -67,15 +88,14 @@ const FeedStack = ({ navigation }) => (
         ),
       }}
     />
-    <Stack.Screen name="Profile" component={ProfileScreen} />
   </Stack.Navigator>
 );
 
 const MessageStack = ({ navigation }) => (
   <Stack.Navigator>
-    <Stack.Screen name="Messages" component={MessagesScreen} />
+    <Stack.Screen name={MESSAGES_ROUTES.MESSAGES} component={MessagesScreen} />
     <Stack.Screen
-      name="Chat"
+      name={MESSAGES_ROUTES.CHAT}
       component={ChatScreen}
       options={({ route }) => ({
         title: route.params.userName,
@@ -88,14 +108,14 @@ const MessageStack = ({ navigation }) => (
 const ProfileStack = ({ navigation }) => (
   <Stack.Navigator>
     <Stack.Screen
-      name="Profile"
+      name={PROFILE_ROUTES.PROFILE}
       component={ProfileScreen}
       options={{
         headerShown: false,
       }}
     />
     <Stack.Screen
-      name="EditProfile"
+      name={PROFILE_ROUTES.EDIT_PROFILE}
       component={EditProfileScreen}
       options={{
         headerTitle: 'Edit Profile',
@@ -117,7 +137,7 @@ const AppStack = () => {
       ? getFocusedRouteNameFromRoute(route).state.routes[route.state.index]
       : '';
 
-    if (routeName === 'Chat') {
+    if (routeName === MESSAGES_ROUTES.CHAT) {
       return false;
     }
     return true;
@@ -130,7 +150,7 @@ const AppStack = () => {
         keyboardHidesTabBar: true,
       }}>
       <Tab.Screen
-        name="Home"
+        name={TAB_ROUTES.FEED}
         component={FeedStack}
         options={({ route }) => ({
           tabBarLabel: 'Home',
@@ -145,7 +165,7 @@ const AppStack = () => {
         })}
       />
       <Tab.Screen
-        name="Messages"
+        name={TAB_ROUTES.MESSAGES}
         component={MessageStack}
         options={({ route }) => ({
           tabBarVisible: getTabBarVisibility(route),
@@ -159,7 +179,7 @@ const AppStack = () => {
         })}
       />
       <Tab.Screen
-        name="Profile"
+        name={TAB_ROUTES.PROFILE}
         component={ProfileStack}
         options={{
           tabBarIcon: ({ color, size }) => (

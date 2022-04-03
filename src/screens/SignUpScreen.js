@@ -11,7 +11,7 @@ import { connect } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
 
 import { FormButton, FormInput, SocialButton } from '../components';
-import { register, fbLogin, googleLogin } from '../actions/AuthActions';
+import { register, fbLogin, googleLogin } from '../store/redux/actions/AuthActions';
 import { totalSize } from '../utils/Dimentions';
 import { emailRegEx } from '../utils/Constants';
 import { Color } from '../utils/Color';

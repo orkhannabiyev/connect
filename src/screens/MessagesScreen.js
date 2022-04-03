@@ -3,7 +3,7 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import { FormButton } from '../components';
 import { connect } from 'react-redux';
-import { logout } from '../actions/AuthActions';
+import { logout } from '../store/redux/actions/AuthActions';
 
 const MessagesScreen = ({ user, logout }) => {
   return (

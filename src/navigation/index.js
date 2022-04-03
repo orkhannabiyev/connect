@@ -3,10 +3,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import auth from '@react-native-firebase/auth';
 import { connect } from 'react-redux';
 
-import AuthStack from './AuthStack';
-import AppStack from './AppStack';
+import AuthStack from './stacks/AuthStack';
+import AppStack from './stacks/AppStack';
 import { Loading } from '../components/Loading';
-import { loginStatus as loginStatusAction } from '../actions/AuthActions';
+import { loginStatus as loginStatusAction } from '../store/redux/actions/AuthActions';
 
 const Routes = ({ loginStatus }) => {
   const [loading, setLoading] = useState(true);
