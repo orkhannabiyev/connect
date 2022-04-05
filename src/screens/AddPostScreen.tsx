@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { FC, useState } from 'react';
 import { StyleSheet, KeyboardAvoidingView } from 'react-native';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -16,10 +16,22 @@ import {
   SubmitBtnText,
   StatusWrapper,
 } from '../styles/AddPost';
+import { UserBody } from 'models/user';
+import { PostBody } from 'models/post';
 
-const AddPostScreen = ({ loading, submitPost, user }) => {
-  const [image, setImage] = useState(null);
-  const [post, setPost] = useState(null);
+type AddPostScreenType = {
+  loading: boolean;
+  submitPost: (user: UserBody, post: PostBody, image: string) => void;
+  user: UserBody;
+};
+
+const AddPostScreen: FC<AddPostScreenType> = ({
+  loading,
+  submitPost,
+  user,
+}) => {
+  const [image, setImage] = useState<string | null>();
+  const [post, setPost] = useState<PostBody | null>();
 
   const takePhotoFromLibrary = () => {
     ImagePicker.openPicker({

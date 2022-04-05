@@ -18,13 +18,14 @@ export const submitPost =
     });
 
     const imageUrl = await uploadImage(image);
+    console.log('image', image);
 
     firestore()
       .collection('posts')
       .add({
         userId: user.uid,
         userName: user.displayName,
-        userImg: user.photoURL ? user.photoURL : null,
+        userImg: user.photoURL || null,
         post: post,
         postImg: imageUrl,
         postTime: firestore.Timestamp.fromDate(new Date()),

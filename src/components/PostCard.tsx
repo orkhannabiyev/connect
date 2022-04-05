@@ -23,15 +23,20 @@ import { UserBody } from 'models/user';
 type PostCardType = {
   post: PostBody;
   user: UserBody;
-  onDelete: () => void;
+  onDelete: (postId: string, index: number) => void;
   onPress: () => void;
+  postIndex: number;
 };
 
-const PostCard: FC<PostCardType> = ({ post, user, onDelete, onPress }) => {
+const PostCard: FC<PostCardType> = ({
+  post,
+  user,
+  onDelete,
+  onPress,
+  postIndex,
+}) => {
   const likeIcon = post.liked ? 'heart' : 'heart-outline';
   const likeIconColor = post.liked ? '#2e64e5' : '#fff';
-  // console.log('POST', post);
-  // console.log('USER', JSON.stringify(user, null, 3));
 
   return (
     <Card>
@@ -74,7 +79,7 @@ const PostCard: FC<PostCardType> = ({ post, user, onDelete, onPress }) => {
           <InteractionText>comment</InteractionText>
         </Interaction>
         {user && user.uid === post.userId ? (
-          <Interaction onPress={() => onDelete(post.id)}>
+          <Interaction onPress={() => onDelete(post.id, postIndex)}>
             <Ionicons name="md-trash-bin" size={25} />
           </Interaction>
         ) : null}

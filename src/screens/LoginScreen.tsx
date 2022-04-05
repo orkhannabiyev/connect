@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FC } from 'react';
 import {
   ScrollView,
   Text,
@@ -10,20 +10,41 @@ import {
 import { connect } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
 
-import { login, fbLogin, googleLogin } from '../store/redux/actions/AuthActions';
+import {
+  login,
+  fbLogin,
+  googleLogin,
+} from '../store/redux/actions/AuthActions';
 import { FormButton, FormInput, SocialButton } from '../components';
 import { Color } from '../utils/Color';
 import { emailRegEx } from '../utils/Constants';
+import { NavigationProp } from '@react-navigation/core';
+import { AUTH_ROUTES } from 'navigation/stacks/AuthStack';
+import { AuthStackParams } from 'navigation/types/authStackTypes';
 
-const LoginScreen = ({ navigation, login, googleLogin, fbLogin }) => {
+type LoginScreenType = {
+  navigation: NavigationProp<AuthStackParams>;
+  login: (email: string, password: string) => void;
+  googleLogin: () => void;
+  fbLogin: () => void;
+};
+
+const LoginScreen: FC<LoginScreenType> = ({
+  navigation,
+  login,
+  googleLogin,
+  fbLogin,
+}) => {
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm();
 
-  const onLogin = data => {
-    login(data.email, data.password);
+  type Data = { email: string; password: string };
+
+  const onLogin = ({ email, password }: Data) => {
+    login(email, password);
   };
 
   return (
@@ -108,7 +129,7 @@ const LoginScreen = ({ navigation, login, googleLogin, fbLogin }) => {
 
         <TouchableOpacity
           style={styles.forgotButton}
-          onPress={() => navigation.navigate('SignUp')}>
+          onPress={() => navigation.navigate(AUTH_ROUTES.SIGN_UP)}>
           <Text style={styles.navButtonText}>
             Dont have an account? Create here
           </Text>

@@ -67,49 +67,51 @@ export const DELETE_POST_LOADING = 'DELETE_POST_LOADING';
 export const DELETE_POST_SUCCESS = 'DELETE_POST_SUCCESS';
 export const DELETE_POST_ERROR = 'DELETE_POST_ERROR';
 
-export const deletePost = (postId: string) => async (dispatch: Dispatch) => {
-  try {
-    dispatch({
-      type: DELETE_POST_LOADING,
-    });
-    firestore()
-      .collection('posts')
-      .doc(postId)
-      .get()
-      .then(documentSnapshot => {
-        if (!documentSnapshot.exists) {
-          return;
-        }
-        const { postImg } = documentSnapshot.data();
-
-        if (postImg) {
-          const storageRef = storage().refFromURL(postImg);
-          const imageRef = storage().ref(storageRef.fullPath);
-
-          return imageRef
-            .delete()
-            .then(() => {
-              console.log(`${postImg} has been deleted successfully.`);
-              deleteFirestoreData(postId);
-              dispatch({
-                type: DELETE_POST_SUCCESS,
-              });
-            })
-            .catch(e => {
-              console.log('Error while deleting the image. ', e);
-            });
-        }
-        deleteFirestoreData(postId);
-        dispatch({
-          type: DELETE_POST_SUCCESS,
-        });
+export const deletePost =
+  (postId: string, index: number) => async (dispatch: Dispatch) => {
+    try {
+      dispatch({
+        type: DELETE_POST_LOADING,
       });
-  } catch (err) {
-    dispatch({
-      type: DELETE_POST_ERROR,
-    });
-  }
-};
+      firestore()
+        .collection('posts')
+        .doc(postId)
+        .get()
+        .then(documentSnapshot => {
+          if (!documentSnapshot.exists) {
+            return;
+          }
+          const { postImg } = documentSnapshot.data();
+
+          if (postImg) {
+            const storageRef = storage().refFromURL(postImg);
+            const imageRef = storage().ref(storageRef.fullPath);
+
+            return imageRef
+              .delete()
+              .then(() => {
+                console.log(`${postImg} has been deleted successfully.`);
+                deleteFirestoreData(postId);
+                dispatch({
+                  type: DELETE_POST_SUCCESS,
+                  payload: index,
+                });
+              })
+              .catch(e => {
+                console.log('Error while deleting the image. ', e);
+              });
+          }
+          deleteFirestoreData(postId);
+          dispatch({
+            type: DELETE_POST_SUCCESS,
+          });
+        });
+    } catch (err) {
+      dispatch({
+        type: DELETE_POST_ERROR,
+      });
+    }
+  };
 
 const deleteFirestoreData = (postId: string) => {
   firestore()

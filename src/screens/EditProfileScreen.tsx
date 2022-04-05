@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import {
   View,
   Text,
@@ -21,10 +21,23 @@ import ImagePicker from 'react-native-image-crop-picker';
 import { FormButton } from '../components';
 import { handleUpdate } from '../store/redux/actions/UserActions';
 import { totalSize } from '../utils/Dimentions';
+import { UserBody } from 'models/user';
+import { UserProfile } from 'models/userProfile';
 
-const EditProfileScreen = ({ userProfile, user }) => {
-  const [image, setImage] = useState(null);
-  const [userData, setUserData] = useState({});
+type EditProfileScreenType = {
+  user: UserBody;
+  userProfile: UserProfile;
+};
+
+const EditProfileScreen: FC<EditProfileScreenType> = ({
+  userProfile,
+  user,
+}) => {
+  const [image, setImage] = useState<string>();
+  const [userData, setUserData] = useState();
+
+  const bs = React.createRef();
+  const fall = new Animated.Value(1);
 
   useEffect(() => {
     setUserData(userProfile);
@@ -92,9 +105,6 @@ const EditProfileScreen = ({ userProfile, user }) => {
     </View>
   );
 
-  const bs = React.createRef();
-  const fall = new Animated.Value(1);
-
   return (
     <KeyboardAvoidingView behavior="position" style={styles.container}>
       <BottomSheet
@@ -128,8 +138,7 @@ const EditProfileScreen = ({ userProfile, user }) => {
                   uri: image
                     ? image
                     : userData
-                    ? userData.userImg ||
-                      'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg'
+                    ? userData.userImg
                     : 'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg',
                 }}
                 style={{ height: 100, width: 100 }}

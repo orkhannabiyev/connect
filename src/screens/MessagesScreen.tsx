@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { FormButton } from '../components';
 import { connect } from 'react-redux';
 import { logout } from '../store/redux/actions/AuthActions';
+import { UserBody } from 'models/user';
 
-const MessagesScreen = ({ user, logout }) => {
+type MessagesScreenType = {
+  user: UserBody;
+  logout: () => void;
+};
+
+const MessagesScreen: FC<MessagesScreenType> = ({ user, logout }) => {
   return (
     <View style={styles.container}>
       <Text>Welcome {user.uid}</Text>

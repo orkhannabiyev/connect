@@ -35,12 +35,12 @@ export default (state = initState, action) => {
     case DELETE_POST_LOADING:
       return {
         ...state,
-        loading: true,
       };
     case DELETE_POST_SUCCESS:
       return {
         ...state,
-        deleted: true,
+        posts: state.posts.filter((item, index) => index !== action.payload),
+        loading: false,
       };
     case DELETE_POST_ERROR:
       return {

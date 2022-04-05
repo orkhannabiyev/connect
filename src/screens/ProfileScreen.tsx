@@ -18,11 +18,29 @@ import { deletePost } from '../store/redux/actions/FeedActions';
 import { Loading } from '../components/Loading';
 import { UserBody } from 'models/user';
 import { PostBody } from 'models/post';
+import { NavigationProp } from '@react-navigation/core';
+import {
+  AppScreenRouteProp,
+  AppStackParams,
+} from 'navigation/types/appStackTypes';
+import { PROFILE_ROUTES } from 'navigation/stacks/AppStack';
+import { UserProfile } from 'models/userProfile';
 
 type ProfileScreenType = {
-  route;
+  navigation: NavigationProp<AppStackParams>;
   posts: PostBody[];
   user: UserBody;
+  route: AppScreenRouteProp;
+  userLoading: boolean;
+  userProfile: UserProfile;
+  userProfileLoading: boolean;
+  getUser: (route: AppScreenRouteProp, user: UserBody) => void;
+  postsLoading: boolean;
+  selfPosts: (route: AppScreenRouteProp, user: UserBody) => void;
+  deletePost: (postId: string) => void;
+  deleted: boolean;
+  deletedLoading: boolean;
+  logout: () => void;
 };
 
 const ProfileScreen: FC<ProfileScreenType> = ({
@@ -81,7 +99,7 @@ const ProfileScreen: FC<ProfileScreenType> = ({
               <TouchableOpacity
                 style={styles.userBtn}
                 onPress={() => {
-                  navigation.navigate('EditProfile');
+                  navigation.navigate(PROFILE_ROUTES.EDIT_PROFILE);
                 }}>
                 <Text style={styles.userBtnTxt}>Edit</Text>
               </TouchableOpacity>

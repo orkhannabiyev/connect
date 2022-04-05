@@ -1,12 +1,19 @@
-import React from 'react';
+import { NavigationProp } from '@react-navigation/core';
+import { AUTH_ROUTES } from 'navigation/stacks/AuthStack';
+import { AuthStackParams } from 'navigation/types/authStackTypes';
+import React, { FC } from 'react';
 import { Image } from 'react-native';
 import Onboarding from 'react-native-onboarding-swiper';
 
-const OnboardingScreen = ({ navigation }) => {
+type OnboardingScreenType = {
+  navigation: NavigationProp<AuthStackParams>;
+};
+
+const OnboardingScreen: FC<OnboardingScreenType> = ({ navigation }) => {
   return (
     <Onboarding
-      onSkip={() => navigation.navigate('Login')}
-      onDone={() => navigation.navigate('Login')}
+      onSkip={() => navigation.navigate(AUTH_ROUTES.LOGIN)}
+      onDone={() => navigation.navigate(AUTH_ROUTES.LOGIN)}
       pages={[
         {
           backgroundColor: '#0df2c9',

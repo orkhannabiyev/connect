@@ -7,11 +7,18 @@ import { PostCard, ShimmerEffect } from 'components';
 import { getPosts, deletePost } from '../store/redux/actions/FeedActions';
 import { PostBody } from 'models/post';
 import { UserBody } from 'models/user';
+import { NavigationProp } from '@react-navigation/core';
+import { AppStackParams } from 'navigation/types/appStackTypes';
+import { PROFILE_ROUTES } from 'navigation/stacks/AppStack';
 
 type FeedScreenType = {
-  navigation
+  navigation: NavigationProp<AppStackParams>;
   posts: PostBody[];
   user: UserBody;
+  getPosts: () => void;
+  deletePost: (postId: string, index: number) => void;
+  loading: boolean;
+  deleted: boolean;
 };
 
 const FeedScreen: FC<FeedScreenType> = ({
@@ -20,14 +27,13 @@ const FeedScreen: FC<FeedScreenType> = ({
   deletePost,
   posts,
   loading,
-  deleted,
   user,
 }) => {
   useEffect(() => {
     getPosts();
-  }, [deleted]);
+  }, []);
 
-  const handleDelete = (postId: string) => {
+  const handleDelete = (postId: string, index: number) => {
     Alert.alert(
       'Delete post',
       'Are you sure?',
@@ -39,7 +45,7 @@ const FeedScreen: FC<FeedScreenType> = ({
         },
         {
           text: 'Confirm',
-          onPress: () => deletePost(postId),
+          onPress: () => deletePost(postId, index),
         },
       ],
       { cancelable: false },
@@ -54,13 +60,16 @@ const FeedScreen: FC<FeedScreenType> = ({
         <Container>
           <FlatList
             data={posts}
-            renderItem={({ item }) => (
+            renderItem={({ item, index }) => (
               <PostCard
                 post={item}
                 user={user}
+                postIndex={index}
                 onDelete={handleDelete}
                 onPress={() =>
-                  navigation.navigate('Profile', { userId: item.userId })
+                  navigation.navigate(PROFILE_ROUTES.PROFILE, {
+                    userId: item.userId,
+                  })
                 }
               />
             )}
@@ -94,4 +103,6 @@ const mapDispatchToProps = {
   deletePost,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(FeedScreen);
+export default React.memo(
+  connect(mapStateToProps, mapDispatchToProps)(FeedScreen),
+);

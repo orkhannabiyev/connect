@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { FC, useRef } from 'react';
 import {
   View,
   Text,
@@ -9,14 +9,33 @@ import {
 } from 'react-native';
 import { connect } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
+import { NavigationProp } from '@react-navigation/core';
+import { AUTH_ROUTES } from '@navigation/stacks/AuthStack';
 
 import { FormButton, FormInput, SocialButton } from '../components';
-import { register, fbLogin, googleLogin } from '../store/redux/actions/AuthActions';
+import {
+  register,
+  fbLogin,
+  googleLogin,
+} from '../store/redux/actions/AuthActions';
 import { totalSize } from '../utils/Dimentions';
 import { emailRegEx } from '../utils/Constants';
 import { Color } from '../utils/Color';
+import { AuthStackParams } from 'navigation/types/authStackTypes';
 
-const SignUpScreen = ({ navigation, register, fbLogin, googleLogin }) => {
+type SignUpScreenType = {
+  navigation: NavigationProp<AuthStackParams>;
+  register: (name: string, email: string, password: string) => void;
+  fbLogin: () => void;
+  googleLogin: () => void;
+};
+
+const SignUpScreen: FC<SignUpScreenType> = ({
+  navigation,
+  register,
+  fbLogin,
+  googleLogin,
+}) => {
   const {
     control,
     handleSubmit,
@@ -24,8 +43,16 @@ const SignUpScreen = ({ navigation, register, fbLogin, googleLogin }) => {
     watch,
   } = useForm();
 
-  const onSignin = data => {
-    register(data.name, data.email, data.password);
+  const onSignin = ({
+    name,
+    email,
+    password,
+  }: {
+    name: string;
+    email: string;
+    password: string;
+  }) => {
+    register(name, email, password);
   };
 
   const password = useRef({});
@@ -69,7 +96,7 @@ const SignUpScreen = ({ navigation, register, fbLogin, googleLogin }) => {
             <FormInput
               value={value}
               error={errors.email}
-              onChangeText={userEmail => onChange(userEmail)}
+              onChangeText={(userEmail: string) => onChange(userEmail)}
               placeholder="Email"
               iconType="user"
               keyboardType="email-address"
@@ -93,7 +120,7 @@ const SignUpScreen = ({ navigation, register, fbLogin, googleLogin }) => {
             <FormInput
               value={value}
               error={errors.password}
-              onChangeText={userPassword => onChange(userPassword)}
+              onChangeText={(userPassword: string) => onChange(userPassword)}
               placeholder="Password"
               iconType="lock"
               secureTextEntry={true}
@@ -116,7 +143,7 @@ const SignUpScreen = ({ navigation, register, fbLogin, googleLogin }) => {
             <FormInput
               value={value}
               error={errors.confirmPassword}
-              onChangeText={userPassword => onChange(userPassword)}
+              onChangeText={(userPassword: string) => onChange(userPassword)}
               placeholder="Confirm Password"
               iconType="lock"
               secureTextEntry={true}
@@ -169,7 +196,7 @@ const SignUpScreen = ({ navigation, register, fbLogin, googleLogin }) => {
 
         <TouchableOpacity
           style={styles.navButton}
-          onPress={() => navigation.navigate('Login')}>
+          onPress={() => navigation.navigate(AUTH_ROUTES.LOGIN)}>
           <Text style={styles.navButtonText}>Have an account? Sign In</Text>
         </TouchableOpacity>
       </KeyboardAvoidingView>
@@ -183,7 +210,7 @@ const mapDispatchToProps = {
   googleLogin,
 };
 
-export default connect(() => ({}), mapDispatchToProps)(SignUpScreen);
+export default connect(null, mapDispatchToProps)(SignUpScreen);
 
 const styles = StyleSheet.create({
   container: {

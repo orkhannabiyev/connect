@@ -3,8 +3,11 @@ import {
   POST_SUCCESS,
   POST_ERROR,
 } from '../actions/AddPostActions';
+import { ApplicationState } from '@models/state';
 
-const initState = {
+export type AddPost = ApplicationState['addPost'];
+
+const initState: AddPost = {
   loading: false,
 };
 

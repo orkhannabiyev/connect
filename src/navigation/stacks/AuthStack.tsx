@@ -6,8 +6,15 @@ import { GoogleSignin } from '@react-native-google-signin/google-signin';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import { LoginScreen, OnboardingScreen, SignUpScreen } from '@screens/index';
+import { AuthStackParams } from 'navigation/types/authStackTypes';
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<AuthStackParams>();
+
+export enum AUTH_ROUTES {
+  ONBOARDING = 'Onboarding',
+  LOGIN = 'Login',
+  SIGN_UP = 'SignUp',
+}
 
 const AuthStack = () => {
   const [isFirstLaunch, setIsFirstLaunch] = React.useState(Boolean);
@@ -40,17 +47,17 @@ const AuthStack = () => {
   return (
     <Stack.Navigator initialRouteName={routeName} headerMode="none">
       <Stack.Screen
-        name="Onboarding"
+        name={AUTH_ROUTES.ONBOARDING}
         component={OnboardingScreen}
-        options={() => null}
+        options={{ header: () => null }}
       />
       <Stack.Screen
-        name="Login"
+        name={AUTH_ROUTES.LOGIN}
         component={LoginScreen}
         options={{ header: () => null }}
       />
       <Stack.Screen
-        name="SignUp"
+        name={AUTH_ROUTES.SIGN_UP}
         component={SignUpScreen}
         options={({ navigation }) => ({
           title: '',

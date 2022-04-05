@@ -5,7 +5,7 @@ import auth from '@react-native-firebase/auth';
 import { uploadImage } from 'utils/UploadImage';
 import { UserBody } from 'models/user';
 import { Dispatch } from 'store/redux/types';
-import { UserUpdateData } from 'models/userUpdateData';
+import { UserProfile } from 'models/userProfile';
 import { AppScreenRouteProp } from 'navigation/types/appStackTypes';
 
 export const USER_LOADING = 'USER_LOADING';
@@ -43,7 +43,7 @@ export const getUser =
 
 export const handleUpdate = async (
   userUid: string,
-  userData: UserUpdateData,
+  userData: UserProfile,
   image: string,
 ) => {
   try {

@@ -1,5 +1,4 @@
 import { RootStackParamList } from '@navigation/types/appStackTypes';
-
 declare global {
   namespace ReactNavigation {
     // eslint-disable-next-line

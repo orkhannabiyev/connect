@@ -1,4 +1,4 @@
-export type UserUpdateData = {
+export type UserProfile = {
   userImg: string;
   about: string;
   phone: string;

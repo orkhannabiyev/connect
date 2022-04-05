@@ -10,9 +10,10 @@ export type AppStackParams = {
   //       inviteById?: string;
   //     }
   //   | undefined;
-  [FEED_ROUTES.FEED]: { userId: string };
+  [FEED_ROUTES.FEED]: undefined;
   [FEED_ROUTES.ADD_POST]: undefined;
-  [PROFILE_ROUTES.PROFILE]: undefined;
+  [PROFILE_ROUTES.PROFILE]: { userId: string };
+  [PROFILE_ROUTES.EDIT_PROFILE]: undefined;
   // [APP_ROUTES.ROOM]: {
   //   roomData?: Room;
   // };
@@ -23,3 +24,5 @@ export type AppScreenNavigationProp = StackNavigationProp<
   AppStackParams,
   FEED_ROUTES.FEED
 >;
+
+export type RootStackParamList = AppStackParams;
