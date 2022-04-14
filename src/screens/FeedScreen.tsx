@@ -1,14 +1,18 @@
 import React, { FC, useEffect } from 'react';
 import { FlatList, Alert, SafeAreaView, StyleSheet } from 'react-native';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigation } from '@react-navigation/native';
 
 import { Container } from '@styles/FeedStyles';
 import { PostCard, ShimmerEffect } from 'components';
-import { getPosts, deletePost } from '../store/redux/actions/FeedActions';
+import { getPosts, deletePost } from '@store/redux/actions/FeedActions';
 import { PostBody } from 'models/post';
 import { UserBody } from 'models/user';
 import { NavigationProp } from '@react-navigation/core';
-import { AppStackParams } from 'navigation/types/appStackTypes';
+import {
+  AppScreenNavigationProp,
+  AppStackParams,
+} from 'navigation/types/appStackTypes';
 import { PROFILE_ROUTES } from 'navigation/stacks/AppStack';
 
 type FeedScreenType = {
@@ -21,16 +25,15 @@ type FeedScreenType = {
   deleted: boolean;
 };
 
-const FeedScreen: FC<FeedScreenType> = ({
-  navigation,
-  getPosts,
-  deletePost,
-  posts,
-  loading,
-  user,
-}) => {
+const FeedScreen: FC<FeedScreenType> = () => {
+  const { navigate } = useNavigation<AppScreenNavigationProp>();
+  const dispatch = useDispatch();
+  const posts = useSelector(state => state.feed.posts);
+  const loading = useSelector(state => state.feed.loading);
+  const user = useSelector(state => state.auth.user);
+
   useEffect(() => {
-    getPosts();
+    dispatch(getPosts());
   }, []);
 
   const handleDelete = (postId: string, index: number) => {
@@ -45,7 +48,7 @@ const FeedScreen: FC<FeedScreenType> = ({
         },
         {
           text: 'Confirm',
-          onPress: () => deletePost(postId, index),
+          onPress: () => dispatch(deletePost(postId, index)),
         },
       ],
       { cancelable: false },
@@ -67,7 +70,7 @@ const FeedScreen: FC<FeedScreenType> = ({
                 postIndex={index}
                 onDelete={handleDelete}
                 onPress={() =>
-                  navigation.navigate(PROFILE_ROUTES.PROFILE, {
+                  navigate(PROFILE_ROUTES.PROFILE, {
                     userId: item.userId,
                   })
                 }
@@ -75,7 +78,7 @@ const FeedScreen: FC<FeedScreenType> = ({
             )}
             keyExtractor={item => item.id}
             showsVerticalScrollIndicator={false}
-            onRefresh={getPosts}
+            onRefresh={() => dispatch(getPosts())}
             refreshing={loading}
           />
         </Container>
@@ -90,19 +93,4 @@ const styles = StyleSheet.create({
   },
 });
 
-const mapStateToProps = ({ feed, auth, userProfile }) => ({
-  posts: feed.posts,
-  loading: feed.loading,
-  deleted: feed.deleted,
-  user: auth.user,
-  userProfile: userProfile.data,
-});
-
-const mapDispatchToProps = {
-  getPosts,
-  deletePost,
-};
-
-export default React.memo(
-  connect(mapStateToProps, mapDispatchToProps)(FeedScreen),
-);
+export default React.memo(FeedScreen);

@@ -59,6 +59,9 @@ const ProfileScreen: FC<ProfileScreenType> = ({
   deletedLoading,
   logout,
 }) => {
+  console.log('user', JSON.stringify(route.params, null, 2));
+  console.log('userProfile', JSON.stringify(userProfile, null, 2));
+
   useEffect(() => {
     getUser(route, user);
     selfPosts(route, user);
@@ -99,7 +102,9 @@ const ProfileScreen: FC<ProfileScreenType> = ({
               <TouchableOpacity
                 style={styles.userBtn}
                 onPress={() => {
-                  navigation.navigate(PROFILE_ROUTES.EDIT_PROFILE);
+                  navigation.navigate(PROFILE_ROUTES.EDIT_PROFILE, {
+                    userId: route?.params?.userId,
+                  });
                 }}>
                 <Text style={styles.userBtnTxt}>Edit</Text>
               </TouchableOpacity>

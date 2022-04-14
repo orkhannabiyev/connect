@@ -16,6 +16,7 @@
       "@actions/*": ["src/actions/*"],
       "@assets/*": ["src/assets/*"],
       "@components/*": ["src/components/*"],
+      "@hooks": ["src/hooks/*"],
       "@models/*": ["src/models/*"],
       "@navigation/*": ["src/navigation/*"],
       "@reducers/*": ["src/reducers/*"],

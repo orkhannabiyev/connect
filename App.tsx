@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { Provider } from 'react-redux';
 import RNBootSplash from 'react-native-bootsplash';
 
-import Routes from './src/navigation';
-import { store } from './src/store/redux/store.ts';
+import Routes from '@navigation/index';
+import { store } from '@store/redux/store';
 
 const App = () => {
   useEffect(() => {

@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Platform,
   KeyboardAvoidingView,
+  SafeAreaView,
 } from 'react-native';
 import { connect } from 'react-redux';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -19,19 +20,24 @@ import BottomSheet from 'reanimated-bottom-sheet';
 import ImagePicker from 'react-native-image-crop-picker';
 
 import { FormButton } from '../components';
-import { handleUpdate } from '../store/redux/actions/UserActions';
+import { handleUpdate as handleUpdateAction } from '../store/redux/actions/UserActions';
 import { totalSize } from '../utils/Dimentions';
 import { UserBody } from 'models/user';
 import { UserProfile } from 'models/userProfile';
+import { Loading } from 'components/Loading';
 
 type EditProfileScreenType = {
+  loading: boolean;
   user: UserBody;
   userProfile: UserProfile;
+  handleUpdate: (uid: string, userData?: UserProfile, image?: string) => void;
 };
 
 const EditProfileScreen: FC<EditProfileScreenType> = ({
+  loading,
   userProfile,
   user,
+  handleUpdate,
 }) => {
   const [image, setImage] = useState<string>();
   const [userData, setUserData] = useState();
@@ -42,6 +48,10 @@ const EditProfileScreen: FC<EditProfileScreenType> = ({
   useEffect(() => {
     setUserData(userProfile);
   }, []);
+
+  const update = () => {
+    handleUpdate(user.uid, userData, image);
+  };
 
   const takePhotoFromCamera = () => {
     ImagePicker.openCamera({
@@ -106,138 +116,152 @@ const EditProfileScreen: FC<EditProfileScreenType> = ({
   );
 
   return (
-    <KeyboardAvoidingView behavior="position" style={styles.container}>
-      <BottomSheet
-        ref={bs}
-        snapPoints={[330, -200]}
-        enabledBottomClamp={true}
-        renderContent={renderInner}
-        renderHeader={renderHeader}
-        initialSnap={1}
-        callbackNode={fall}
-        enabledGestureInteraction={true}
-      />
-      <Animated.View
-        style={{
-          margin: 20,
-          marginBottom: totalSize(15),
-          opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),
-        }}>
-        <View style={{ alignItems: 'center' }}>
-          <TouchableOpacity onPress={() => bs.current.snapTo(0)}>
-            <View
-              style={{
-                height: 100,
-                width: 100,
-                borderRadius: 15,
-                justifyContent: 'center',
-                alignItems: 'center',
-              }}>
-              <ImageBackground
-                source={{
-                  uri: image
-                    ? image
-                    : userData
-                    ? userData.userImg
-                    : 'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg',
-                }}
-                style={{ height: 100, width: 100 }}
-                imageStyle={{ borderRadius: 15 }}>
+    <SafeAreaView style={styles.container}>
+      {loading ? (
+        <Loading size={8} />
+      ) : (
+        <KeyboardAvoidingView behavior="position" style={styles.container}>
+          <BottomSheet
+            ref={bs}
+            snapPoints={[330, -200]}
+            enabledBottomClamp={true}
+            renderContent={renderInner}
+            renderHeader={renderHeader}
+            initialSnap={1}
+            callbackNode={fall}
+            enabledGestureInteraction={true}
+          />
+          <Animated.View
+            style={{
+              margin: 20,
+              marginBottom: totalSize(15),
+              opacity: Animated.add(0.1, Animated.multiply(fall, 1.0)),
+            }}>
+            <View style={{ alignItems: 'center' }}>
+              <TouchableOpacity onPress={() => bs.current.snapTo(0)}>
                 <View
                   style={{
-                    flex: 1,
+                    height: 100,
+                    width: 100,
+                    borderRadius: 15,
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <MaterialCommunityIcons
-                    name="camera"
-                    size={35}
-                    color="#fff"
-                    style={{
-                      opacity: 0.7,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      borderWidth: 1,
-                      borderColor: '#fff',
-                      borderRadius: 10,
+                  <ImageBackground
+                    source={{
+                      uri: image
+                        ? image
+                        : userData
+                        ? userData.userImg
+                        : 'https://lh5.googleusercontent.com/-b0PKyNuQv5s/AAAAAAAAAAI/AAAAAAAAAAA/AMZuuclxAM4M1SCBGAO7Rp-QP6zgBEUkOQ/s96-c/photo.jpg',
                     }}
-                  />
+                    style={{ height: 100, width: 100 }}
+                    imageStyle={{ borderRadius: 15 }}>
+                    <View
+                      style={{
+                        flex: 1,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}>
+                      <MaterialCommunityIcons
+                        name="camera"
+                        size={35}
+                        color="#fff"
+                        style={{
+                          opacity: 0.7,
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          borderWidth: 1,
+                          borderColor: '#fff',
+                          borderRadius: 10,
+                        }}
+                      />
+                    </View>
+                  </ImageBackground>
                 </View>
-              </ImageBackground>
+              </TouchableOpacity>
+              <Text
+                style={{
+                  marginVertical: 20,
+                  fontSize: 18,
+                  fontWeight: 'bold',
+                }}>
+                {user.displayName}
+              </Text>
             </View>
-          </TouchableOpacity>
-          <Text
-            style={{ marginVertical: 20, fontSize: 18, fontWeight: 'bold' }}>
-            {user.displayName}
-          </Text>
-        </View>
-        <View style={styles.action}>
-          <Ionicons name="ios-clipboard-outline" color="#333333" size={20} />
-          <TextInput
-            multiline
-            numberOfLines={3}
-            placeholder="About Me"
-            placeholderTextColor="#666666"
-            value={userData ? userData.about : ''}
-            onChangeText={txt => setUserData({ ...userData, about: txt })}
-            autoCorrect={true}
-            style={[styles.textInput, { height: 40 }]}
-          />
-        </View>
-        <View style={styles.action}>
-          <Feather name="phone" color="#333333" size={20} />
-          <TextInput
-            placeholder="Phone"
-            placeholderTextColor="#666666"
-            keyboardType="phone-pad"
-            autoCorrect={false}
-            value={userData ? userData.phone : ''}
-            onChangeText={txt => setUserData({ ...userData, phone: txt })}
-            style={styles.textInput}
-          />
-        </View>
+            <View style={styles.action}>
+              <Ionicons
+                name="ios-clipboard-outline"
+                color="#333333"
+                size={20}
+              />
+              <TextInput
+                multiline
+                numberOfLines={3}
+                placeholder="About Me"
+                placeholderTextColor="#666666"
+                value={userData ? userData.about : ''}
+                onChangeText={txt => setUserData({ ...userData, about: txt })}
+                autoCorrect={true}
+                style={[styles.textInput, { height: 40 }]}
+              />
+            </View>
+            <View style={styles.action}>
+              <Feather name="phone" color="#333333" size={20} />
+              <TextInput
+                placeholder="Phone"
+                placeholderTextColor="#666666"
+                keyboardType="phone-pad"
+                autoCorrect={false}
+                value={userData ? userData.phone : ''}
+                onChangeText={txt => setUserData({ ...userData, phone: txt })}
+                style={styles.textInput}
+              />
+            </View>
 
-        <View style={styles.action}>
-          <FontAwesome name="globe" color="#333333" size={20} />
-          <TextInput
-            placeholder="Country"
-            placeholderTextColor="#666666"
-            autoCorrect={false}
-            value={userData ? userData.country : ''}
-            onChangeText={txt => setUserData({ ...userData, country: txt })}
-            style={styles.textInput}
-          />
-        </View>
-        <View style={styles.action}>
-          <MaterialCommunityIcons
-            name="map-marker-outline"
-            color="#333333"
-            size={20}
-          />
-          <TextInput
-            placeholder="City"
-            placeholderTextColor="#666666"
-            autoCorrect={false}
-            value={userData ? userData.city : ''}
-            onChangeText={txt => setUserData({ ...userData, city: txt })}
-            style={styles.textInput}
-          />
-        </View>
-        <FormButton
-          buttonTitle="Update"
-          onPress={() => handleUpdate(user.uid, userData, image)}
-        />
-      </Animated.View>
-    </KeyboardAvoidingView>
+            <View style={styles.action}>
+              <FontAwesome name="globe" color="#333333" size={20} />
+              <TextInput
+                placeholder="Country"
+                placeholderTextColor="#666666"
+                autoCorrect={false}
+                value={userData ? userData.country : ''}
+                onChangeText={txt => setUserData({ ...userData, country: txt })}
+                style={styles.textInput}
+              />
+            </View>
+            <View style={styles.action}>
+              <MaterialCommunityIcons
+                name="map-marker-outline"
+                color="#333333"
+                size={20}
+              />
+              <TextInput
+                placeholder="City"
+                placeholderTextColor="#666666"
+                autoCorrect={false}
+                value={userData ? userData.city : ''}
+                onChangeText={txt => setUserData({ ...userData, city: txt })}
+                style={styles.textInput}
+              />
+            </View>
+            <FormButton buttonTitle="Update" onPress={update} />
+          </Animated.View>
+        </KeyboardAvoidingView>
+      )}
+    </SafeAreaView>
   );
 };
 
 const mapStateToProps = ({ auth, userProfile }) => ({
   user: auth.user,
   userProfile: userProfile.data,
+  loading: userProfile.loading,
 });
 
-const mapDispatchToProps = {};
+const mapDispatchToProps = {
+  handleUpdate: handleUpdateAction,
+};
 
 export default connect(mapStateToProps, mapDispatchToProps)(EditProfileScreen);
 

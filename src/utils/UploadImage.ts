@@ -1,7 +1,7 @@
 import storage from '@react-native-firebase/storage';
 
 export const uploadImage = async (image: string) => {
-  if (image === null) {
+  if (!image) {
     return null;
   }
 

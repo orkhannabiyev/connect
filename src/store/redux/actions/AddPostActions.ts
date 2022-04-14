@@ -1,4 +1,3 @@
-import { Alert } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 
 import { uploadImage } from 'utils/UploadImage';
@@ -18,7 +17,6 @@ export const submitPost =
     });
 
     const imageUrl = await uploadImage(image);
-    console.log('image', image);
 
     firestore()
       .collection('posts')
@@ -34,10 +32,6 @@ export const submitPost =
       })
       .then(() => {
         console.log('Post Added!');
-        Alert.alert(
-          'Post published!',
-          'Your post has been published Successfully!',
-        );
         dispatch({
           type: POST_SUCCESS,
         });

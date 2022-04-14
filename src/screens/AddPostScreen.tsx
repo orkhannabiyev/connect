@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import ImagePicker from 'react-native-image-crop-picker';
 import { connect } from 'react-redux';
 
-import { submitPost } from '../store/redux/actions/AddPostActions';
+import { submitPost } from '@store/redux/actions/AddPostActions';
 import { Loading } from '../components/Loading';
 
 import {

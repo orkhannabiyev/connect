@@ -7,56 +7,64 @@ import {
   FB_LOGIN_SUCCESS,
   AUTH_ERROR,
 } from '../actions/AuthActions';
+import { ApplicationState } from '@models/state';
+import { HandlerAction, Handlers } from '../types';
+import { UserBody } from 'models/user';
+import { Reducer } from 'redux';
+import { ErrorAlert } from 'models/base';
 
-const initState = {
-  user: null,
+export type AuthState = ApplicationState['auth'];
+
+const initState: AuthState = {
   loading: false,
+  user: {},
+  error: '',
 };
 
-export default (state = initState, action) => {
-  switch (action.type) {
-    case AUTH_LOADING:
-      return {
-        ...state,
-        loading: true,
-      };
-    case LOG_IN_STATUS_SUCCESS:
-      return {
-        ...state,
-        user: action.payload,
-        loading: false,
-      };
-    case LOG_IN_SUCCESS:
-      return {
-        ...state,
-        user: action.payload,
-        loading: false,
-      };
-    case SIGN_UP_SUCCESS:
-      return {
-        ...state,
-        user: action.payload,
-        loading: false,
-      };
-    case GOOGLE_LOGIN_SUCCESS:
-      return {
-        ...state,
-        user: action.payload,
-        loading: false,
-      };
-    case FB_LOGIN_SUCCESS:
-      return {
-        ...state,
-        user: action.payload,
-        loading: false,
-      };
-    case AUTH_ERROR:
-      return {
-        ...state,
-        loading: false,
-        user: action.payload,
-      };
-    default:
-      return state;
-  }
+const handlers: Handlers<AuthState> = {
+  [AUTH_LOADING]: state => ({
+    ...state,
+    loading: true,
+  }),
+  [LOG_IN_STATUS_SUCCESS]: (state, action: HandlerAction<UserBody>) => ({
+    ...state,
+    user: action.payload,
+    loading: false,
+  }),
+  [LOG_IN_SUCCESS]: (state, action: HandlerAction<UserBody>) => ({
+    ...state,
+    user: action.payload,
+    loading: false,
+  }),
+  [SIGN_UP_SUCCESS]: (state, action: HandlerAction<UserBody>) => ({
+    ...state,
+    user: action.payload,
+    loading: false,
+  }),
+  [GOOGLE_LOGIN_SUCCESS]: (state, action: HandlerAction<UserBody>) => ({
+    ...state,
+    user: action.payload,
+    loading: false,
+  }),
+  [FB_LOGIN_SUCCESS]: (state, action: HandlerAction<UserBody>) => ({
+    ...state,
+    user: action.payload,
+    loading: false,
+  }),
+  [AUTH_ERROR]: (state, action: HandlerAction<ErrorAlert>) => ({
+    ...state,
+    authError: action.payload,
+    loading: false,
+  }),
+  DEFAULT: state => state,
 };
+
+const authReducer: Reducer<AuthState, HandlerAction> = (
+  state = initState,
+  action,
+) => {
+  const handler = handlers[action.type] || handlers.DEFAULT;
+  return handler(state, action);
+};
+
+export default authReducer;

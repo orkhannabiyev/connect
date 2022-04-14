@@ -1,4 +1,4 @@
-import { Action as ReduxAction, AnyAction } from 'src/store/redux';
+import { Action as ReduxAction, AnyAction } from 'redux';
 import { store } from './store';
 
 export type RootState = ReturnType<typeof store.getState>;

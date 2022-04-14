@@ -2,33 +2,39 @@ import {
   POST_LOADING,
   POST_SUCCESS,
   POST_ERROR,
-} from '../actions/AddPostActions';
+} from '@store/redux/actions/AddPostActions';
 import { ApplicationState } from '@models/state';
+import { Reducer } from 'redux';
+import { HandlerAction, Handlers } from '@store/redux/types';
 
-export type AddPost = ApplicationState['addPost'];
+export type AddPostState = ApplicationState['addPost'];
 
-const initState: AddPost = {
+const initState: AddPostState = {
   loading: false,
 };
 
-export default (state = initState, action) => {
-  switch (action.type) {
-    case POST_LOADING:
-      return {
-        ...state,
-        loading: true,
-      };
-    case POST_SUCCESS:
-      return {
-        ...state,
-        loading: false,
-      };
-    case POST_ERROR:
-      return {
-        ...state,
-        loading: false,
-      };
-    default:
-      return state;
-  }
+const handlers: Handlers<AddPostState> = {
+  [POST_LOADING]: state => ({
+    ...state,
+    loading: true,
+  }),
+  [POST_SUCCESS]: state => ({
+    ...state,
+    loading: false,
+  }),
+  [POST_ERROR]: state => ({
+    ...state,
+    loading: false,
+  }),
+  DEFAULT: state => state,
 };
+
+const addPostReducer: Reducer<AddPostState, HandlerAction> = (
+  state = initState,
+  action,
+) => {
+  const handler = handlers[action.type] || handlers.DEFAULT;
+  return handler(state, action);
+};
+
+export default addPostReducer;

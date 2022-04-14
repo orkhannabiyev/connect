@@ -1,4 +1,3 @@
-import { Alert } from 'react-native';
 import firestore from '@react-native-firebase/firestore';
 import storage from '@react-native-firebase/storage';
 import { PostBody } from 'models/post';
@@ -73,6 +72,10 @@ export const deletePost =
       dispatch({
         type: DELETE_POST_LOADING,
       });
+      dispatch({
+        type: DELETE_POST_SUCCESS,
+        payload: index,
+      });
       firestore()
         .collection('posts')
         .doc(postId)
@@ -92,19 +95,12 @@ export const deletePost =
               .then(() => {
                 console.log(`${postImg} has been deleted successfully.`);
                 deleteFirestoreData(postId);
-                dispatch({
-                  type: DELETE_POST_SUCCESS,
-                  payload: index,
-                });
               })
               .catch(e => {
                 console.log('Error while deleting the image. ', e);
               });
           }
           deleteFirestoreData(postId);
-          dispatch({
-            type: DELETE_POST_SUCCESS,
-          });
         });
     } catch (err) {
       dispatch({
@@ -118,8 +114,6 @@ const deleteFirestoreData = (postId: string) => {
     .collection('posts')
     .doc(postId)
     .delete()
-    .then(() => {
-      Alert.alert('Post deleted!', 'Your post has been deleted successfully!');
-    })
+    .then(() => {})
     .catch(e => console.log('Error deleting posst.', e));
 };
