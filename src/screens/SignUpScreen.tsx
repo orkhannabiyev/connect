@@ -22,6 +22,7 @@ import { totalSize } from '../utils/Dimentions';
 import { emailRegEx } from '../utils/Constants';
 import { Color } from '../utils/Color';
 import { AuthStackParams } from 'navigation/types/authStackTypes';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 type SignUpScreenType = {
   navigation: NavigationProp<AuthStackParams>;
@@ -59,148 +60,150 @@ const SignUpScreen: FC<SignUpScreenType> = ({
   password.current = watch('password', '');
 
   return (
-    <ScrollView>
-      <KeyboardAvoidingView
-        keyboardVerticalOffset={100}
-        style={styles.container}>
-        <Text style={styles.text}>Create an account</Text>
-        <Controller
-          name="name"
-          control={control}
-          render={({ field: { onChange, value } }) => (
-            <FormInput
-              value={value}
-              error={errors.name}
-              onChangeText={userName => onChange(userName)}
-              placeholder="Name"
-              iconType="user"
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoCorrect={false}
-            />
-          )}
-          rules={{
-            required: { value: true, message: 'Enter name' },
-            minLength: {
-              value: 3,
-              message: 'Name must have at least 3 characters',
-            },
-          }}
-          defaultValue=""
-        />
+    <SafeAreaView>
+      <ScrollView>
+        <KeyboardAvoidingView
+          keyboardVerticalOffset={100}
+          style={styles.container}>
+          <Text style={styles.text}>Create an account</Text>
+          <Controller
+            name="name"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <FormInput
+                value={value}
+                error={errors.name}
+                onChangeText={userName => onChange(userName)}
+                placeholder="Name"
+                iconType="user"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                autoCorrect={false}
+              />
+            )}
+            rules={{
+              required: { value: true, message: 'Enter name' },
+              minLength: {
+                value: 3,
+                message: 'Name must have at least 3 characters',
+              },
+            }}
+            defaultValue=""
+          />
 
-        <Controller
-          name="email"
-          control={control}
-          render={({ field: { onChange, value } }) => (
-            <FormInput
-              value={value}
-              error={errors.email}
-              onChangeText={(userEmail: string) => onChange(userEmail)}
-              placeholder="Email"
-              iconType="user"
-              keyboardType="email-address"
-              autoCapitalize="none"
-              autoCorrect={false}
-            />
-          )}
-          rules={{
-            required: { value: true, message: 'Enter email' },
-            pattern: {
-              value: emailRegEx,
-              message: 'Invalid email',
-            },
-          }}
-          defaultValue=""
-        />
-        <Controller
-          name="password"
-          control={control}
-          render={({ field: { onChange, value } }) => (
-            <FormInput
-              value={value}
-              error={errors.password}
-              onChangeText={(userPassword: string) => onChange(userPassword)}
-              placeholder="Password"
-              iconType="lock"
-              secureTextEntry={true}
-            />
-          )}
-          rules={{
-            required: { value: true, message: 'Enter password' },
-            minLength: {
-              value: 6,
-              message: 'Password must have at least 6 characters',
-            },
-          }}
-          defaultValue=""
-        />
+          <Controller
+            name="email"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <FormInput
+                value={value}
+                error={errors.email}
+                onChangeText={(userEmail: string) => onChange(userEmail)}
+                placeholder="Email"
+                iconType="user"
+                keyboardType="email-address"
+                autoCapitalize="none"
+                autoCorrect={false}
+              />
+            )}
+            rules={{
+              required: { value: true, message: 'Enter email' },
+              pattern: {
+                value: emailRegEx,
+                message: 'Invalid email',
+              },
+            }}
+            defaultValue=""
+          />
+          <Controller
+            name="password"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <FormInput
+                value={value}
+                error={errors.password}
+                onChangeText={(userPassword: string) => onChange(userPassword)}
+                placeholder="Password"
+                iconType="lock"
+                secureTextEntry={true}
+              />
+            )}
+            rules={{
+              required: { value: true, message: 'Enter password' },
+              minLength: {
+                value: 6,
+                message: 'Password must have at least 6 characters',
+              },
+            }}
+            defaultValue=""
+          />
 
-        <Controller
-          name="confirmPassword"
-          control={control}
-          render={({ field: { onChange, value } }) => (
-            <FormInput
-              value={value}
-              error={errors.confirmPassword}
-              onChangeText={(userPassword: string) => onChange(userPassword)}
-              placeholder="Confirm Password"
-              iconType="lock"
-              secureTextEntry={true}
-            />
-          )}
-          rules={{
-            required: { value: true, message: 'Confirm password' },
-            minLength: {
-              value: 6,
-              message: 'Password must have at least 6 characters',
-            },
-            validate: value =>
-              value === password.current || 'The passwords do not match',
-          }}
-          defaultValue=""
-        />
+          <Controller
+            name="confirmPassword"
+            control={control}
+            render={({ field: { onChange, value } }) => (
+              <FormInput
+                value={value}
+                error={errors.confirmPassword}
+                onChangeText={(userPassword: string) => onChange(userPassword)}
+                placeholder="Confirm Password"
+                iconType="lock"
+                secureTextEntry={true}
+              />
+            )}
+            rules={{
+              required: { value: true, message: 'Confirm password' },
+              minLength: {
+                value: 6,
+                message: 'Password must have at least 6 characters',
+              },
+              validate: value =>
+                value === password.current || 'The passwords do not match',
+            }}
+            defaultValue=""
+          />
 
-        <FormButton buttonTitle="Sign Up" onPress={handleSubmit(onSignin)} />
+          <FormButton buttonTitle="Sign Up" onPress={handleSubmit(onSignin)} />
 
-        <SocialButton
-          buttonTitle="Sign in with Facebook"
-          onPress={() => fbLogin()}
-          btnType="facebook"
-          color={Color.fb}
-          backgroundColor={Color.fbBackground}
-        />
+          <SocialButton
+            buttonTitle="Sign in with Facebook"
+            onPress={() => fbLogin()}
+            btnType="facebook"
+            color={Color.fb}
+            backgroundColor={Color.fbBackground}
+          />
 
-        <SocialButton
-          buttonTitle="Sign in with Google"
-          onPress={() => googleLogin()}
-          btnType="google"
-          color={Color.google}
-          backgroundColor={Color.googleBackground}
-        />
+          <SocialButton
+            buttonTitle="Sign in with Google"
+            onPress={() => googleLogin()}
+            btnType="google"
+            color={Color.google}
+            backgroundColor={Color.googleBackground}
+          />
 
-        <View style={styles.textPrivate}>
-          <Text style={styles.color_textPrivate}>
-            By registering, you confirm that you accept our{' '}
-          </Text>
-          <TouchableOpacity onPress={() => {}}>
-            <Text style={[styles.color_textPrivate, { color: '#e88832' }]}>
-              Terms of service
+          <View style={styles.textPrivate}>
+            <Text style={styles.color_textPrivate}>
+              By registering, you confirm that you accept our{' '}
             </Text>
-          </TouchableOpacity>
-          <Text style={styles.color_textPrivate}> and </Text>
-          <Text style={[styles.color_textPrivate, { color: '#e88832' }]}>
-            Privacy Policy
-          </Text>
-        </View>
+            <TouchableOpacity onPress={() => {}}>
+              <Text style={[styles.color_textPrivate, { color: '#e88832' }]}>
+                Terms of service
+              </Text>
+            </TouchableOpacity>
+            <Text style={styles.color_textPrivate}> and </Text>
+            <Text style={[styles.color_textPrivate, { color: '#e88832' }]}>
+              Privacy Policy
+            </Text>
+          </View>
 
-        <TouchableOpacity
-          style={styles.navButton}
-          onPress={() => navigation.navigate(AUTH_ROUTES.LOGIN)}>
-          <Text style={styles.navButtonText}>Have an account? Sign In</Text>
-        </TouchableOpacity>
-      </KeyboardAvoidingView>
-    </ScrollView>
+          <TouchableOpacity
+            style={styles.navButton}
+            onPress={() => navigation.navigate(AUTH_ROUTES.LOGIN)}>
+            <Text style={styles.navButtonText}>Have an account? Sign In</Text>
+          </TouchableOpacity>
+        </KeyboardAvoidingView>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 

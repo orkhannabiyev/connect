@@ -212,11 +212,30 @@ PODS:
     - abseil/base/base_internal
     - abseil/base/config
     - abseil/meta/type_traits
-  - AppAuth (1.4.0):
-    - AppAuth/Core (= 1.4.0)
-    - AppAuth/ExternalUserAgent (= 1.4.0)
-  - AppAuth/Core (1.4.0)
-  - AppAuth/ExternalUserAgent (1.4.0)
+  - AppAuth (1.6.0):
+    - AppAuth/Core (= 1.6.0)
+    - AppAuth/ExternalUserAgent (= 1.6.0)
+  - AppAuth/Core (1.6.0)
+  - AppAuth/ExternalUserAgent (1.6.0):
+    - AppAuth/Core
+  - appcenter-analytics (4.4.5):
+    - AppCenter/Analytics (~> 4.0)
+    - AppCenterReactNativeShared (~> 4.0)
+    - React-Core
+  - appcenter-core (4.4.5):
+    - AppCenterReactNativeShared (~> 4.0)
+    - React-Core
+  - appcenter-crashes (4.4.5):
+    - AppCenter/Crashes (~> 4.0)
+    - AppCenterReactNativeShared (~> 4.0)
+    - React-Core
+  - AppCenter/Analytics (4.4.3):
+    - AppCenter/Core
+  - AppCenter/Core (4.4.3)
+  - AppCenter/Crashes (4.4.3):
+    - AppCenter/Core
+  - AppCenterReactNativeShared (4.4.5):
+    - AppCenter/Core (= 4.4.3)
   - boost-for-react-native (1.63.0)
   - BoringSSL-GRPC (0.0.7):
     - BoringSSL-GRPC/Implementation (= 0.0.7)
@@ -225,14 +244,14 @@ PODS:
     - BoringSSL-GRPC/Interface (= 0.0.7)
   - BoringSSL-GRPC/Interface (0.0.7)
   - DoubleConversion (1.1.6)
-  - FBLazyVector (0.64.0)
-  - FBReactNativeSpec (0.64.0):
+  - FBLazyVector (0.64.4)
+  - FBReactNativeSpec (0.64.4):
     - RCT-Folly (= 2020.01.13.00)
-    - RCTRequired (= 0.64.0)
-    - RCTTypeSafety (= 0.64.0)
-    - React-Core (= 0.64.0)
-    - React-jsi (= 0.64.0)
-    - ReactCommon/turbomodule/core (= 0.64.0)
+    - RCTRequired (= 0.64.4)
+    - RCTTypeSafety (= 0.64.4)
+    - React-Core (= 0.64.4)
+    - React-jsi (= 0.64.4)
+    - ReactCommon/turbomodule/core (= 0.64.4)
   - FBSDKCoreKit (8.2.0):
     - FBSDKCoreKit/Basics (= 8.2.0)
     - FBSDKCoreKit/Core (= 8.2.0)
@@ -247,32 +266,32 @@ PODS:
     - FBSDKShareKit/Share (= 8.2.0)
   - FBSDKShareKit/Share (8.2.0):
     - FBSDKCoreKit (~> 8.2.0)
-  - Firebase/Auth (7.11.0):
+  - Firebase/Auth (7.7.0):
     - Firebase/CoreOnly
-    - FirebaseAuth (~> 7.11.0)
-  - Firebase/CoreOnly (7.11.0):
-    - FirebaseCore (= 7.11.0)
-  - Firebase/Firestore (7.11.0):
+    - FirebaseAuth (~> 7.7.0)
+  - Firebase/CoreOnly (7.7.0):
+    - FirebaseCore (= 7.7.0)
+  - Firebase/Firestore (7.7.0):
     - Firebase/CoreOnly
-    - FirebaseFirestore (~> 7.11.0)
-  - Firebase/Storage (7.11.0):
+    - FirebaseFirestore (~> 7.7.0)
+  - Firebase/Storage (7.7.0):
     - Firebase/CoreOnly
-    - FirebaseStorage (~> 7.11.0)
-  - FirebaseAuth (7.11.0):
+    - FirebaseStorage (~> 7.7.0)
+  - FirebaseAuth (7.7.0):
     - FirebaseCore (~> 7.0)
     - GoogleUtilities/AppDelegateSwizzler (~> 7.0)
     - GoogleUtilities/Environment (~> 7.0)
     - GTMSessionFetcher/Core (~> 1.4)
-  - FirebaseCore (7.11.0):
+  - FirebaseCore (7.7.0):
     - FirebaseCoreDiagnostics (~> 7.4)
     - GoogleUtilities/Environment (~> 7.0)
     - GoogleUtilities/Logger (~> 7.0)
-  - FirebaseCoreDiagnostics (7.11.0):
-    - GoogleDataTransport (~> 8.4)
+  - FirebaseCoreDiagnostics (7.9.0):
+    - GoogleDataTransport (~> 8.0)
     - GoogleUtilities/Environment (~> 7.0)
     - GoogleUtilities/Logger (~> 7.0)
-    - nanopb (~> 2.30908.0)
-  - FirebaseFirestore (7.11.0):
+    - nanopb (~> 2.30907.0)
+  - FirebaseFirestore (7.7.0):
     - abseil/algorithm (= 0.20200225.0)
     - abseil/base (= 0.20200225.0)
     - abseil/memory (= 0.20200225.0)
@@ -283,33 +302,33 @@ PODS:
     - FirebaseCore (~> 7.0)
     - "gRPC-C++ (~> 1.28.0)"
     - leveldb-library (~> 1.22)
-    - nanopb (~> 2.30908.0)
-  - FirebaseStorage (7.11.0):
+    - nanopb (~> 2.30907.0)
+  - FirebaseStorage (7.7.0):
     - FirebaseCore (~> 7.0)
     - GTMSessionFetcher/Core (~> 1.4)
   - glog (0.3.5)
-  - GoogleDataTransport (8.4.0):
+  - GoogleDataTransport (8.3.1):
     - GoogleUtilities/Environment (~> 7.2)
-    - nanopb (~> 2.30908.0)
+    - nanopb (~> 2.30907.0)
     - PromisesObjC (~> 1.2)
   - GoogleSignIn (5.0.2):
     - AppAuth (~> 1.2)
     - GTMAppAuth (~> 1.0)
     - GTMSessionFetcher/Core (~> 1.1)
-  - GoogleUtilities/AppDelegateSwizzler (7.7.0):
+  - GoogleUtilities/AppDelegateSwizzler (7.11.0):
     - GoogleUtilities/Environment
     - GoogleUtilities/Logger
     - GoogleUtilities/Network
-  - GoogleUtilities/Environment (7.7.0):
+  - GoogleUtilities/Environment (7.11.0):
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleUtilities/Logger (7.7.0):
+  - GoogleUtilities/Logger (7.11.0):
     - GoogleUtilities/Environment
-  - GoogleUtilities/Network (7.7.0):
+  - GoogleUtilities/Network (7.11.0):
     - GoogleUtilities/Logger
     - "GoogleUtilities/NSData+zlib"
     - GoogleUtilities/Reachability
-  - "GoogleUtilities/NSData+zlib (7.7.0)"
-  - GoogleUtilities/Reachability (7.7.0):
+  - "GoogleUtilities/NSData+zlib (7.11.0)"
+  - GoogleUtilities/Reachability (7.11.0):
     - GoogleUtilities/Logger
   - "gRPC-C++ (1.28.2)":
     - "gRPC-C++/Implementation (= 1.28.2)"
@@ -335,16 +354,16 @@ PODS:
     - BoringSSL-GRPC (= 0.0.7)
     - gRPC-Core/Interface (= 1.28.2)
   - gRPC-Core/Interface (1.28.2)
-  - GTMAppAuth (1.2.2):
-    - AppAuth/Core (~> 1.4)
-    - GTMSessionFetcher/Core (~> 1.5)
-  - GTMSessionFetcher/Core (1.7.0)
+  - GTMAppAuth (1.3.1):
+    - AppAuth/Core (~> 1.6)
+    - GTMSessionFetcher/Core (< 3.0, >= 1.5)
+  - GTMSessionFetcher/Core (1.7.2)
   - leveldb-library (1.22.1)
-  - nanopb (2.30908.0):
-    - nanopb/decode (= 2.30908.0)
-    - nanopb/encode (= 2.30908.0)
-  - nanopb/decode (2.30908.0)
-  - nanopb/encode (2.30908.0)
+  - nanopb (2.30907.0):
+    - nanopb/decode (= 2.30907.0)
+    - nanopb/encode (= 2.30907.0)
+  - nanopb/decode (2.30907.0)
+  - nanopb/encode (2.30907.0)
   - PromisesObjC (1.2.12)
   - RCT-Folly (2020.01.13.00):
     - boost-for-react-native
@@ -355,190 +374,190 @@ PODS:
     - boost-for-react-native
     - DoubleConversion
     - glog
-  - RCTRequired (0.64.0)
-  - RCTTypeSafety (0.64.0):
-    - FBLazyVector (= 0.64.0)
+  - RCTRequired (0.64.4)
+  - RCTTypeSafety (0.64.4):
+    - FBLazyVector (= 0.64.4)
     - RCT-Folly (= 2020.01.13.00)
-    - RCTRequired (= 0.64.0)
-    - React-Core (= 0.64.0)
-  - React (0.64.0):
-    - React-Core (= 0.64.0)
-    - React-Core/DevSupport (= 0.64.0)
-    - React-Core/RCTWebSocket (= 0.64.0)
-    - React-RCTActionSheet (= 0.64.0)
-    - React-RCTAnimation (= 0.64.0)
-    - React-RCTBlob (= 0.64.0)
-    - React-RCTImage (= 0.64.0)
-    - React-RCTLinking (= 0.64.0)
-    - React-RCTNetwork (= 0.64.0)
-    - React-RCTSettings (= 0.64.0)
-    - React-RCTText (= 0.64.0)
-    - React-RCTVibration (= 0.64.0)
-  - React-callinvoker (0.64.0)
-  - React-Core (0.64.0):
+    - RCTRequired (= 0.64.4)
+    - React-Core (= 0.64.4)
+  - React (0.64.4):
+    - React-Core (= 0.64.4)
+    - React-Core/DevSupport (= 0.64.4)
+    - React-Core/RCTWebSocket (= 0.64.4)
+    - React-RCTActionSheet (= 0.64.4)
+    - React-RCTAnimation (= 0.64.4)
+    - React-RCTBlob (= 0.64.4)
+    - React-RCTImage (= 0.64.4)
+    - React-RCTLinking (= 0.64.4)
+    - React-RCTNetwork (= 0.64.4)
+    - React-RCTSettings (= 0.64.4)
+    - React-RCTText (= 0.64.4)
+    - React-RCTVibration (= 0.64.4)
+  - React-callinvoker (0.64.4)
+  - React-Core (0.64.4):
     - glog
     - RCT-Folly (= 2020.01.13.00)
-    - React-Core/Default (= 0.64.0)
-    - React-cxxreact (= 0.64.0)
-    - React-jsi (= 0.64.0)
-    - React-jsiexecutor (= 0.64.0)
-    - React-perflogger (= 0.64.0)
+    - React-Core/Default (= 0.64.4)
+    - React-cxxreact (= 0.64.4)
+    - React-jsi (= 0.64.4)
+    - React-jsiexecutor (= 0.64.4)
+    - React-perflogger (= 0.64.4)
     - Yoga
-  - React-Core/CoreModulesHeaders (0.64.0):
-    - glog
-    - RCT-Folly (= 2020.01.13.00)
-    - React-Core/Default
-    - React-cxxreact (= 0.64.0)
-    - React-jsi (= 0.64.0)
-    - React-jsiexecutor (= 0.64.0)
-    - React-perflogger (= 0.64.0)
-    - Yoga
-  - React-Core/Default (0.64.0):
-    - glog
-    - RCT-Folly (= 2020.01.13.00)
-    - React-cxxreact (= 0.64.0)
-    - React-jsi (= 0.64.0)
-    - React-jsiexecutor (= 0.64.0)
-    - React-perflogger (= 0.64.0)
-    - Yoga
-  - React-Core/DevSupport (0.64.0):
-    - glog
-    - RCT-Folly (= 2020.01.13.00)
-    - React-Core/Default (= 0.64.0)
-    - React-Core/RCTWebSocket (= 0.64.0)
-    - React-cxxreact (= 0.64.0)
-    - React-jsi (= 0.64.0)
-    - React-jsiexecutor (= 0.64.0)
-    - React-jsinspector (= 0.64.0)
-    - React-perflogger (= 0.64.0)
-    - Yoga
-  - React-Core/RCTActionSheetHeaders (0.64.0):
+  - React-Core/CoreModulesHeaders (0.64.4):
     - glog
     - RCT-Folly (= 2020.01.13.00)
     - React-Core/Default
-    - React-cxxreact (= 0.64.0)
-    - React-jsi (= 0.64.0)
-    - React-jsiexecutor (= 0.64.0)
-    - React-perflogger (= 0.64.0)
+    - React-cxxreact (= 0.64.4)
+    - React-jsi (= 0.64.4)
+    - React-jsiexecutor (= 0.64.4)
+    - React-perflogger (= 0.64.4)
     - Yoga
-  - React-Core/RCTAnimationHeaders (0.64.0):
+  - React-Core/Default (0.64.4):
+    - glog
+    - RCT-Folly (= 2020.01.13.00)
+    - React-cxxreact (= 0.64.4)
+    - React-jsi (= 0.64.4)
+    - React-jsiexecutor (= 0.64.4)
+    - React-perflogger (= 0.64.4)
+    - Yoga
+  - React-Core/DevSupport (0.64.4):
+    - glog
+    - RCT-Folly (= 2020.01.13.00)
+    - React-Core/Default (= 0.64.4)
+    - React-Core/RCTWebSocket (= 0.64.4)
+    - React-cxxreact (= 0.64.4)
+    - React-jsi (= 0.64.4)
+    - React-jsiexecutor (= 0.64.4)
+    - React-jsinspector (= 0.64.4)
+    - React-perflogger (= 0.64.4)
+    - Yoga
+  - React-Core/RCTActionSheetHeaders (0.64.4):
     - glog
     - RCT-Folly (= 2020.01.13.00)
     - React-Core/Default
-    - React-cxxreact (= 0.64.0)
-    - React-jsi (= 0.64.0)
-    - React-jsiexecutor (= 0.64.0)
-    - React-perflogger (= 0.64.0)
+    - React-cxxreact (= 0.64.4)
+    - React-jsi (= 0.64.4)
+    - React-jsiexecutor (= 0.64.4)
+    - React-perflogger (= 0.64.4)
     - Yoga
-  - React-Core/RCTBlobHeaders (0.64.0):
+  - React-Core/RCTAnimationHeaders (0.64.4):
     - glog
     - RCT-Folly (= 2020.01.13.00)
     - React-Core/Default
-    - React-cxxreact (= 0.64.0)
-    - React-jsi (= 0.64.0)
-    - React-jsiexecutor (= 0.64.0)
-    - React-perflogger (= 0.64.0)
+    - React-cxxreact (= 0.64.4)
+    - React-jsi (= 0.64.4)
+    - React-jsiexecutor (= 0.64.4)
+    - React-perflogger (= 0.64.4)
     - Yoga
-  - React-Core/RCTImageHeaders (0.64.0):
+  - React-Core/RCTBlobHeaders (0.64.4):
     - glog
     - RCT-Folly (= 2020.01.13.00)
     - React-Core/Default
-    - React-cxxreact (= 0.64.0)
-    - React-jsi (= 0.64.0)
-    - React-jsiexecutor (= 0.64.0)
-    - React-perflogger (= 0.64.0)
+    - React-cxxreact (= 0.64.4)
+    - React-jsi (= 0.64.4)
+    - React-jsiexecutor (= 0.64.4)
+    - React-perflogger (= 0.64.4)
     - Yoga
-  - React-Core/RCTLinkingHeaders (0.64.0):
+  - React-Core/RCTImageHeaders (0.64.4):
     - glog
     - RCT-Folly (= 2020.01.13.00)
     - React-Core/Default
-    - React-cxxreact (= 0.64.0)
-    - React-jsi (= 0.64.0)
-    - React-jsiexecutor (= 0.64.0)
-    - React-perflogger (= 0.64.0)
+    - React-cxxreact (= 0.64.4)
+    - React-jsi (= 0.64.4)
+    - React-jsiexecutor (= 0.64.4)
+    - React-perflogger (= 0.64.4)
     - Yoga
-  - React-Core/RCTNetworkHeaders (0.64.0):
+  - React-Core/RCTLinkingHeaders (0.64.4):
     - glog
     - RCT-Folly (= 2020.01.13.00)
     - React-Core/Default
-    - React-cxxreact (= 0.64.0)
-    - React-jsi (= 0.64.0)
-    - React-jsiexecutor (= 0.64.0)
-    - React-perflogger (= 0.64.0)
+    - React-cxxreact (= 0.64.4)
+    - React-jsi (= 0.64.4)
+    - React-jsiexecutor (= 0.64.4)
+    - React-perflogger (= 0.64.4)
     - Yoga
-  - React-Core/RCTSettingsHeaders (0.64.0):
+  - React-Core/RCTNetworkHeaders (0.64.4):
     - glog
     - RCT-Folly (= 2020.01.13.00)
     - React-Core/Default
-    - React-cxxreact (= 0.64.0)
-    - React-jsi (= 0.64.0)
-    - React-jsiexecutor (= 0.64.0)
-    - React-perflogger (= 0.64.0)
+    - React-cxxreact (= 0.64.4)
+    - React-jsi (= 0.64.4)
+    - React-jsiexecutor (= 0.64.4)
+    - React-perflogger (= 0.64.4)
     - Yoga
-  - React-Core/RCTTextHeaders (0.64.0):
+  - React-Core/RCTSettingsHeaders (0.64.4):
     - glog
     - RCT-Folly (= 2020.01.13.00)
     - React-Core/Default
-    - React-cxxreact (= 0.64.0)
-    - React-jsi (= 0.64.0)
-    - React-jsiexecutor (= 0.64.0)
-    - React-perflogger (= 0.64.0)
+    - React-cxxreact (= 0.64.4)
+    - React-jsi (= 0.64.4)
+    - React-jsiexecutor (= 0.64.4)
+    - React-perflogger (= 0.64.4)
     - Yoga
-  - React-Core/RCTVibrationHeaders (0.64.0):
+  - React-Core/RCTTextHeaders (0.64.4):
     - glog
     - RCT-Folly (= 2020.01.13.00)
     - React-Core/Default
-    - React-cxxreact (= 0.64.0)
-    - React-jsi (= 0.64.0)
-    - React-jsiexecutor (= 0.64.0)
-    - React-perflogger (= 0.64.0)
+    - React-cxxreact (= 0.64.4)
+    - React-jsi (= 0.64.4)
+    - React-jsiexecutor (= 0.64.4)
+    - React-perflogger (= 0.64.4)
     - Yoga
-  - React-Core/RCTWebSocket (0.64.0):
+  - React-Core/RCTVibrationHeaders (0.64.4):
     - glog
     - RCT-Folly (= 2020.01.13.00)
-    - React-Core/Default (= 0.64.0)
-    - React-cxxreact (= 0.64.0)
-    - React-jsi (= 0.64.0)
-    - React-jsiexecutor (= 0.64.0)
-    - React-perflogger (= 0.64.0)
+    - React-Core/Default
+    - React-cxxreact (= 0.64.4)
+    - React-jsi (= 0.64.4)
+    - React-jsiexecutor (= 0.64.4)
+    - React-perflogger (= 0.64.4)
     - Yoga
-  - React-CoreModules (0.64.0):
-    - FBReactNativeSpec (= 0.64.0)
+  - React-Core/RCTWebSocket (0.64.4):
+    - glog
     - RCT-Folly (= 2020.01.13.00)
-    - RCTTypeSafety (= 0.64.0)
-    - React-Core/CoreModulesHeaders (= 0.64.0)
-    - React-jsi (= 0.64.0)
-    - React-RCTImage (= 0.64.0)
-    - ReactCommon/turbomodule/core (= 0.64.0)
-  - React-cxxreact (0.64.0):
+    - React-Core/Default (= 0.64.4)
+    - React-cxxreact (= 0.64.4)
+    - React-jsi (= 0.64.4)
+    - React-jsiexecutor (= 0.64.4)
+    - React-perflogger (= 0.64.4)
+    - Yoga
+  - React-CoreModules (0.64.4):
+    - FBReactNativeSpec (= 0.64.4)
+    - RCT-Folly (= 2020.01.13.00)
+    - RCTTypeSafety (= 0.64.4)
+    - React-Core/CoreModulesHeaders (= 0.64.4)
+    - React-jsi (= 0.64.4)
+    - React-RCTImage (= 0.64.4)
+    - ReactCommon/turbomodule/core (= 0.64.4)
+  - React-cxxreact (0.64.4):
     - boost-for-react-native (= 1.63.0)
     - DoubleConversion
     - glog
     - RCT-Folly (= 2020.01.13.00)
-    - React-callinvoker (= 0.64.0)
-    - React-jsi (= 0.64.0)
-    - React-jsinspector (= 0.64.0)
-    - React-perflogger (= 0.64.0)
-    - React-runtimeexecutor (= 0.64.0)
-  - React-jsi (0.64.0):
+    - React-callinvoker (= 0.64.4)
+    - React-jsi (= 0.64.4)
+    - React-jsinspector (= 0.64.4)
+    - React-perflogger (= 0.64.4)
+    - React-runtimeexecutor (= 0.64.4)
+  - React-jsi (0.64.4):
     - boost-for-react-native (= 1.63.0)
     - DoubleConversion
     - glog
     - RCT-Folly (= 2020.01.13.00)
-    - React-jsi/Default (= 0.64.0)
-  - React-jsi/Default (0.64.0):
+    - React-jsi/Default (= 0.64.4)
+  - React-jsi/Default (0.64.4):
     - boost-for-react-native (= 1.63.0)
     - DoubleConversion
     - glog
     - RCT-Folly (= 2020.01.13.00)
-  - React-jsiexecutor (0.64.0):
+  - React-jsiexecutor (0.64.4):
     - DoubleConversion
     - glog
     - RCT-Folly (= 2020.01.13.00)
-    - React-cxxreact (= 0.64.0)
-    - React-jsi (= 0.64.0)
-    - React-perflogger (= 0.64.0)
-  - React-jsinspector (0.64.0)
+    - React-cxxreact (= 0.64.4)
+    - React-jsi (= 0.64.4)
+    - React-perflogger (= 0.64.4)
+  - React-jsinspector (0.64.4)
   - react-native-fbsdk (3.0.0):
     - React
     - react-native-fbsdk/Core (= 3.0.0)
@@ -553,91 +572,91 @@ PODS:
   - react-native-fbsdk/Share (3.0.0):
     - FBSDKShareKit (~> 8.1)
     - React
-  - react-native-safe-area-context (3.3.2):
+  - react-native-safe-area-context (3.4.1):
     - React-Core
-  - React-perflogger (0.64.0)
-  - React-RCTActionSheet (0.64.0):
-    - React-Core/RCTActionSheetHeaders (= 0.64.0)
-  - React-RCTAnimation (0.64.0):
-    - FBReactNativeSpec (= 0.64.0)
+  - React-perflogger (0.64.4)
+  - React-RCTActionSheet (0.64.4):
+    - React-Core/RCTActionSheetHeaders (= 0.64.4)
+  - React-RCTAnimation (0.64.4):
+    - FBReactNativeSpec (= 0.64.4)
     - RCT-Folly (= 2020.01.13.00)
-    - RCTTypeSafety (= 0.64.0)
-    - React-Core/RCTAnimationHeaders (= 0.64.0)
-    - React-jsi (= 0.64.0)
-    - ReactCommon/turbomodule/core (= 0.64.0)
-  - React-RCTBlob (0.64.0):
-    - FBReactNativeSpec (= 0.64.0)
+    - RCTTypeSafety (= 0.64.4)
+    - React-Core/RCTAnimationHeaders (= 0.64.4)
+    - React-jsi (= 0.64.4)
+    - ReactCommon/turbomodule/core (= 0.64.4)
+  - React-RCTBlob (0.64.4):
+    - FBReactNativeSpec (= 0.64.4)
     - RCT-Folly (= 2020.01.13.00)
-    - React-Core/RCTBlobHeaders (= 0.64.0)
-    - React-Core/RCTWebSocket (= 0.64.0)
-    - React-jsi (= 0.64.0)
-    - React-RCTNetwork (= 0.64.0)
-    - ReactCommon/turbomodule/core (= 0.64.0)
-  - React-RCTImage (0.64.0):
-    - FBReactNativeSpec (= 0.64.0)
+    - React-Core/RCTBlobHeaders (= 0.64.4)
+    - React-Core/RCTWebSocket (= 0.64.4)
+    - React-jsi (= 0.64.4)
+    - React-RCTNetwork (= 0.64.4)
+    - ReactCommon/turbomodule/core (= 0.64.4)
+  - React-RCTImage (0.64.4):
+    - FBReactNativeSpec (= 0.64.4)
     - RCT-Folly (= 2020.01.13.00)
-    - RCTTypeSafety (= 0.64.0)
-    - React-Core/RCTImageHeaders (= 0.64.0)
-    - React-jsi (= 0.64.0)
-    - React-RCTNetwork (= 0.64.0)
-    - ReactCommon/turbomodule/core (= 0.64.0)
-  - React-RCTLinking (0.64.0):
-    - FBReactNativeSpec (= 0.64.0)
-    - React-Core/RCTLinkingHeaders (= 0.64.0)
-    - React-jsi (= 0.64.0)
-    - ReactCommon/turbomodule/core (= 0.64.0)
-  - React-RCTNetwork (0.64.0):
-    - FBReactNativeSpec (= 0.64.0)
+    - RCTTypeSafety (= 0.64.4)
+    - React-Core/RCTImageHeaders (= 0.64.4)
+    - React-jsi (= 0.64.4)
+    - React-RCTNetwork (= 0.64.4)
+    - ReactCommon/turbomodule/core (= 0.64.4)
+  - React-RCTLinking (0.64.4):
+    - FBReactNativeSpec (= 0.64.4)
+    - React-Core/RCTLinkingHeaders (= 0.64.4)
+    - React-jsi (= 0.64.4)
+    - ReactCommon/turbomodule/core (= 0.64.4)
+  - React-RCTNetwork (0.64.4):
+    - FBReactNativeSpec (= 0.64.4)
     - RCT-Folly (= 2020.01.13.00)
-    - RCTTypeSafety (= 0.64.0)
-    - React-Core/RCTNetworkHeaders (= 0.64.0)
-    - React-jsi (= 0.64.0)
-    - ReactCommon/turbomodule/core (= 0.64.0)
-  - React-RCTSettings (0.64.0):
-    - FBReactNativeSpec (= 0.64.0)
+    - RCTTypeSafety (= 0.64.4)
+    - React-Core/RCTNetworkHeaders (= 0.64.4)
+    - React-jsi (= 0.64.4)
+    - ReactCommon/turbomodule/core (= 0.64.4)
+  - React-RCTSettings (0.64.4):
+    - FBReactNativeSpec (= 0.64.4)
     - RCT-Folly (= 2020.01.13.00)
-    - RCTTypeSafety (= 0.64.0)
-    - React-Core/RCTSettingsHeaders (= 0.64.0)
-    - React-jsi (= 0.64.0)
-    - ReactCommon/turbomodule/core (= 0.64.0)
-  - React-RCTText (0.64.0):
-    - React-Core/RCTTextHeaders (= 0.64.0)
-  - React-RCTVibration (0.64.0):
-    - FBReactNativeSpec (= 0.64.0)
+    - RCTTypeSafety (= 0.64.4)
+    - React-Core/RCTSettingsHeaders (= 0.64.4)
+    - React-jsi (= 0.64.4)
+    - ReactCommon/turbomodule/core (= 0.64.4)
+  - React-RCTText (0.64.4):
+    - React-Core/RCTTextHeaders (= 0.64.4)
+  - React-RCTVibration (0.64.4):
+    - FBReactNativeSpec (= 0.64.4)
     - RCT-Folly (= 2020.01.13.00)
-    - React-Core/RCTVibrationHeaders (= 0.64.0)
-    - React-jsi (= 0.64.0)
-    - ReactCommon/turbomodule/core (= 0.64.0)
-  - React-runtimeexecutor (0.64.0):
-    - React-jsi (= 0.64.0)
-  - ReactCommon/turbomodule/core (0.64.0):
+    - React-Core/RCTVibrationHeaders (= 0.64.4)
+    - React-jsi (= 0.64.4)
+    - ReactCommon/turbomodule/core (= 0.64.4)
+  - React-runtimeexecutor (0.64.4):
+    - React-jsi (= 0.64.4)
+  - ReactCommon/turbomodule/core (0.64.4):
     - DoubleConversion
     - glog
     - RCT-Folly (= 2020.01.13.00)
-    - React-callinvoker (= 0.64.0)
-    - React-Core (= 0.64.0)
-    - React-cxxreact (= 0.64.0)
-    - React-jsi (= 0.64.0)
-    - React-perflogger (= 0.64.0)
-  - RNBootSplash (3.2.6):
+    - React-callinvoker (= 0.64.4)
+    - React-Core (= 0.64.4)
+    - React-cxxreact (= 0.64.4)
+    - React-jsi (= 0.64.4)
+    - React-perflogger (= 0.64.4)
+  - RNBootSplash (3.2.7):
     - React-Core
-  - RNCAsyncStorage (1.15.11):
+  - RNCAsyncStorage (1.18.1):
     - React-Core
   - RNCMaskedView (0.1.11):
     - React
-  - RNFBApp (11.5.0):
-    - Firebase/CoreOnly (= 7.11.0)
+  - RNFBApp (11.0.0):
+    - Firebase/CoreOnly (= 7.7.0)
     - React-Core
-  - RNFBAuth (11.5.0):
-    - Firebase/Auth (= 7.11.0)
-    - React-Core
-    - RNFBApp
-  - RNFBFirestore (11.5.0):
-    - Firebase/Firestore (= 7.11.0)
+  - RNFBAuth (11.0.0):
+    - Firebase/Auth (= 7.7.0)
     - React-Core
     - RNFBApp
-  - RNFBStorage (11.5.0):
-    - Firebase/Storage (= 7.11.0)
+  - RNFBFirestore (11.0.0):
+    - Firebase/Firestore (= 7.7.0)
+    - React-Core
+    - RNFBApp
+  - RNFBStorage (11.0.0):
+    - Firebase/Storage (= 7.7.0)
     - React-Core
     - RNFBApp
   - RNGestureHandler (1.10.3):
@@ -654,7 +673,7 @@ PODS:
     - React-Core
     - React-RCTImage
     - TOCropViewController
-  - RNReanimated (2.2.4):
+  - RNReanimated (2.14.4):
     - DoubleConversion
     - FBLazyVector
     - FBReactNativeSpec
@@ -662,7 +681,6 @@ PODS:
     - RCT-Folly
     - RCTRequired
     - RCTTypeSafety
-    - React
     - React-callinvoker
     - React-Core
     - React-Core/DevSupport
@@ -680,17 +698,25 @@ PODS:
     - React-RCTNetwork
     - React-RCTSettings
     - React-RCTText
-    - React-RCTVibration
     - ReactCommon/turbomodule/core
     - Yoga
   - RNScreens (2.18.1):
     - React-Core
+  - RNSentry (3.4.3):
+    - React-Core
+    - Sentry (= 7.11.0)
   - RNVectorIcons (8.1.0):
     - React-Core
+  - Sentry (7.11.0):
+    - Sentry/Core (= 7.11.0)
+  - Sentry/Core (7.11.0)
   - TOCropViewController (2.6.1)
   - Yoga (1.14.0)
 
 DEPENDENCIES:
+  - appcenter-analytics (from `../node_modules/appcenter-analytics`)
+  - appcenter-core (from `../node_modules/appcenter`)
+  - appcenter-crashes (from `../node_modules/appcenter-crashes`)
   - DoubleConversion (from `../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec`)
   - FBLazyVector (from `../node_modules/react-native/Libraries/FBLazyVector`)
   - FBReactNativeSpec (from `../node_modules/react-native/React/FBReactNativeSpec`)
@@ -734,6 +760,7 @@ DEPENDENCIES:
   - RNImageCropPicker (from `../node_modules/react-native-image-crop-picker`)
   - RNReanimated (from `../node_modules/react-native-reanimated`)
   - RNScreens (from `../node_modules/react-native-screens`)
+  - "RNSentry (from `../node_modules/@sentry/react-native`)"
   - RNVectorIcons (from `../node_modules/react-native-vector-icons`)
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
@@ -741,6 +768,8 @@ SPEC REPOS:
   trunk:
     - abseil
     - AppAuth
+    - AppCenter
+    - AppCenterReactNativeShared
     - boost-for-react-native
     - BoringSSL-GRPC
     - FBSDKCoreKit
@@ -762,9 +791,16 @@ SPEC REPOS:
     - leveldb-library
     - nanopb
     - PromisesObjC
+    - Sentry
     - TOCropViewController
 
 EXTERNAL SOURCES:
+  appcenter-analytics:
+    :path: "../node_modules/appcenter-analytics"
+  appcenter-core:
+    :path: "../node_modules/appcenter"
+  appcenter-crashes:
+    :path: "../node_modules/appcenter-crashes"
   DoubleConversion:
     :podspec: "../node_modules/react-native/third-party-podspecs/DoubleConversion.podspec"
   FBLazyVector:
@@ -847,6 +883,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-reanimated"
   RNScreens:
     :path: "../node_modules/react-native-screens"
+  RNSentry:
+    :path: "../node_modules/@sentry/react-native"
   RNVectorIcons:
     :path: "../node_modules/react-native-vector-icons"
   Yoga:
@@ -854,73 +892,80 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
-  AppAuth: 31bcec809a638d7bd2f86ea8a52bd45f6e81e7c7
+  AppAuth: 8fca6b5563a5baef2c04bee27538025e4ceb2add
+  AppCenter: 3fd04aa1b166e16fdb03ec81dabe488aece83fbd
+  appcenter-analytics: 1aea9ada8922d2e2df3e069a28eda21157c9d30d
+  appcenter-core: c593b2e4ac28d6a21b6a217c4a5e6b3de7b0b00f
+  appcenter-crashes: d9ae1c9296974c1c433600fa2f320e0ba1f12bdf
+  AppCenterReactNativeShared: f395caeabde0dc3a11609dbcb737d0f14cd40e79
   boost-for-react-native: 39c7adb57c4e60d6c5479dd8623128eb5b3f0f2c
   BoringSSL-GRPC: 8edf627ee524575e2f8d19d56f068b448eea3879
   DoubleConversion: cf9b38bf0b2d048436d9a82ad2abe1404f11e7de
-  FBLazyVector: 49cbe4b43e445b06bf29199b6ad2057649e4c8f5
-  FBReactNativeSpec: f07cd9f3f5fc255d8cd2d78a2f637c55769e403b
+  FBLazyVector: fa8275d5086566e22a26ddc385ab5772e7f9b1bd
+  FBReactNativeSpec: 4206ef784ca5df6119a4ba18e1ddda92411b80d3
   FBSDKCoreKit: 4afd6ff53d8133a433dbcda44451c9498f8c6ce4
   FBSDKLoginKit: 7181765f2524d7ebf82d9629066c8e6caafc99d0
   FBSDKShareKit: 0c0d51b3af47075a85ed9bea0e28b2fc70e3594b
-  Firebase: c121feb35e4126c0b355e3313fa9b487d47319fd
-  FirebaseAuth: 5fe4585c2ed847319f0ea68bd1d82c77e49ff9a0
-  FirebaseCore: 907447d8917a4d3eb0cce2829c5a0ad21d90b432
-  FirebaseCoreDiagnostics: 68ad972f99206cef818230f3f3179d52ccfb7f8c
-  FirebaseFirestore: f495bb336b23eca23ea5d3605dce2a4cc214fde9
-  FirebaseStorage: 8542711850ca181a3931c0ed483006a7b46039e7
+  Firebase: cd2ab85eec8170dc260186159f21072ecb679ad5
+  FirebaseAuth: 76aa97ecd51e20ecd21321d08474d25f5d2b7b9f
+  FirebaseCore: ac35d680a0bf32319a59966a1478e0741536b97b
+  FirebaseCoreDiagnostics: 3d36e05da74cb8b7ce30e6594a8f201b982c725c
+  FirebaseFirestore: 5e314d8ad3280576d641caf228f399dfb74f7914
+  FirebaseStorage: 9b940765fa33494258fab6131b6180fc7c2d80f5
   glog: 73c2498ac6884b13ede40eda8228cb1eee9d9d62
-  GoogleDataTransport: cd9db2180fcecd8da1b561aea31e3e56cf834aa7
+  GoogleDataTransport: 8b0e733ea77c9218778e5a9e34ba9508b8328939
   GoogleSignIn: 7137d297ddc022a7e0aa4619c86d72c909fa7213
-  GoogleUtilities: e0913149f6b0625b553d70dae12b49fc62914fd1
+  GoogleUtilities: c2bdc4cf2ce786c4d2e6b3bcfd599a25ca78f06f
   "gRPC-C++": 13d8ccef97d5c3c441b7e3c529ef28ebee86fad2
   gRPC-Core: 4afa11bfbedf7cdecd04de535a9e046893404ed5
-  GTMAppAuth: ad5c2b70b9a8689e1a04033c9369c4915bfcbe89
-  GTMSessionFetcher: 43748f93435c2aa068b1cbe39655aaf600652e91
+  GTMAppAuth: 0ff230db599948a9ad7470ca667337803b3fc4dd
+  GTMSessionFetcher: 5595ec75acf5be50814f81e9189490412bad82ba
   leveldb-library: 50c7b45cbd7bf543c81a468fe557a16ae3db8729
-  nanopb: a0ba3315591a9ae0a16a309ee504766e90db0c96
+  nanopb: 59221d7f958fb711001e6a449489542d92ae113e
   PromisesObjC: 3113f7f76903778cf4a0586bd1ab89329a0b7b97
   RCT-Folly: ec7a233ccc97cc556cf7237f0db1ff65b986f27c
-  RCTRequired: 2f8cb5b7533219bf4218a045f92768129cf7050a
-  RCTTypeSafety: 512728b73549e72ad7330b92f3d42936f2a4de5b
-  React: 98eac01574128a790f0bbbafe2d1a8607291ac24
-  React-callinvoker: def3f7fae16192df68d9b69fd4bbb59092ee36bc
-  React-Core: 70a52aa5dbe9b83befae82038451a7df9fd54c5a
-  React-CoreModules: 052edef46117862e2570eb3a0f06d81c61d2c4b8
-  React-cxxreact: c1dc71b30653cfb4770efdafcbdc0ad6d388baab
-  React-jsi: 74341196d9547cbcbcfa4b3bbbf03af56431d5a1
-  React-jsiexecutor: 06a9c77b56902ae7ffcdd7a4905f664adc5d237b
-  React-jsinspector: 0ae35a37b20d5e031eb020a69cc5afdbd6406301
+  RCTRequired: f85fa00af016059cf88b90b8f8ff9a6af9e4b6c3
+  RCTTypeSafety: 5279aaf0fb1ad715cbbbbee32d5c98c72598bc9c
+  React: ff4e89fbcb05461c9533fd4da3c0f44cda6ab618
+  React-callinvoker: 4670ac7842699e4a39b19a08b4ede02573c1e5dd
+  React-Core: ee61e8a8aea912e1504ebec230b3e07d96cf82e1
+  React-CoreModules: 8544ba0d319003b33707cdeed66e3122685d31a0
+  React-cxxreact: 668500d4ce359515bbf8f907bca0e66fd357d36f
+  React-jsi: 64f80675a66899bf0f4a58b8e3908966fa516234
+  React-jsiexecutor: 8c077bef1c64430b6034f27df1000d194551e2eb
+  React-jsinspector: d4f6973dd474357dbaaf6f52f31ffc713bf3e766
   react-native-fbsdk: 8e92c7a334fd8d9c2b5d8b8fcd7ae2c314161099
-  react-native-safe-area-context: 584dc04881deb49474363f3be89e4ca0e854c057
-  React-perflogger: 9c547d8f06b9bf00cb447f2b75e8d7f19b7e02af
-  React-RCTActionSheet: 3080b6e12e0e1a5b313c8c0050699b5c794a1b11
-  React-RCTAnimation: 3f96f21a497ae7dabf4d2f150ee43f906aaf516f
-  React-RCTBlob: 283b8e5025e7f954176bc48164f846909002f3ed
-  React-RCTImage: 5088a484faac78f2d877e1b79125d3bb1ea94a16
-  React-RCTLinking: 5e8fbb3e9a8bc2e4e3eb15b1eb8bda5fcac27b8c
-  React-RCTNetwork: 38ec277217b1e841d5e6a1fa78da65b9212ccb28
-  React-RCTSettings: 242d6e692108c3de4f3bb74b7586a8799e9ab070
-  React-RCTText: 8746736ac8eb5a4a74719aa695b7a236a93a83d2
-  React-RCTVibration: 0fd6b21751a33cb72fce1a4a33ab9678416d307a
-  React-runtimeexecutor: cad74a1eaa53ee6e7a3620231939d8fe2c6afcf0
-  ReactCommon: cfe2b7fd20e0dbd2d1185cd7d8f99633fbc5ff05
-  RNBootSplash: 51eef7e143faeab63f81ddbb7c1de38b8fba66ed
-  RNCAsyncStorage: eb05c0284dd6b50b32f92fad55e2a41e03358c43
+  react-native-safe-area-context: 9e40fb181dac02619414ba1294d6c2a807056ab9
+  React-perflogger: 5a890ca0911669421b7611661e9b58f91c805f5c
+  React-RCTActionSheet: bd180e0879f8424a73650c5c28fbef4f3b5b27fb
+  React-RCTAnimation: 1004d2b4be1f2cedfdc4cb2326adc95b989e6c6b
+  React-RCTBlob: 55a984137d10e4c41071e8d39374336b48656e54
+  React-RCTImage: fa346c899c2f7301eddc79860c37f836db185eb2
+  React-RCTLinking: 7af1444a261610ff29a1afeab8c1cfcb5c3280a9
+  React-RCTNetwork: fdaad596311091a2c48e0327b8431ba3e011a684
+  React-RCTSettings: a7879d48e2951d107763f53e1db80be29f462ab7
+  React-RCTText: d7e66b2600487f631531f77bb9d336e33c1187d9
+  React-RCTVibration: 761849eea2a1abc99d5e4171bae17ab3da3143ac
+  React-runtimeexecutor: 5b441857030bb6c3abaa7517f333cb01875ae499
+  ReactCommon: b4a65d2d6e9eeffd4b32dde1245962b3f43907d0
+  RNBootSplash: f31eba8f6d496e2029859e06e5582cac4607256d
+  RNCAsyncStorage: b90b71f45b8b97be43bc4284e71a6af48ac9f547
   RNCMaskedView: 0e1bc4bfa8365eba5fbbb71e07fbdc0555249489
-  RNFBApp: 9c90f9d576861947ba75fe0830567c570bcbcf6d
-  RNFBAuth: 99fdbce04ff3d39e57a7a3956d632ee69145685b
-  RNFBFirestore: bedb9727c0df9a1f1ec23b5e23988075a4cbea78
-  RNFBStorage: 052a32c5af38b106e4d6b0a296df304d97be995e
+  RNFBApp: 1624ffcfc328c00ec3049d2f1bbf09d3e78dcdb7
+  RNFBAuth: 888e490f4bc371e6afa68d587c7c791976a5f52f
+  RNFBFirestore: 2e602fc143aaae72d99333caa6d36266d6fa14aa
+  RNFBStorage: 8f40c919c0c9872424a40bfe942c6323dc58de06
   RNGestureHandler: a479ebd5ed4221a810967000735517df0d2db211
   RNGoogleSignin: e64616a4080cf7d83f4b292fad82d174587444e2
   RNImageCropPicker: 73891a709e6fd8a47d32104d942757971f220aee
-  RNReanimated: 024eff8202342abf4b24e11575a16afc441dabfe
+  RNReanimated: bd6be32488d65cc66a843de8214c2fee49f761a6
   RNScreens: f7ad633b2e0190b77b6a7aab7f914fad6f198d8d
+  RNSentry: 85f6525b5fe8d2ada065858026b338605b3c09da
   RNVectorIcons: 31cebfcf94e8cf8686eb5303ae0357da64d7a5a4
+  Sentry: 0c5cd63d714187b4a39c331c1f0eb04ba7868341
   TOCropViewController: edfd4f25713d56905ad1e0b9f5be3fbe0f59c863
-  Yoga: 8c8436d4171c87504c648ae23b1d81242bdf3bbf
+  Yoga: d1fc3575b8b68891ff5ef3c276daa855e841eb32
 
 PODFILE CHECKSUM: 54e30c2fba7122e77aacc2a26e42c9147aa949c8
 
-COCOAPODS: 1.11.2
+COCOAPODS: 1.11.3

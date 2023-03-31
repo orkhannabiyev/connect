@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { StyleSheet, View } from 'react-native';
 import SkeletonPlaceholder from 'react-native-skeleton-placeholder';
 
-const ChatScreen = () => {
+const ChatScreen: FC = () => {
   return (
     <View style={styles.container}>
       <SkeletonPlaceholder>

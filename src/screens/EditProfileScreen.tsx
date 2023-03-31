@@ -10,7 +10,7 @@ import {
   KeyboardAvoidingView,
   SafeAreaView,
 } from 'react-native';
-import { connect } from 'react-redux';
+import { connect, useSelector } from 'react-redux';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
@@ -33,12 +33,11 @@ type EditProfileScreenType = {
   handleUpdate: (uid: string, userData?: UserProfile, image?: string) => void;
 };
 
-const EditProfileScreen: FC<EditProfileScreenType> = ({
-  loading,
-  userProfile,
-  user,
-  handleUpdate,
-}) => {
+const EditProfileScreen: FC<EditProfileScreenType> = ({ handleUpdate }) => {
+  const user = useSelector(state => state.auth.user);
+  const userProfile = useSelector(state => state.userProfile.data);
+  const loading = useSelector(state => state.userProfile.loading);
+
   const [image, setImage] = useState<string>();
   const [userData, setUserData] = useState();
 
