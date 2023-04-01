@@ -7,36 +7,29 @@ import {
   KeyboardAvoidingView,
   ScrollView,
 } from 'react-native';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
 import { NavigationProp } from '@react-navigation/core';
 import { AUTH_ROUTES } from '@navigation/stacks/AuthStack';
 
-import { FormButton, FormInput, SocialButton } from '../components';
+import { FormButton, FormInput, SocialButton } from 'components';
 import {
   register,
   fbLogin,
   googleLogin,
-} from '../store/redux/actions/AuthActions';
-import { totalSize } from '../utils/Dimentions';
-import { emailRegEx } from '../utils/Constants';
-import { Color } from '../utils/Color';
+} from 'store/redux/actions/AuthActions';
+import { totalSize } from 'utils/Dimentions';
+import { emailRegEx } from 'utils/Constants';
+import { Color } from 'utils/Color';
 import { AuthStackParams } from 'navigation/types/authStackTypes';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 type SignUpScreenType = {
   navigation: NavigationProp<AuthStackParams>;
-  register: (name: string, email: string, password: string) => void;
-  fbLogin: () => void;
-  googleLogin: () => void;
 };
 
-const SignUpScreen: FC<SignUpScreenType> = ({
-  navigation,
-  register,
-  fbLogin,
-  googleLogin,
-}) => {
+const SignUpScreen: FC<SignUpScreenType> = ({ navigation }) => {
+  const dispatch = useDispatch();
   const {
     control,
     handleSubmit,
@@ -53,7 +46,7 @@ const SignUpScreen: FC<SignUpScreenType> = ({
     email: string;
     password: string;
   }) => {
-    register(name, email, password);
+    dispatch(register(name, email, password));
   };
 
   const password = useRef({});
@@ -167,7 +160,7 @@ const SignUpScreen: FC<SignUpScreenType> = ({
 
           <SocialButton
             buttonTitle="Sign in with Facebook"
-            onPress={() => fbLogin()}
+            onPress={() => dispatch(fbLogin())}
             btnType="facebook"
             color={Color.fb}
             backgroundColor={Color.fbBackground}
@@ -175,7 +168,7 @@ const SignUpScreen: FC<SignUpScreenType> = ({
 
           <SocialButton
             buttonTitle="Sign in with Google"
-            onPress={() => googleLogin()}
+            onPress={() => dispatch(googleLogin())}
             btnType="google"
             color={Color.google}
             backgroundColor={Color.googleBackground}
@@ -207,13 +200,7 @@ const SignUpScreen: FC<SignUpScreenType> = ({
   );
 };
 
-const mapDispatchToProps = {
-  register,
-  fbLogin,
-  googleLogin,
-};
-
-export default connect(null, mapDispatchToProps)(SignUpScreen);
+export default SignUpScreen;
 
 const styles = StyleSheet.create({
   container: {

@@ -9,67 +9,44 @@ import {
   FlatList,
   Alert,
 } from 'react-native';
-import { connect } from 'react-redux';
-import { PostCard } from '../components';
-import { selfPosts } from '../store/redux/actions/SelfPostsAction';
-import { logout } from '../store/redux/actions/AuthActions';
-import { getUser } from '../store/redux/actions/UserActions';
-import { deletePost } from '../store/redux/actions/FeedActions';
-import { Loading } from '../components/Loading';
-import { UserBody } from 'models/user';
-import { PostBody } from 'models/post';
+import { useDispatch, useSelector } from 'react-redux';
+import { PostCard } from 'components';
+import { selfPosts } from 'store/redux/actions/SelfPostsAction';
+import { logout } from 'store/redux/actions/AuthActions';
+import { getUser } from 'store/redux/actions/UserActions';
+import { deletePost } from 'store/redux/actions/FeedActions';
+import { Loading } from 'components/Loading';
 import { NavigationProp } from '@react-navigation/core';
 import {
   AppScreenRouteProp,
   AppStackParams,
 } from 'navigation/types/appStackTypes';
 import { PROFILE_ROUTES } from 'navigation/stacks/AppStack';
-import { UserProfile } from 'models/userProfile';
 
 type ProfileScreenType = {
   navigation: NavigationProp<AppStackParams>;
-  posts: PostBody[];
-  user: UserBody;
   route: AppScreenRouteProp;
-  userLoading: boolean;
-  userProfile: UserProfile;
-  userProfileLoading: boolean;
-  getUser: (route: AppScreenRouteProp, user: UserBody) => void;
-  postsLoading: boolean;
-  selfPosts: (route: AppScreenRouteProp, user: UserBody) => void;
-  deletePost: (postId: string) => void;
-  deleted: boolean;
-  deletedLoading: boolean;
-  logout: () => void;
 };
 
-const ProfileScreen: FC<ProfileScreenType> = ({
-  route,
-  navigation,
-  user,
-  userLoading,
-  userProfile,
-  userProfileLoading,
-  getUser,
-  posts,
-  postsLoading,
-  selfPosts,
-  deletePost,
-  deleted,
-  deletedLoading,
-  logout,
-}) => {
-  console.log('user', JSON.stringify(route.params, null, 2));
-  console.log('userProfile', JSON.stringify(userProfile, null, 2));
+const ProfileScreen: FC<ProfileScreenType> = ({ route, navigation }) => {
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.auth.user);
+  const userLoading = useSelector(state => state.auth.loading);
+  const posts = useSelector(state => state.selfposts.posts);
+  const postsLoading = useSelector(state => state.selfposts.loading);
+  const userProfile = useSelector(state => state.userProfile.data);
+  const userProfileLoading = useSelector(state => state.userProfile.loading);
+  const deleted = useSelector(state => state.feed.deleted);
+  const deletedLoading = useSelector(state => state.feed.loading);
 
   useEffect(() => {
-    getUser(route, user);
-    selfPosts(route, user);
+    dispatch(getUser(route, user));
+    dispatch(selfPosts(route, user));
   }, [deleted]);
 
   const refresh = () => {
-    getUser(route, user);
-    selfPosts(route, user);
+    dispatch(getUser(route, user));
+    dispatch(selfPosts(route, user));
   };
 
   const profile = () => {
@@ -108,7 +85,9 @@ const ProfileScreen: FC<ProfileScreenType> = ({
                 }}>
                 <Text style={styles.userBtnTxt}>Edit</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.userBtn} onPress={logout}>
+              <TouchableOpacity
+                style={styles.userBtn}
+                onPress={() => dispatch(logout())}>
                 <Text style={styles.userBtnTxt}>Logout</Text>
               </TouchableOpacity>
             </>
@@ -145,7 +124,7 @@ const ProfileScreen: FC<ProfileScreenType> = ({
         },
         {
           text: 'Confirm',
-          onPress: () => deletePost(postId),
+          onPress: () => dispatch(deletePost(postId)),
         },
       ],
       { cancelable: false },
@@ -178,25 +157,7 @@ const ProfileScreen: FC<ProfileScreenType> = ({
   );
 };
 
-const mapStateToProps = ({ auth, selfposts, userProfile, feed }) => ({
-  user: auth.user,
-  userLoading: auth.loading,
-  posts: selfposts.posts,
-  postsLoading: selfposts.loading,
-  userProfile: userProfile.data,
-  userProfileLoading: userProfile.loading,
-  deleted: feed.deleted,
-  deletedLoading: feed.loading,
-});
-
-const mapDispatchToProps = {
-  deletePost,
-  selfPosts,
-  getUser,
-  logout,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(ProfileScreen);
+export default ProfileScreen;
 
 const styles = StyleSheet.create({
   container: {
