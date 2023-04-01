@@ -10,7 +10,7 @@ import {
   KeyboardAvoidingView,
   SafeAreaView,
 } from 'react-native';
-import { connect, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Feather from 'react-native-vector-icons/Feather';
@@ -19,24 +19,18 @@ import Animated from 'react-native-reanimated';
 import BottomSheet from 'reanimated-bottom-sheet';
 import ImagePicker from 'react-native-image-crop-picker';
 
-import { FormButton } from '../components';
-import { handleUpdate as handleUpdateAction } from '../store/redux/actions/UserActions';
-import { totalSize } from '../utils/Dimentions';
-import { UserBody } from 'models/user';
-import { UserProfile } from 'models/userProfile';
+import { FormButton } from 'components';
+import { handleUpdate } from 'store/redux/actions/UserActions';
+import { totalSize } from 'utils/Dimentions';
 import { Loading } from 'components/Loading';
 
-type EditProfileScreenType = {
-  loading: boolean;
-  user: UserBody;
-  userProfile: UserProfile;
-  handleUpdate: (uid: string, userData?: UserProfile, image?: string) => void;
-};
+type EditProfileScreenType = {};
 
-const EditProfileScreen: FC<EditProfileScreenType> = ({ handleUpdate }) => {
+const EditProfileScreen: FC<EditProfileScreenType> = () => {
   const user = useSelector(state => state.auth.user);
   const userProfile = useSelector(state => state.userProfile.data);
   const loading = useSelector(state => state.userProfile.loading);
+  const dispatch = useDispatch();
 
   const [image, setImage] = useState<string>();
   const [userData, setUserData] = useState();
@@ -49,7 +43,7 @@ const EditProfileScreen: FC<EditProfileScreenType> = ({ handleUpdate }) => {
   }, []);
 
   const update = () => {
-    handleUpdate(user.uid, userData, image);
+    dispatch(handleUpdate(user.uid, userData, image));
   };
 
   const takePhotoFromCamera = () => {
@@ -252,17 +246,7 @@ const EditProfileScreen: FC<EditProfileScreenType> = ({ handleUpdate }) => {
   );
 };
 
-const mapStateToProps = ({ auth, userProfile }) => ({
-  user: auth.user,
-  userProfile: userProfile.data,
-  loading: userProfile.loading,
-});
-
-const mapDispatchToProps = {
-  handleUpdate: handleUpdateAction,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(EditProfileScreen);
+export default EditProfileScreen;
 
 const styles = StyleSheet.create({
   container: {

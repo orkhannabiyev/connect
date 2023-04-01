@@ -7,34 +7,23 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
 } from 'react-native';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
 
-import {
-  login,
-  fbLogin,
-  googleLogin,
-} from '../store/redux/actions/AuthActions';
-import { FormButton, FormInput, SocialButton } from '../components';
-import { Color } from '../utils/Color';
-import { emailRegEx } from '../utils/Constants';
+import { login, fbLogin, googleLogin } from 'store/redux/actions/AuthActions';
+import { FormButton, FormInput, SocialButton } from 'components';
+import { Color } from 'utils/Color';
+import { emailRegEx } from 'utils/Constants';
 import { NavigationProp } from '@react-navigation/core';
 import { AUTH_ROUTES } from 'navigation/stacks/AuthStack';
 import { AuthStackParams } from 'navigation/types/authStackTypes';
 
 type LoginScreenType = {
   navigation: NavigationProp<AuthStackParams>;
-  login: (email: string, password: string) => void;
-  googleLogin: () => void;
-  fbLogin: () => void;
 };
 
-const LoginScreen: FC<LoginScreenType> = ({
-  navigation,
-  login,
-  googleLogin,
-  fbLogin,
-}) => {
+const LoginScreen: FC<LoginScreenType> = ({ navigation }) => {
+  const dispatch = useDispatch();
   const {
     control,
     handleSubmit,
@@ -44,7 +33,7 @@ const LoginScreen: FC<LoginScreenType> = ({
   type Data = { email: string; password: string };
 
   const onLogin = ({ email, password }: Data) => {
-    login(email, password);
+    dispatch(login(email, password));
   };
 
   return (
@@ -113,7 +102,7 @@ const LoginScreen: FC<LoginScreenType> = ({
 
         <SocialButton
           buttonTitle="Sign in with Facebook"
-          onPress={() => fbLogin()}
+          onPress={() => dispatch(fbLogin())}
           btnType="facebook"
           color={Color.fb}
           backgroundColor={Color.fbBackground}
@@ -121,7 +110,7 @@ const LoginScreen: FC<LoginScreenType> = ({
 
         <SocialButton
           buttonTitle="Sign in with Google"
-          onPress={() => googleLogin()}
+          onPress={() => dispatch(googleLogin())}
           btnType="google"
           color={Color.google}
           backgroundColor={Color.googleBackground}
@@ -145,7 +134,7 @@ const mapDispatchToProps = {
   googleLogin,
 };
 
-export default connect(() => ({}), mapDispatchToProps)(LoginScreen);
+export default LoginScreen;
 
 const styles = StyleSheet.create({
   container: {

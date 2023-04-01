@@ -3,7 +3,7 @@ import { StyleSheet, KeyboardAvoidingView } from 'react-native';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ImagePicker from 'react-native-image-crop-picker';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import { submitPost } from '@store/redux/actions/AddPostActions';
 import { Loading } from '../components/Loading';
@@ -16,20 +16,15 @@ import {
   SubmitBtnText,
   StatusWrapper,
 } from '../styles/AddPost';
-import { UserBody } from 'models/user';
 import { PostBody } from 'models/post';
 
-type AddPostScreenType = {
-  loading: boolean;
-  submitPost: (user: UserBody, post: PostBody, image: string) => void;
-  user: UserBody;
-};
+type AddPostScreenType = {};
 
-const AddPostScreen: FC<AddPostScreenType> = ({
-  loading,
-  submitPost,
-  user,
-}) => {
+const AddPostScreen: FC<AddPostScreenType> = () => {
+  const dispatch = useDispatch();
+  const user = useSelector(state => state.auth.user);
+  const loading = useSelector(state => state.addPost.loading);
+
   const [image, setImage] = useState<string | null>();
   const [post, setPost] = useState<PostBody | null>();
 
@@ -62,7 +57,7 @@ const AddPostScreen: FC<AddPostScreenType> = ({
   };
 
   const submit = () => {
-    submitPost(user, post, image);
+    dispatch(submitPost(user, post, image));
     setImage(null);
     setPost(null);
   };
@@ -106,16 +101,7 @@ const AddPostScreen: FC<AddPostScreenType> = ({
   );
 };
 
-const mapStateToProps = ({ addPost, auth }) => ({
-  loading: addPost.loading,
-  user: auth.user,
-});
-
-const mapDispatchToProps = {
-  submitPost,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddPostScreen);
+export default AddPostScreen;
 
 const styles = StyleSheet.create({
   container: {
