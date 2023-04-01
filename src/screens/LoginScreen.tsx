@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
 } from 'react-native';
-import { connect, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useForm, Controller } from 'react-hook-form';
 
 import { login, fbLogin, googleLogin } from 'store/redux/actions/AuthActions';
@@ -126,12 +126,6 @@ const LoginScreen: FC<LoginScreenType> = ({ navigation }) => {
       </KeyboardAvoidingView>
     </ScrollView>
   );
-};
-
-const mapDispatchToProps = {
-  login,
-  fbLogin,
-  googleLogin,
 };
 
 export default LoginScreen;
